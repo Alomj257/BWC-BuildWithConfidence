@@ -1,121 +1,99 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Sidebar.css';
-import image from '../../assests/profile/P1.png'
+import image from '../../assests/profile/P1.png';
 
 function Sidebar() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
-        <div className="sidebar close">
+        <div className={`sidebar ${isOpen ? 'open' : ''}`}>
             <div className="logo-details">
-                <i class='bx bx-buildings'></i>
-                <span className="logo_name">BWC</span>
+            <i class='bx bx-buildings'></i>
+                <div className="logo_name">BWC</div>
+                <i className={`bx ${isOpen ? 'bx-menu-alt-right' : 'bx-menu'}`} id="btn" onClick={toggleSidebar}></i>
             </div>
-            <ul className="nav-links">
+            <ul className="nav-list">
                 <li>
-                    <a href="#">
-                        <i class='bx bx-grid-alt'></i>
-                        <span className="link_name">Dashboard</span>
-                    </a>
-                    <ul className="sub-menu">
-                        <li><a className='link_name blank' href="#">Dashboard</a></li>
-                    </ul>
+                    <i className='bx bx-search'></i>
+                    <input type="text" placeholder="Search..." />
+                    <span className="tooltip">Search</span>
                 </li>
                 <li>
-                    <div className="icon-link">
-                        <a href="#">
-                            <i class='bx bx-user-pin'></i>
-                            <span className="link_name">Tradeperson</span>
-                            <i class='bx bxs-chevron-down arrow'></i>
-                        </a>
+                    <a href="#">
+                        <i className='bx bx-grid-alt'></i>
+                        <span className="links_name">Dashboard</span>
+                    </a>
+                    <span className="tooltip">Dashboard</span>
+                </li>
+                <li>
+                    <a href="#">
+                    <i class='bx bx-user-pin'></i>
+                        <span className="links_name">Tradeperson</span>
+                    </a>
+                    <span className="tooltip">Tradeperson</span>
+                </li>
+                <li>
+                    <a href="#">
+                    <i class='bx bx-select-multiple'></i>
+                        <span className="links_name">Create a job</span>
+                    </a>
+                    <span className="tooltip">Create a job</span>
+                </li>
+                <li>
+                    <a href="#">
+                    <i class='bx bx-history' ></i>
+                        <span className="links_name">Job history</span>
+                    </a>
+                    <span className="tooltip">Job history</span>
+                </li>
+                <li>
+                    <a href="#">
+                    <i class='bx bx-bell'></i>
+                        <span className="links_name">Suppliers</span>
+                    </a>
+                    <span className="tooltip">Suppliers</span>
+                </li>
+                <li>
+                    <a href="#">
+                    <i class='bx bx-message-rounded-dots'></i>
+                        <span className="links_name">Message</span>
+                    </a>
+                    <span className="tooltip">Message</span>
+                </li>
+                <li>
+                    <a href="#">
+                    <i class='bx bx-envelope' ></i>
+                        <span className="links_name">Insurance</span>
+                    </a>
+                    <span className="tooltip">Insurance</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i className='bx bx-cog'></i>
+                        <span className="links_name">Setting</span>
+                    </a>
+                    <span className="tooltip">Setting</span>
+                </li>
+                <li>
+                    <a href="#">
+                    <i class='bx bx-help-circle' ></i>
+                        <span className="links_name">Help $ Support</span>
+                    </a>
+                    <span className="tooltip">Help $ Support</span>
+                </li>
+                <li className="profile">
+                    <div className="profile-details">
+                        <img src={image} alt="profileImg" />
+                        <div className="name_job">
+                            <div className="name">Jahangir</div>
+                            <div className="job">Consumer</div>
+                        </div>
                     </div>
-                    <ul className="sub-menu">
-                        <li><a className='link_name' href="#">Tradeperson</a></li>
-                        <li><a href="#">Person one</a></li>
-                        <li><a href="#">Person two</a></li>
-                        <li><a href="#">Person three</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <div className="icon-link">
-                        <a href="#">
-                            <i class='bx bx-select-multiple'></i>
-                            <span className="link_name">Create job</span>
-                            <i class='bx bxs-chevron-down arrow'></i>
-                        </a>
-                    </div>
-                    <ul className="sub-menu">
-                        <li><a className='link_name' href="#">Create job</a></li>
-                        <li><a href="#">Job one</a></li>
-                        <li><a href="#">Job two</a></li>
-                        <li><a href="#">Job three</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bx-history' ></i>
-                        <span className="link_name">Job history</span>
-                    </a>
-                    <ul className="sub-menu">
-                        <li><a className='link_name blank' href="#">Job history</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bx-bell'></i>
-                        <span className="link_name">Suppliers</span>
-                    </a>
-                    <ul className="sub-menu">
-                        <li><a className='link_name blank' href="#">Suppliers</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bx-message-rounded-dots'></i>
-                        <span className="link_name">Message</span>
-                    </a>
-                    <ul className="sub-menu">
-                        <li><a className='link_name blank' href="#">Message</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bx-envelope' ></i>
-                        <span className="link_name">Insurances</span>
-                    </a>
-                    <ul className="sub-menu">
-                        <li><a className='link_name blank' href="#">Insurances</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bx-cog' ></i>
-                        <span className="link_name">Settings</span>
-                    </a>
-                    <ul className="sub-menu">
-                        <li><a className='link_name blank' href="#">Settings</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bx-help-circle' ></i>
-                        <span className="link_name">Helo & Support</span>
-                    </a>
-                    <ul className="sub-menu">
-                        <li><a className='link_name blank' href="#">Helo & Support</a></li>
-                    </ul>
-                </li>
-                <li>
-                <div className="profile-details">
-                    <div className="profile-content">
-                        <img src={image} alt="profile" />
-                    </div>
-
-                    <div className="name-job">
-                        <div className="profile_name">Jahangir Alom</div>
-                        <div className="job">Consumer</div>
-                    </div>
-                    <i class='bx bx-log-out'></i>
-
-                </div>
+                    <i className='bx bx-log-out' id="log_out"></i>
                 </li>
             </ul>
         </div>
