@@ -1,5 +1,6 @@
 import React from 'react';
 import './Sidebar.css';
+import image from '../../assests/profile/P1.png'
 
 function Sidebar() {
     return (
@@ -23,7 +24,7 @@ function Sidebar() {
                         <a href="#">
                             <i class='bx bx-user-pin'></i>
                             <span className="link_name">Tradeperson</span>
-                            <i class='bx bxs-chevron-down'></i>
+                            <i class='bx bxs-chevron-down arrow'></i>
                         </a>
                     </div>
                     <ul className="sub-menu">
@@ -38,7 +39,7 @@ function Sidebar() {
                         <a href="#">
                             <i class='bx bx-select-multiple'></i>
                             <span className="link_name">Create job</span>
-                            <i class='bx bxs-chevron-down'></i>
+                            <i class='bx bxs-chevron-down arrow'></i>
                         </a>
                     </div>
                     <ul className="sub-menu">
@@ -68,7 +69,7 @@ function Sidebar() {
                 </li>
                 <li>
                     <a href="#">
-                    <i class='bx bx-message-rounded-dots'></i>
+                        <i class='bx bx-message-rounded-dots'></i>
                         <span className="link_name">Message</span>
                     </a>
                     <ul className="sub-menu">
@@ -77,7 +78,7 @@ function Sidebar() {
                 </li>
                 <li>
                     <a href="#">
-                    <i class='bx bx-envelope' ></i>
+                        <i class='bx bx-envelope' ></i>
                         <span className="link_name">Insurances</span>
                     </a>
                     <ul className="sub-menu">
@@ -86,7 +87,7 @@ function Sidebar() {
                 </li>
                 <li>
                     <a href="#">
-                    <i class='bx bx-cog' ></i>
+                        <i class='bx bx-cog' ></i>
                         <span className="link_name">Settings</span>
                     </a>
                     <ul className="sub-menu">
@@ -95,20 +96,28 @@ function Sidebar() {
                 </li>
                 <li>
                     <a href="#">
-                    <i class='bx bx-help-circle' ></i>
+                        <i class='bx bx-help-circle' ></i>
                         <span className="link_name">Helo & Support</span>
                     </a>
                     <ul className="sub-menu">
                         <li><a className='link_name blank' href="#">Helo & Support</a></li>
                     </ul>
                 </li>
-            </ul>
-            <div className="profile-details">
-                <div className="profile-content">
-                    <img src="" alt="" />
-                    <h1>hello</h1>
+                <li>
+                <div className="profile-details">
+                    <div className="profile-content">
+                        <img src={image} alt="profile" />
+                    </div>
+
+                    <div className="name-job">
+                        <div className="profile_name">Jahangir Alom</div>
+                        <div className="job">Consumer</div>
+                    </div>
+                    <i class='bx bx-log-out'></i>
+
                 </div>
-            </div>
+                </li>
+            </ul>
         </div>
     );
 }
