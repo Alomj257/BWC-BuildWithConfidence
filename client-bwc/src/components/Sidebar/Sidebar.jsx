@@ -30,7 +30,7 @@ function Sidebar() {
                     <span className="tooltip">Dashboard</span>
                 </li>
                 <li>
-                    <a href="/">
+                    <a href="/tradeperson">
                     <i class='bx bx-user-pin'></i>
                         <span className="links_name">Tradeperson</span>
                     </a>
@@ -84,16 +84,6 @@ function Sidebar() {
                         <span className="links_name">Help & Support</span>
                     </a>
                     <span className="tooltip">Help & Support</span>
-                </li>
-                <li className="profile">
-                    <div className="profile-details">
-                        <img src={image} alt="profileImg" />
-                        <div className="name_job">
-                            <div className="name">Jahangir</div>
-                            <div className="job">Consumer</div>
-                        </div>
-                    </div>
-                    <i className='bx bx-log-out' id="log_out"></i>
                 </li>
             </ul>
         </div>

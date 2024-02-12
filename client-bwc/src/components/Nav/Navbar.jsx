@@ -2,11 +2,11 @@ import React from 'react';
 import image from '../../assests/profile/P1.png';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar(props) {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <span className="website-name">Build With Confidence</span>
+        <span className="li-name">{props.liName}</span>
       </div>
       <div className="navbar-center">
         <div className="search-bar-container">
