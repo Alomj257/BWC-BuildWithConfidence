@@ -1,7 +1,7 @@
 import React from "react";
 
 function CreateJob() {
-  return <h1>Create Job</h1>;
+  return <h3>Create Job</h3>;
 }
 
 export default CreateJob;

@@ -18,12 +18,12 @@ const DashboardPanel = () => {
           <div className="right-sidebar">
             {!right ? (
               <i
-                className="bx  right-icon bxs-chevrons-right"
+              class='bx bx-dots-horizontal-rounded'
                 onClick={() => setRight(!right)}
               ></i>
             ) : (
               <i
-                className="bx right-icon bxs-chevrons-left"
+                className="bx bx-dots-horizontal-rounded"
                 onClick={() => setRight(!right)}
               ></i>
             )}

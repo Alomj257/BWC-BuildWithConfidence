@@ -22,10 +22,10 @@ function Sidebar() {
       </div>
       <ul className="nav-list">
         {/* <li>
-                    <i className='bx bx-search'></i>
-                    <input type="text" placeholder="Search..." />
-                    <span className="tooltip">Search</span>
-                </li> */}
+          <i className='bx bx-search'></i>
+          <input type="text" placeholder="Search..." />
+          <span className="tooltip">Search</span>
+        </li> */}
         <li>
           <Link to="/">
             <i className="bx bx-grid-alt"></i>
@@ -43,9 +43,9 @@ function Sidebar() {
         <li>
           <Link to="/create-job">
             <i class="bx bx-select-multiple"></i>
-            <span className="links_name">Create Link job</span>
+            <span className="links_name">Create a job</span>
           </Link>
-          <span className="tooltip">Create Link job</span>
+          <span className="tooltip">Create a job</span>
         </li>
         <li>
           <Link to="/job-history">
