@@ -1,0 +1,18 @@
+.membership{
+    text-align: center;
+}
+.membership>:first-child{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.membership>:first-child>:first-child i{
+    margin: auto;
+}
+.membership .icons{
+    display: flex;
+}
+.membership .bxs-crown{
+    font-size:30px ;
+    margin: auto;
+}

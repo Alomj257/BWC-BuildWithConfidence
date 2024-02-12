@@ -1,0 +1,11 @@
+.financial{
+    margin: 4rem 0;
+    display: flex;
+    justify-content: center;
+}
+.graph{
+    margin-top: auto;
+}
+.graph h3{
+    text-align: center;
+}

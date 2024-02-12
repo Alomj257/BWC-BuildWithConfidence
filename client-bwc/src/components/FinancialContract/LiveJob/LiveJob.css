@@ -1,0 +1,43 @@
+.live{
+    display: flex;
+}
+.live-jobs{
+    margin: auto;
+    display: flex;
+    text-align: center;
+}
+.live-jobs>:first-child{
+    font-size: 8rem;
+    font-weight: bold;
+    margin-right: 2rem;
+    color: #0a023b;
+}
+.live-jobs>:last-child{
+    margin: auto 0;
+}
+.live-jobs .list{
+    display: flex;
+    background: lightgray;
+    font-weight: bold;
+    min-width: 25rem;
+    border-radius: 1rem;
+    margin: 1rem 0;
+}
+ .list>:first-child {
+    background: #0a023b;
+    border-radius: 1rem;
+    clip-path: calc(5px 5px 5px);
+    padding: 0.8rem;
+    display: flex;
+}
+.list span span{
+    background: white;
+    padding: 0rem 1rem;
+    border-radius: 50%;
+    margin: auto;
+    font-size: 20px;
+}
+.list>:last-child{
+font-size: 25px;
+margin: auto;
+}

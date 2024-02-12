@@ -1,16 +1,7 @@
-import React from 'react'
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Navbar from '../../components/Nav/Navbar';
+import React from "react";
 
 function CreateJob() {
-  return (
-    <div className='wrapper'>
-        <Sidebar />
-        <div className="dashboard-content">
-            <Navbar liName="Create a job"/>
-        </div>
-    </div>
-  )
+  return <h1>Create Job</h1>;
 }
 
-export default CreateJob
+export default CreateJob;

@@ -1,16 +1,7 @@
-import React from 'react'
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Navbar from '../../components/Nav/Navbar';
+import React from "react";
 
 function JobHistory() {
-  return (
-    <div className='wrapper'>
-        <Sidebar />
-        <div className="dashboard-content">
-            <Navbar liName="Job history"/>
-        </div>
-    </div>
-  )
+  return <h1>Job history</h1>;
 }
 
-export default JobHistory
+export default JobHistory;

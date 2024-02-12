@@ -1,0 +1,29 @@
+#right-sidebar{
+  
+    padding:0 2rem;
+    height: 75vh;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+#right-sidebar::-webkit-scrollbar{
+    display: none;
+}
+#right-sidebar .sidebar-content{
+    display: flex;
+    margin: 1rem 0;
+    justify-content: space-between;
+}
+#right-sidebar .star,#right-sidebar .sidebar-content:last-child{
+    display: flex;
+}
+#right-sidebar .sidebar-content:nth-child(1) svg,#right-sidebar .sidebar-content:last-child svg{
+    margin: auto;
+}
+#right-sidebar .title{
+    font-weight: 600;
+}
+
+#right-sidebar .right-side-icons{
+    font-size: 30px;
+}

@@ -1,18 +1,16 @@
-import React from 'react'
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Navbar from '../../components/Nav/Navbar';
-import TradepersonProfile from '../../components/TradepersonProfile/TradepersonProfile';
+import React from "react";
+// import TradepersonProfile from "../../components/TradepersonProfile/TradepersonProfile";
+import TradepersoneTable from "../../components/TradepersonTable/TradepersonTable";
+import MemeberShip from "../../components/FinancialContract/Membership/MemeberShip";
 
 function TradePerson() {
+  // return <TradepersonProfile />;
   return (
-    <div className='wrapper'>
-        <Sidebar />
-        <div className="dashboard-content">
-            <Navbar liName="Tradeperson"/>
-            <TradepersonProfile />
-        </div>
-    </div>
-  )
+    <>
+      <TradepersoneTable />
+      <MemeberShip />
+    </>
+  );
 }
 
-export default TradePerson
+export default TradePerson;
