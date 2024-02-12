@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Sidebar.css';
-import image from '../../assests/profile/P1.png';
 
 function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -37,14 +36,14 @@ function Sidebar() {
                     <span className="tooltip">Tradeperson</span>
                 </li>
                 <li>
-                    <a href="/">
+                    <a href="/create-job">
                     <i class='bx bx-select-multiple'></i>
                         <span className="links_name">Create a job</span>
                     </a>
                     <span className="tooltip">Create a job</span>
                 </li>
                 <li>
-                    <a href="/">
+                    <a href="/job-history">
                     <i class='bx bx-history' ></i>
                         <span className="links_name">Job history</span>
                     </a>
