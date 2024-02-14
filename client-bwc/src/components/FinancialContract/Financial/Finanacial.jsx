@@ -5,7 +5,7 @@ import Progress from "../../../Utils/Progress";
 import "./Financial.css";
 const Finanacial = () => {
   return (
-    <div className="financial">
+    <div className="financial justify-content-between">
       <div className="graph">
         <h3>Budget</h3>
         <Budget data={50} />

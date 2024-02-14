@@ -111,8 +111,12 @@
   
   /*  dashboard panel ------> */
   #dashboard-panel-outlet {
-    display: flex;
     justify-content: space-between;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   #dashboard-panel-outlet .outlet{
     width: 100%;
@@ -121,6 +125,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  
    .right-sidebar .rightside-content{
     /* width: 20rem; */
     width: 0;

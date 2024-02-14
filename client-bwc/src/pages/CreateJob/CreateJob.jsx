@@ -1,7 +1,12 @@
 import React from "react";
+import CreateJobCom from "../../components/CreateJob/CreateJob";
 
 function CreateJob() {
-  return <h1>Create Job</h1>;
+  return (
+    <>
+      <CreateJobCom />
+    </>
+  );
 }
 
 export default CreateJob;

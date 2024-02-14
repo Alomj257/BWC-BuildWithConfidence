@@ -6,6 +6,10 @@ import TradePerson from "./pages/TradePerson/TradePerson";
 import CreateJob from "./pages/CreateJob/CreateJob";
 import JobHistory from "./pages/JobHistory/JobHistory";
 import DashboardPanel from "./pages/DashBoard/DashboardPanel";
+import TradesPersonNearby from "./pages/TradesPersonNearby/TradesPersonNearby";
+import Supplier from "./pages/Supplier/Supplier";
+import Profile from "./components/Profile/Profile";
+import PostJob from "./pages/PostJob/PostJob";
 
 function App() {
   return (
@@ -14,8 +18,12 @@ function App() {
         <Route path="/" element={<DashboardPanel />}>
           <Route path="" element={<Dashboard />} />
           <Route path="tradeperson" element={<TradePerson />} />
+          <Route path="tradespern/nearby" element={<TradesPersonNearby />} />
           <Route path="create-job" element={<CreateJob />} />
           <Route path="job-history" element={<JobHistory />} />
+          <Route path="supplier" element={<Supplier />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="post-job" element={<PostJob />} />
         </Route>
       </Routes>
     </BrowserRouter>

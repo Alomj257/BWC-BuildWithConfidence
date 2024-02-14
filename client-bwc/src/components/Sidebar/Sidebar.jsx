@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -20,7 +19,7 @@ function Sidebar() {
           onClick={toggleSidebar}
         ></i>
       </div>
-      <ul className="nav-list">
+      <ul className="nav-list px-0">
         {/* <li>
                     <i className='bx bx-search'></i>
                     <input type="text" placeholder="Search..." />
@@ -41,6 +40,13 @@ function Sidebar() {
           <span className="tooltip">Tradeperson</span>
         </li>
         <li>
+          <Link to="/post-job">
+            <i class="bx bx-user-pin"></i>
+            <span className="links_name">Post job</span>
+          </Link>
+          <span className="tooltip">Post job</span>
+        </li>
+        <li>
           <Link to="/create-job">
             <i class="bx bx-select-multiple"></i>
             <span className="links_name">Create Link job</span>
@@ -55,7 +61,7 @@ function Sidebar() {
           <span className="tooltip">Job history</span>
         </li>
         <li>
-          <Link to="/">
+          <Link to="/supplier">
             <i class="bx bx-bell"></i>
             <span className="links_name">Suppliers</span>
           </Link>
