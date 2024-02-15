@@ -1,13 +1,13 @@
-.modal{
+.popup{
     position: fixed;
     min-height: 100vh;
     width: 100vw;
-    background-color: rgba(73, 133, 133, 0.422);
+    background-color:#0000003b;
     inset: 0;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
 }
-.modal #model-body{
+.popup #model-body{
     margin: auto;
 }

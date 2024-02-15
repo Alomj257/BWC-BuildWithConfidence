@@ -8,7 +8,7 @@ const Modal = ({ children, btnText, bodyClass, btnClasss, closeIcon }) => {
       <button className={btnClasss} onClick={() => setIsModal(!isModal)}>
         {btnText}
       </button>
-      <div className={isModal ? "modal" : "d-none"}>
+      <div className={isModal ? "popup" : "d-none"}>
         <div className={bodyClass + " p-3 rounded shadow"} id="model-body">
           <div className="text-end">
             <i

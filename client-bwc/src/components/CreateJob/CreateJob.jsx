@@ -1,5 +1,7 @@
 import React from "react";
 import "./CreateJob.css";
+import Modal from "../../Utils/Modal/Modal";
+import GeneratePdf from "../GeneratePdf/GeneratePdf";
 const CreateJobCom = () => {
   return (
     <div className="container">
@@ -8,16 +10,15 @@ const CreateJobCom = () => {
         <div>
           <div className="file-filed">
             <div className="file-upload-container">
-              <label
-                htmlFor="file-upload"
-                className="file-upload-label first-field"
-              >
-                Build
-                <input
-                  type="file"
-                  id="file-upload"
-                  className="file-upload-input"
-                />
+              <label htmlFor="" className=" file-upload-label first-field">
+                <Modal
+                  btnText="Build"
+                  btnClasss="w-100  bg-transparent fw-bold border-0 build-btn"
+                  closeIcon="fs-1"
+                  bodyClass="bg-white"
+                >
+                  <GeneratePdf />
+                </Modal>
               </label>
             </div>
             <div className="file-upload-container">

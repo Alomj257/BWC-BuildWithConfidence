@@ -1,0 +1,8 @@
+.generate-btn{
+    background: rgb(5, 5, 97);
+    color: white;
+}
+.generate-btn:hover{
+    color: black;
+    background: gray;
+}

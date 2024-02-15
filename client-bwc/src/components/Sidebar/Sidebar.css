@@ -231,9 +231,34 @@
     font-weight: 500;
     margin: 18px
 }
+.sidebar-grid{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: fit-content;
+}
 
 @media (max-width: 420px) {
     .sidebar li .tooltip {
         display: none;
     }
+}
+@media (max-width:600px) {
+    .sidebar{
+        position: absolute;
+        width: 0;
+        padding: 0;
+        transition: width 0.5s;
+    }
+    .setSidebar{
+        width: 57px;
+        padding: 6px 6px;
+    }
+}
+.close-icon{
+    left: 15%;
+    top: -3px;
+}
+.both-side-icon{
+    left: 55%;
 }

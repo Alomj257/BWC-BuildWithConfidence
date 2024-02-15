@@ -1,4 +1,4 @@
-.navbar {
+.cnavbar {
   margin: 0 !important;
     display: flex;
     justify-content: space-between;
@@ -7,7 +7,6 @@
     color: black;
     padding: 15px 20px;
   }
-  
   .navbar-left,
   .navbar-center,
   .navbar-right {
@@ -58,4 +57,35 @@
     border-radius: 50%;
     margin-left: 10px;
   }
-  
+ .menu-icons{
+  display: none;
+ }
+  @media (max-width:850px) {
+    .menu-icons{
+      display: block;
+     }
+    .cnavbar{
+      position: absolute !important;
+      flex-direction: column;
+      gap: 2rem;
+      overflow: hidden;
+      right: 0;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+      z-index: 2000;
+     
+    }
+    .setNav{
+      transition: all 0.5s ease-out;
+      height: auto;
+      padding: 1rem;
+    }
+    .navbar-right {
+      gap: 1rem;
+    }
+    .navbar-left{
+      justify-content: flex-end;
+    }
+   
+  }

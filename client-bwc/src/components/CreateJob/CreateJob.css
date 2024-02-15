@@ -26,8 +26,16 @@
   }
   .file-filed .first-field{
     background-color: rgb(5, 5, 97);
-    color: white;
+    color: white ;
   }
+  .file-filed .build-btn{
+   color: white;
+  }
+  .file-filed .build-btn:hover{
+    color: black;
+  }
+
+
   .file-filed .first-field:hover{
     background-color: lightgray;
     color: rgb(5, 5, 97);

@@ -1,5 +1,4 @@
 #right-sidebar{
-  
     padding:0 2rem;
     height: 80vh;
     overflow-y: scroll;
@@ -22,8 +21,4 @@
 }
 #right-sidebar .title{
     font-weight: 600;
-}
-
-#right-sidebar .right-side-icons{
-    font-size: 30px;
 }

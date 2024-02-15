@@ -9,3 +9,10 @@
 .graph h3{
     text-align: center;
 }
+@media (max-width:600px){
+    .graph{
+      margin: auto;
+      margin-top: 1rem;
+    }
+  
+   }
