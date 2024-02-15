@@ -18,13 +18,13 @@ function App() {
         <Route path="/" element={<DashboardPanel />}>
           <Route path="" element={<Dashboard />} />
           <Route path="tradeperson" element={<TradePerson />} />
-          <Route path="tradespern/nearby" element={<TradesPersonNearby />} />
           <Route path="create-job" element={<CreateJob />} />
           <Route path="job-history" element={<JobHistory />} />
-          <Route path="supplier" element={<Supplier />} />
           <Route path="profile" element={<Profile />} />
           <Route path="post-job" element={<PostJob />} />
         </Route>
+        <Route path="/tradespern/nearby" element={<TradesPersonNearby />} />
+        <Route path="/supplier" element={<Supplier />} />
       </Routes>
     </BrowserRouter>
   );
