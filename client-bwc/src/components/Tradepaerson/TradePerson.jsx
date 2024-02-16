@@ -2,8 +2,6 @@ import React from "react";
 import "./TradePerson.css";
 import TradePersonCard from "./TradePersonCard";
 import { useNavigate } from "react-router-dom";
-import Modal from "../../Utils/Modal/Modal";
-import Profile from "../Profile/Profile";
 import Navbar from "../Nav/Navbar";
 const TradePersonCom = () => {
   const navigate = useNavigate();
@@ -41,14 +39,7 @@ const TradePersonCom = () => {
 
               <div className="row row-cols-lg-3 w-100  row-cols-md-2 cols-sm-1">
                 {data.tradesperson?.map((trade, key) => (
-                  <Modal
-                    btnClasss="border-0 bg-white"
-                    bodyClass="bg-white col-12"
-                    closeIcon="fs-1"
-                    btnText={<TradePersonCard trade={trade} />}
-                  >
-                    <Profile />
-                  </Modal>
+                  <TradePersonCard trade={trade} />
                 ))}
               </div>
             </>

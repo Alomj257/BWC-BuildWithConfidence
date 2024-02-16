@@ -1,9 +1,12 @@
 import React from "react";
+import JobPost from "../../components/JobPost/JobPost";
+import JobList from "../../components/JobList/JobList";
 
 const PostJob = () => {
   return (
     <div>
-      <h1>Post job</h1>
+      <JobPost />
+      <JobList />
     </div>
   );
 };

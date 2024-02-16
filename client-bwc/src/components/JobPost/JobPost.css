@@ -1,0 +1,7 @@
+.job-search .search-input,.job-search .job-btn{
+    background-color: #0056b3;
+    color: white;
+}
+.job-search .search-input::placeholder{
+    color: white;
+}
