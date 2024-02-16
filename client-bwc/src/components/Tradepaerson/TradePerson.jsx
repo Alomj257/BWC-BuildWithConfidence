@@ -39,11 +39,11 @@ const TradePersonCom = () => {
                 )}
               </div>
 
-              <div className="row row-cols-lg-3  row-cols-md-2 row cols-sm-1">
+              <div className="row row-cols-lg-3 w-100  row-cols-md-2 cols-sm-1">
                 {data.tradesperson?.map((trade, key) => (
                   <Modal
                     btnClasss="border-0 bg-white"
-                    bodyClass="bg-white"
+                    bodyClass="bg-white col-12"
                     closeIcon="fs-1"
                     btnText={<TradePersonCard trade={trade} />}
                   >
