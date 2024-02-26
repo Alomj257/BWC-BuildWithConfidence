@@ -1,7 +1,7 @@
 import React from "react";
-import Graph from "../../../Utils/Graph";
-import Budget from "../../../Utils/Budget";
-import Progress from "../../../Utils/Progress";
+import Graph from "../../../../Utils/Graph";
+import Budget from "../../../../Utils/Budget";
+import Progress from "../../../../Utils/Progress";
 import "./Financial.css";
 const Finanacial = () => {
   return (

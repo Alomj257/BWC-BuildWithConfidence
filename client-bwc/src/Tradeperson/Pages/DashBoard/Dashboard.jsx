@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import "./Dashboard.css";
-import backgroundImage from "../../assests/banner/b.png";
-import Finanacial from "../../components/FinancialContract/Financial/Finanacial";
-import Signiture from "../../components/FinancialContract/Signiture/Signiture";
-import MemeberShip from "../../components/FinancialContract/Membership/MemeberShip";
-import LiveJobs from "../../components/FinancialContract/LiveJob/LiveJobs";
-import { useNavigate } from "react-router-dom";
-import RightSidebar from "../../components/RightSidebar/RightSidebar";
+import backgroundImage from "../../../assests/banner/b.png";
 
-function Dashboard() {
+import { useNavigate } from "react-router-dom";
+import RightSidebar from "../../../Consumer/components/RightSidebar/RightSidebar";
+import Finanacial from "../../../Consumer/components/FinancialContract/Financial/Finanacial";
+import Signiture from "../../../Consumer/components/FinancialContract/Signiture/Signiture";
+import MemeberShip from "../../../Consumer/components/FinancialContract/Membership/MemeberShip";
+import LiveJobs from "../../../Consumer/components/FinancialContract/LiveJob/LiveJobs";
+
+function TradeDashboard() {
   const [contract, setContract] = useState("financial");
   const [right, setRight] = useState(false);
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ function Dashboard() {
               <p>Click 'start now' if you already choosen a tradeperson</p>
               <button
                 className="banner-button tradeperson"
-                onClick={() => navigate("/tradespern/nearby")}
+                onClick={() => navigate("/consumer/tradespern/nearby")}
               >
                 Trade Person
               </button>
@@ -99,4 +100,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default TradeDashboard;

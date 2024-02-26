@@ -1,6 +1,6 @@
 import React from "react";
 import "./JobPost.css";
-import Modal from "../../Utils/Modal/Modal";
+import Modal from "../../../Utils/Modal/Modal";
 import NewJobPost from "../NewJobPost/NewJobPost";
 const JobPost = () => {
   return (

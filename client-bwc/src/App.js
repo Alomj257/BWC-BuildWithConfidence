@@ -1,30 +1,44 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "boxicons/css/boxicons.min.css";
-import Dashboard from "./pages/DashBoard/Dashboard";
-import TradePerson from "./pages/TradePerson/TradePerson";
-import CreateJob from "./pages/CreateJob/CreateJob";
-import JobHistory from "./pages/JobHistory/JobHistory";
-import DashboardPanel from "./pages/DashBoard/DashboardPanel";
-import TradesPersonNearby from "./pages/TradesPersonNearby/TradesPersonNearby";
-import Supplier from "./pages/Supplier/Supplier";
-import Profile from "./components/Profile/Profile";
-import PostJob from "./pages/PostJob/PostJob";
+import Dashboard from "./Consumer/pages/DashBoard/Dashboard";
+import TradePerson from "./Consumer/pages/TradePerson/TradePerson";
+import CreateJob from "./Consumer/pages/CreateJob/CreateJob";
+import JobHistory from "./Consumer/pages/JobHistory/JobHistory";
+import DashboardPanel from "./Consumer/pages/DashBoard/DashboardPanel";
+import TradesPersonNearby from "./Consumer/pages/TradesPersonNearby/TradesPersonNearby";
+import Supplier from "./Consumer/pages/Supplier/Supplier";
+import Profile from "./Consumer/components/Profile/Profile";
+import PostJob from "./Consumer/pages/PostJob/PostJob";
+import Home from "./PublicView/Pages/Home";
+import TradeDashboardPanel from "./Tradeperson/Pages/DashBoard/DashboardPanel";
+import TradeDashboard from "./Tradeperson/Pages/DashBoard/Dashboard";
+import Consumer from "./Tradeperson/Pages/Consumer";
+import PostJobCom from "./Consumer/components/JobPost/PostJob/PostJobCom";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DashboardPanel />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/consumer" element={<DashboardPanel />}>
           <Route path="" element={<Dashboard />} />
           <Route path="tradeperson" element={<TradePerson />} />
           <Route path="create-job" element={<CreateJob />} />
           <Route path="job-history" element={<JobHistory />} />
           <Route path="profile" element={<Profile />} />
           <Route path="post-job" element={<PostJob />} />
+          <Route path="job-post" element={<PostJobCom />} />
         </Route>
-        <Route path="/tradespern/nearby" element={<TradesPersonNearby />} />
-        <Route path="/supplier" element={<Supplier />} />
+        <Route
+          path="/consumer/tradespern/nearby"
+          element={<TradesPersonNearby />}
+        />
+        <Route path="/consumer/supplier" element={<Supplier />} />
+        <Route path="/tradeperson" element={<TradeDashboardPanel />}>
+          <Route path="" element={<TradeDashboard />} />
+          <Route path="consumer" element={<Consumer />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

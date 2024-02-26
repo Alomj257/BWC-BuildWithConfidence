@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
 
-function Sidebar() {
+function Sidebar({ sidebar, role }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebar, setSidebar] = useState(false);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+  const kebabCase = (string) =>
+    string
+      ?.replace(/([a-z])([A-Z])/g, "$1-$2")
+      ?.replace(/[\s_]+/g, "-")
+      ?.toLowerCase();
 
   return (
     <>
@@ -50,71 +55,33 @@ function Sidebar() {
           <input type="text" placeholder="Search..." />
           <span className="tooltip">Search</span>
         </li> */}
+          {sidebar?.map((data, key) => (
+            <li>
+              <Link
+                to={`/${key === 0 ? role : role + "/" + kebabCase(data?.name)}`}
+              >
+                <i className={data?.icon}></i>
+                <span className="links_name text-capitalize">{data.name}</span>
+              </Link>
+              <span className="tooltip text-capitalize">{data.name}</span>
+            </li>
+          ))}
           <li>
-            <Link to="/">
-              <i className="bx bx-grid-alt"></i>
-              <span className="links_name">Dashboard</span>
-            </Link>
-            <span className="tooltip">Dashboard</span>
-          </li>
-          <li>
-            <Link to="/tradeperson">
-              <i class="bx bx-user-pin"></i>
-              <span className="links_name">Tradeperson</span>
-            </Link>
-            <span className="tooltip">Tradeperson</span>
-          </li>
-          <li>
-            <Link to="/post-job">
-              <i class="bx bx-user-pin"></i>
-              <span className="links_name">Post job</span>
-            </Link>
-            <span className="tooltip">Post job</span>
-          </li>
-          <li>
-            <Link to="/create-job">
-              <i class="bx bx-select-multiple"></i>
-              <span className="links_name">Create a job</span>
-            </Link>
-            <span className="tooltip">Create a job</span>
-          </li>
-          <li>
-            <Link to="/job-history">
-              <i class="bx bx-history"></i>
-              <span className="links_name">Job history</span>
-            </Link>
-            <span className="tooltip">Job history</span>
-          </li>
-          <li>
-            <Link to="/supplier">
-              <i class="bx bx-bell"></i>
-              <span className="links_name">Suppliers</span>
-            </Link>
-            <span className="tooltip">Suppliers</span>
-          </li>
-          <li>
-            <Link to="/">
-              <i class="bx bx-message-rounded-dots"></i>
-              <span className="links_name">Message</span>
-            </Link>
-            <span className="tooltip">Message</span>
-          </li>
-          <li>
-            <Link to="/">
+            <Link to="/consumer/insurance">
               <i class="bx bx-envelope"></i>
               <span className="links_name">Insurance</span>
             </Link>
             <span className="tooltip">Insurance</span>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/setting">
               <i className="bx bx-cog"></i>
               <span className="links_name">Setting</span>
             </Link>
             <span className="tooltip">Setting</span>
           </li>
           <li>
-            <Link to="/">
+            <Link to="/help">
               <i class="bx bx-help-circle"></i>
               <span className="links_name">Help & Support</span>
             </Link>

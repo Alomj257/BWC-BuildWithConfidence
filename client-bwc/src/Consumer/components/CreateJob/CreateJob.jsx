@@ -1,6 +1,6 @@
 import React from "react";
 import "./CreateJob.css";
-import Modal from "../../Utils/Modal/Modal";
+import Modal from "../../../Utils/Modal/Modal";
 import GeneratePdf from "../GeneratePdf/GeneratePdf";
 const CreateJobCom = () => {
   return (

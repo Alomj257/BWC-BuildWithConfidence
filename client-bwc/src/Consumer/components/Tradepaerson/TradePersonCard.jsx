@@ -1,7 +1,7 @@
 import React from "react";
 import "./TradePerson.css";
-import img from "../../assests/profile/P1.png";
-import Modal from "../../Utils/Modal/Modal";
+import img from "../../../assests/profile/P1.png";
+import Modal from "../../../Utils/Modal/Modal";
 import Profile from "../Profile/Profile";
 const TradePersonCard = ({ trade }) => {
   return (

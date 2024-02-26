@@ -1,5 +1,5 @@
 import React from "react";
-import img from "../../assests/profile/P1.png";
+import img from "../../../assests/profile/P1.png";
 const SupplierCard = ({ supplier }) => {
   return (
     <>

@@ -1,0 +1,15 @@
+.post-1{
+    padding: .5rem 1rem;
+    background-color: lightgray;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+.work-acitive{
+    background-color: #050564;
+    color: white;
+}
+.work-heading{
+    color: #050564;
+}

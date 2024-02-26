@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import image from "../../assests/profile/P1.png";
+import image from "../../../assests/profile/P1.png";
 import "./Navbar.css";
-import Modal from "../../Utils/Modal/Modal";
+import Modal from "../../../Utils/Modal/Modal";
 import Profile from "../Profile/Profile";
 
 function Navbar(props) {
