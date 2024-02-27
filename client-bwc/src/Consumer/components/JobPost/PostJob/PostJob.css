@@ -13,3 +13,16 @@
 .work-heading{
     color: #050564;
 }
+.job-btn{
+    background-color: #050564 !important;
+    color: white !important;
+    font-size: 25px !important;
+}
+.job-post-ul{
+    height: 55vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.job-post-ul::-webkit-scrollbar{
+    width: 0;
+}

@@ -46,3 +46,9 @@
       background-color: rgb(5, 5, 97);
     color: white;
   }
+
+  /* job create */
+
+  .job-create-field{
+    background: lightgray;
+  }

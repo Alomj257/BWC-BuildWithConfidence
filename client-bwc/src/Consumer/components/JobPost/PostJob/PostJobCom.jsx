@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./PostJob.css";
+import img from "../../../../assests/job-post/cong.gif";
 const PostJobCom = () => {
   const [work, setWork] = useState("");
   const [budget, setbudget] = useState("");
@@ -11,11 +12,11 @@ const PostJobCom = () => {
         {step === 1 && "Type of works"}
         {step === 2 && "Description"}
         {step === 3 && "Budget"}
-        {step === 4 && "Headline"}
+        {step === 4 && "Timeline"}
         {step === 5 && "Location"}
         {step === 6 && "Hooriay! Your job post active"}
       </h2>
-      <ul className="my-5" style={{ listStyle: "decimal" }}>
+      <ul className=" job-post-ul " style={{ listStyle: "decimal" }}>
         {step === 1 && (
           <li>
             <span className="fw-bold">
@@ -175,19 +176,156 @@ const PostJobCom = () => {
             </li>
           </>
         )}
+
+        {step === 4 && (
+          <>
+            <li>
+              <span className="fw-bold">
+                When you are looking to get this job started?
+              </span>
+              <div className="row w-100 row-cols-md-4 my-5">
+                <div className="p-2">
+                  <div
+                    className={`${
+                      budget === "yes" ? "work-acitive" : ""
+                    } post-1`}
+                    onClick={() => setbudget("yes")}
+                  >
+                    As soon as possible
+                  </div>
+                </div>
+                <div className="p-2">
+                  <div
+                    className={`${
+                      budget === "no" ? "work-acitive" : ""
+                    } post-1`}
+                    onClick={() => setbudget("no")}
+                  >
+                    Exactly Day
+                  </div>
+                </div>
+                <div className="p-2">
+                  <div
+                    className={`${
+                      budget === "no" ? "work-acitive" : ""
+                    } post-1`}
+                    onClick={() => setbudget("no")}
+                  >
+                    Desired Week
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li className="my-5">
+              <span className="fw-bold">Select your Exact Day</span>
+              <div>
+                <input
+                  type="date"
+                  className="bg-transperent border-0  p-2"
+                  style={{ outline: "none" }}
+                  hidden
+                />
+                <i className="bx bx-calendar fs-1 my-2"></i>
+              </div>
+            </li>
+            <li>
+              <span className="fw-bold">Desired project completion date</span>
+              <div className="row row-cols-4">
+                <div className="p-2">
+                  <div
+                    className={`${
+                      budget === "no" ? "work-acitive" : ""
+                    } post-1`}
+                    onClick={() => setbudget("no")}
+                  >
+                    As soon as possible
+                  </div>
+                </div>
+                <div className="p-2">
+                  <div
+                    className={`${
+                      budget === "no" ? "work-acitive" : ""
+                    } post-1`}
+                    onClick={() => setbudget("no")}
+                  >
+                    Exact Day
+                  </div>
+                </div>
+                <div className="p-2">
+                  <div
+                    className={`${
+                      budget === "no" ? "work-acitive" : ""
+                    } post-1`}
+                    onClick={() => setbudget("no")}
+                  >
+                    Desired Week
+                  </div>
+                </div>
+              </div>
+            </li>
+          </>
+        )}
+
+        {step === 5 && (
+          <>
+            <li>
+              <span className="fw-bold">Provide a postcode of the job</span>
+              <div className="row w-100 row-cols-md-4 my-5">
+                <div className="p-2">
+                  <div
+                    className={`${
+                      budget === "yes" ? "work-acitive" : ""
+                    } post-1`}
+                    onClick={() => setbudget("yes")}
+                  >
+                    As soon as possible
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <span className="fw-bold">Give your job headline</span>
+              <div className="row w-100 row-cols-md-4 my-5">
+                <div className="p-2">
+                  <div className=" post-1 p-0">
+                    <input
+                      type="text"
+                      style={{ outline: "none" }}
+                      className="w-100 bg-transparent border-0 p-2 "
+                      placeholder="installing new carpet tiles"
+                    />
+                  </div>
+                </div>
+              </div>
+            </li>
+          </>
+        )}
+        {step === 6 && (
+          <div className="w-100 h-100">
+            <img src={img} alt="" className="w-100 h-100" />
+          </div>
+        )}
       </ul>
       <div className="d-flex justify-content-between my-3 container">
         <div
-          className="btn btn-primary mb-5"
+          className="btn job-btn mb-5"
           onClick={() => step > 1 && setStep(step - 1)}
         >
-          Back
+          <i className="bx bx-chevrons-left"></i>
+        </div>
+        <div className="fw-bold">
+          {step}. {step === 1 && "Type of works"}
+          {step === 2 && "Description"}
+          {step === 3 && "Budget"}
+          {step === 4 && "Timeline"}
+          {step === 5 && "Location"}
+          {step === 6 && "Hooriay! Your job post active"}
         </div>
         <div
-          className="btn btn-primary mb-5"
+          className="btn job-btn mb-5"
           onClick={() => step < 6 && setStep(step + 1)}
         >
-          Next
+          <i className="bx bxs-chevrons-right"></i>
         </div>
       </div>
     </div>
