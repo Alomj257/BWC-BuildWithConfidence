@@ -26,3 +26,53 @@
 .job-post-ul::-webkit-scrollbar{
     width: 0;
 }
+
+/* review */
+.file-upload-container {
+    display: flex;
+    align-items: center;
+    margin: 1rem auto;
+  }
+  
+  .file-upload-label {
+    margin: auto
+    ;
+   background-color: lightgray;
+    padding: 18px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 15rem;
+    height: 10rem;
+    justify-content: center;
+    font-weight: 600;
+  }
+  
+  .file-upload-input {
+    display: none;
+  }
+  
+  .review .post-now-btn{
+    background-color: #0707a3;
+    color: white;
+    border: 2px solid #0707a3;
+    border-radius: 2rem;
+    padding-right: 5px;
+  }
+  .review .post-now-btn .icon{
+    border: 2px solid #0707a3;
+    padding: 4px;
+    background:white;
+    color: #0707a3;
+    border-radius: 50%;
+  }
+  .review .post-now-btn:hover .icon{
+    padding: 4px;
+    background:#0707a3;
+    color: white;
+    border-radius: 50%;
+  }
+  .review .post-now-btn:hover{
+    color: #0707a3;
+    border: 2px solid #0707a3;
+  }
