@@ -1,0 +1,73 @@
+.file-filed{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.file-filed .file-upload-container {
+    display: flex;
+    align-items: center;
+    margin: 1rem auto;
+  }
+  
+  .file-filed .file-upload-label {
+    background-color: rgba(211, 211, 211, 0.69);
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 25rem;
+    justify-content: center;
+    font-weight: 600;
+    border-radius: 1rem;
+  }
+  .file-filed .file-upload-input {
+    display: none;
+  }
+  .file-filed .first-field{
+    background-color: rgb(5, 5, 97);
+    color: white ;
+  }
+  .file-filed .build-btn{
+   color: white;
+  }
+  .file-filed .build-btn:hover{
+    color: black;
+  }
+
+
+  .file-filed .first-field:hover{
+    background-color: lightgray;
+    color: rgb(5, 5, 97);
+    border: 2px rgb(5, 5, 97);
+  }
+
+  .file-filed .second-field:hover{
+      background-color: #050561;
+    color: white;
+  }
+
+  /* job create */
+
+  .job-create-field{
+    background: lightgray;
+  }
+
+  .job-create-btn{
+    background-color:#050561 ;
+    color: white;
+    border: 2px solid #050561;
+    font-weight: 600;
+  }
+
+  .job-create-btn:hover{
+    background-color:white ;
+    color: #050561;
+    border: 2px solid #050561;
+   
+  }
+  .create-job-active{
+    background-color: #050561;
+    color: white;
+    cursor: pointer;
+  }
