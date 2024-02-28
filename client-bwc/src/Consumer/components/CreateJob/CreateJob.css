@@ -43,7 +43,7 @@
   }
 
   .file-filed .second-field:hover{
-      background-color: rgb(5, 5, 97);
+      background-color: #050561;
     color: white;
   }
 
@@ -51,4 +51,23 @@
 
   .job-create-field{
     background: lightgray;
+  }
+
+  .job-create-btn{
+    background-color:#050561 ;
+    color: white;
+    border: 2px solid #050561;
+    font-weight: 600;
+  }
+
+  .job-create-btn:hover{
+    background-color:white ;
+    color: #050561;
+    border: 2px solid #050561;
+   
+  }
+  .create-job-active{
+    background-color: #050561;
+    color: white;
+    cursor: pointer;
   }
