@@ -15,6 +15,7 @@ import TradeDashboardPanel from "./Tradeperson/Pages/DashBoard/DashboardPanel";
 import TradeDashboard from "./Tradeperson/Pages/DashBoard/Dashboard";
 import Consumer from "./Tradeperson/Pages/Consumer";
 import PostJobCom from "./Consumer/components/JobPost/PostJob/PostJobCom";
+import PostJobHome from "./Consumer/components/JobPost/PostJob/PostJobHome/PostJobHome";
 
 function App() {
   return (
@@ -27,8 +28,9 @@ function App() {
           <Route path="create-job" element={<CreateJob />} />
           <Route path="job-history" element={<JobHistory />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="post-job" element={<PostJob />} />
-          <Route path="job-post" element={<PostJobCom />} />
+          {/* <Route path="post-job" element={<PostJob />} /> */}
+          <Route path="post-job" element={<PostJobHome />} />
+          <Route path="post-job/post" element={<PostJobCom />} />
         </Route>
         <Route
           path="/consumer/tradespern/nearby"
