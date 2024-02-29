@@ -7,6 +7,8 @@ import reportWebVitals from "./reportWebVitals";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-quill/dist/quill.snow.css";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

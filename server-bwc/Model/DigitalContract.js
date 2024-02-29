@@ -1,0 +1,48 @@
+const mongoose = require("mongoose");
+const DigitalSchema = new mongoose.Schema({
+  ArchitectDrawing: String,
+  DateOfConditionSurvey: String,
+  LiquidatedDamage: String,
+  Milestone: String,
+  PPSService: String,
+  Specification: String,
+  advancePayment: String,
+  bothPayment: String,
+  client: { address: String, individual: String, institute: String },
+  contractor: {
+    address: String,
+    companyNo: String,
+    individual: String,
+    institute: String,
+  },
+  clientName: String,
+  companyName: String,
+  conpanyName: String,
+  contractDate: String,
+  contratorName: String,
+  dateForCompletion: String,
+  defectsLiabilityPeriod: String,
+  digitalService: String,
+  eachMilestone: String,
+  isBothAgree: String,
+  isMilestone: String,
+  isProtection: String,
+  isRetention: String,
+  measurements: String,
+  partyContact: String,
+  preconditionSurveyPhoto: String,
+  procurement: [String],
+  requiredToAccess: String,
+  retention: String,
+  scopeOfWork: String,
+  signature: String,
+  siteAccess: String,
+  siteRestrictions: String,
+  todayDate: String,
+  workCommencementDate: String,
+  workingHours: String,
+});
+
+const DigitalContractModel = mongoose.model("digitalContract", DigitalSchema);
+
+module.exports = DigitalContractModel;
