@@ -17,7 +17,7 @@ const tradePersonSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-});
+}, { timestamps: true });
 
 const TradePerson = mongoose.model('TradePerson', tradePersonSchema);
 
