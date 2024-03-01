@@ -16,7 +16,7 @@ export const saveDigitalService = async (digitalData) => {
     return response.data;
   } catch (error) {
     console.log(error);
-    return error.message;
+    throw error.message;
   }
 };
 export const updateDigitalService = async (digitalData, id) => {

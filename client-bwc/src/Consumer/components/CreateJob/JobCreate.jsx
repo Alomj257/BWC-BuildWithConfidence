@@ -17,6 +17,7 @@ const JobCreate = () => {
     address: "",
     companyNo: "",
   });
+
   const [procurement, setProcurement] = useState([]);
   const [ArchitectDrawing, setArdrawing] = useState();
   const [requiredToAccess, setAccess] = useState("");
@@ -42,7 +43,6 @@ const JobCreate = () => {
       [name]: type === "file" ? files[0] : value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -61,22 +61,53 @@ const JobCreate = () => {
       });
       formData.append("client", JSON.stringify([client]));
       formData.append("contractor", JSON.stringify([contractor]));
+      formData.append("contractSum", JSON.stringify(contractSum));
 
       for (let key in inputData) {
         formData.append(key, inputData[key]);
       }
       const res = await saveDigitalService(formData);
-      console.log(res);
+      if (res.message) {
+        toast.error(res.message);
+      }
       toast.success(res);
     } catch (err) {
       console.log(err);
-      toast.success(err);
+      toast.error(err);
     }
   };
   const handleDate = (date, name) => {
     setInputputData({
       ...inputData,
       [name]: date,
+    });
+  };
+  const [contractSum, setContractSum] = useState({
+    designFees: { qty: "", rate: "", total: "" },
+    materialCost: { qty: "", rate: "", total: "" },
+    labourCost: { qty: "", rate: "", total: "" },
+    disposalCost: { qty: "", rate: "", total: "" },
+    cleaningCost: { qty: "", rate: "", total: "" },
+  });
+
+  const handleContractSum = (e, category, field) => {
+    const { value } = e.target;
+    setContractSum((prevState) => {
+      const updatedCategory = {
+        ...prevState[category],
+        [field]: value,
+      };
+      if (!isNaN(updatedCategory.qty) && !isNaN(updatedCategory.rates)) {
+        updatedCategory.total = (
+          parseFloat(updatedCategory.qty) * parseFloat(updatedCategory.rates)
+        ).toFixed(2);
+      } else {
+        updatedCategory.total = "";
+      }
+      return {
+        ...prevState,
+        [category]: updatedCategory,
+      };
     });
   };
 
@@ -154,13 +185,13 @@ const JobCreate = () => {
             {/* client */}
             <hr />
             <div className="row row-cols-md-2 mt-3 w-100">
-              <div className="my-auto">Client</div>
+              <div className="my-auto ">Client</div>
               <div>
                 <div className="d-flex justify-content-between">
-                  <label htmlFor="" className="my-auto fw-bold">
+                  <label htmlFor="" className="my-auto ">
                     Institution
                   </label>
-                  <div className="p-2 fw-bold job-create-field col-9 rounded my-2">
+                  <div className="p-2  job-create-field col-9 rounded my-2">
                     <input
                       type="text"
                       onChange={(e) =>
@@ -287,6 +318,158 @@ const JobCreate = () => {
                       placeholder="190202002"
                     />
                   </div>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div className="row  mt-3 w-100">
+              <div className="row row-cols-md-2">
+                <div className="my-auto fw-bold fs-5">Constract Sum</div>
+                <div
+                  className="p-2  fw-bold job-create-field col-9 rounded my-2"
+                  style={{ cursor: "not-allowed" }}
+                >
+                  £
+                  {parseInt(contractSum?.designFees?.qty || 0) *
+                    parseInt(contractSum?.designFees?.rate || 0) +
+                    parseInt(contractSum?.labourCost?.qty || 0) *
+                      parseInt(contractSum?.labourCost?.rate || 0) +
+                    parseInt(contractSum?.disposalCost?.qty || 0) *
+                      parseInt(contractSum?.disposalCost?.rate || 0) +
+                    parseInt(contractSum?.cleaningCost?.qty || 0) *
+                      parseInt(contractSum?.cleaningCost?.rate || 0)}
+                </div>
+              </div>
+              <div className="row row-cols-md-4">
+                <label htmlFor="" className="my-auto  ">
+                  Design fees
+                </label>
+                <div className="p-2  fw-bold job-create-field col-9 rounded my-2">
+                  <input
+                    onChange={(e) => handleContractSum(e, "designFees", "qty")}
+                    type="text"
+                    className="w-100 bg-transparent border-0"
+                    style={{ outline: "none" }}
+                    placeholder="Quantity"
+                  />
+                </div>
+                <div className="px-3">
+                  <div className="p-2  fw-bold job-create-field  rounded my-2">
+                    <input
+                      onChange={(e) =>
+                        handleContractSum(e, "designFees", "rate")
+                      }
+                      type="text"
+                      className="w-100 bg-transparent border-0"
+                      style={{ outline: "none" }}
+                      placeholder="Rates"
+                    />
+                  </div>
+                </div>
+                <div className="p-2  job-create-field  rounded my-2">
+                  <span className="fw-bold mx-3"> Total:</span>£
+                  {parseInt(contractSum?.designFees?.qty || 0) *
+                    parseInt(contractSum?.designFees?.rate || 0)}
+                </div>
+              </div>
+              <div className="row row-cols-md-4">
+                <label htmlFor="" className="my-auto ">
+                  Labour cost
+                </label>
+                <div className="p-2  fw-bold job-create-field col-9 rounded my-2">
+                  <input
+                    onChange={(e) => handleContractSum(e, "labourCost", "qty")}
+                    type="text"
+                    className="w-100 bg-transparent border-0"
+                    style={{ outline: "none" }}
+                    placeholder="Quantity"
+                  />
+                </div>
+                <div className="px-3">
+                  <div className="p-2  fw-bold job-create-field  rounded my-2">
+                    <input
+                      onChange={(e) =>
+                        handleContractSum(e, "labourCost", "rate")
+                      }
+                      type="text"
+                      className="w-100 bg-transparent border-0"
+                      style={{ outline: "none" }}
+                      placeholder="Rates"
+                    />
+                  </div>
+                </div>
+                <div className="p-2 job-create-field  rounded my-2">
+                  <span className="fw-bold mx-3"> Total:</span>£
+                  {parseInt(contractSum?.labourCost?.qty || 0) *
+                    parseInt(contractSum?.labourCost?.rate || 0)}
+                </div>
+              </div>
+              <div className="row row-cols-md-4">
+                <label htmlFor="" className="my-auto ">
+                  Disposal cost
+                </label>
+                <div className="p-2  fw-bold job-create-field col-9 rounded my-2">
+                  <input
+                    onChange={(e) =>
+                      handleContractSum(e, "disposalCost", "qty")
+                    }
+                    type="text"
+                    className="w-100 bg-transparent border-0"
+                    style={{ outline: "none" }}
+                    placeholder="Quantity"
+                  />
+                </div>
+                <div className="px-3">
+                  <div className="p-2  fw-bold job-create-field  rounded my-2">
+                    <input
+                      onChange={(e) =>
+                        handleContractSum(e, "disposalCost", "rate")
+                      }
+                      type="text"
+                      className="w-100 bg-transparent border-0"
+                      style={{ outline: "none" }}
+                      placeholder="Rates"
+                    />
+                  </div>
+                </div>
+                <div className="p-2 job-create-field  rounded my-2">
+                  <span className="fw-bold mx-3"> Total:</span>£
+                  {parseInt(contractSum?.disposalCost?.qty || 0) *
+                    parseInt(contractSum?.disposalCost?.rate || 0)}
+                </div>
+              </div>
+              <div className="row row-cols-md-4">
+                <label htmlFor="" className="my-auto ">
+                  Cleaning cost
+                </label>
+                <div className="p-2  fw-bold job-create-field col-9 rounded my-2">
+                  <input
+                    onChange={(e) =>
+                      handleContractSum(e, "cleaningCost", "qty")
+                    }
+                    type="text"
+                    className="w-100 bg-transparent border-0"
+                    style={{ outline: "none" }}
+                    placeholder="Quantity"
+                  />
+                </div>
+                <div className="px-3">
+                  <div className="p-2  fw-bold job-create-field  rounded my-2">
+                    <input
+                      onChange={(e) =>
+                        handleContractSum(e, "cleaningCost", "rate")
+                      }
+                      type="text"
+                      className="w-100 bg-transparent border-0"
+                      style={{ outline: "none" }}
+                      placeholder="Rates"
+                    />
+                  </div>
+                </div>
+                <div className="p-2 job-create-field  rounded my-2">
+                  <span className="fw-bold mx-3"> Total:</span>£
+                  {parseInt(contractSum?.cleaningCost?.qty || 0) *
+                    parseInt(contractSum?.cleaningCost?.rate || 0)}
                 </div>
               </div>
             </div>
@@ -451,7 +634,9 @@ const JobCreate = () => {
                       for="file-upload-input"
                       class="job-file-upload-label"
                     >
-                      Upload a file
+                      {inputData.surveyPhoto
+                        ? inputData.surveyPhoto.name
+                        : "Upload Photo"}
                     </label>
 
                     <input
@@ -927,7 +1112,9 @@ const JobCreate = () => {
                 <div className="p-2  text-center">
                   <div className="p-2 w-100 fw-bold job-create-field rounded job-file-upload-container">
                     <label htmlFor="" className="job-file-upload-label">
-                      upload
+                      {inputData.clientSignature
+                        ? inputData.clientSignature.name
+                        : "Upload Signiture"}
                     </label>
                     <input
                       name="clientSignature"
@@ -985,7 +1172,9 @@ const JobCreate = () => {
                 <div className="p-2  text-center">
                   <div className="p-2 w-100 fw-bold job-create-field rounded job-file-upload-container">
                     <label htmlFor="" className="job-file-upload-label">
-                      upload
+                      {inputData.contractorSigniture
+                        ? inputData.contractorSigniture.name
+                        : "Upload Signiture"}
                     </label>
 
                     <input
