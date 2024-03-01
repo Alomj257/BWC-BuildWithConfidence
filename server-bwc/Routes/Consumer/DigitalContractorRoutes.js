@@ -5,11 +5,15 @@ const {
   getAllDigitalContractor,
   getDigitalById,
 } = require("../../Controller/DigitalContractor");
-const uploadFile = require("../../Middlewares/uploadFile");
+const uploadMuiltiFieldFiles = require("../../Middlewares/uploadMultifieldFiles");
 
 const DigitalRoutes = require("express").Router();
 
-DigitalRoutes.post("/", uploadFile("./Public/DigitalContrator"), createDigital);
+DigitalRoutes.post(
+  "/",
+  uploadMuiltiFieldFiles("./Public/DigitalContrator"),
+  createDigital
+);
 DigitalRoutes.put("/:id", updateDigital);
 DigitalRoutes.delete("/:id", deleteDigitalById);
 DigitalRoutes.get("/:id", getDigitalById);

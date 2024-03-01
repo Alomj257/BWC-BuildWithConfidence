@@ -1,7 +1,40 @@
 const DigitalContractModel = require("../Model/DigitalContract");
 const createDigital = async (req, res) => {
   try {
-    // console.log(req.body);
+    let {
+      surveyPhoto,
+      clientSignature,
+      contractorSigniture,
+      client,
+      contractor,
+      ...other
+    } = req.body;
+    req.body = other;
+    if (req.files) {
+      surveyPhoto = {
+        img:
+          "/consumer/digital-contractor/pic/" +
+          req?.files?.surveyPhoto[0]?.originalname,
+        path: req?.files?.surveyPhoto[0]?.path,
+      };
+      clientSignature = {
+        img:
+          "/consumer/digital-contractor/pic/" +
+          req?.files?.clientSignature[0]?.originalname,
+        path: req?.files?.clientSignature[0]?.path,
+      };
+      contractorSigniture = {
+        img:
+          "/consumer/digital-contractor/pic/" +
+          req?.files?.contractorSigniture[0]?.originalname,
+        path: req?.files?.contractorSigniture[0]?.path,
+      };
+      req.body.surveyPhoto = surveyPhoto;
+      req.body.clientSignature = clientSignature;
+      req.body.contractorSigniture = contractorSigniture;
+    }
+    req.body.client = JSON.parse(client)[0];
+    req.body.contractor = JSON.parse(contractor)[0];
     const createdData = await new DigitalContractModel(req.body).save();
     return res.status(201).json("digital contractor created successfully");
   } catch (error) {
@@ -41,7 +74,6 @@ const updateDigital = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 // Delete
 const deleteDigitalById = async (req, res) => {
   try {

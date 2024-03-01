@@ -56,16 +56,14 @@ const JobCreate = () => {
       inputData.isMilestone = isMilestone;
 
       const formData = new FormData();
-      formData.append("client", JSON.stringify(client));
-      formData.append("contractor", JSON.stringify(contractor));
       procurement.forEach((value, index) => {
         formData.append(`procurement[${index}]`, value);
       });
+      formData.append("client", JSON.stringify([client]));
+      formData.append("contractor", JSON.stringify([contractor]));
 
-      for (const [key, value] of Object.entries(inputData)) {
-        if (key && value) {
-          formData.append(key, value);
-        }
+      for (let key in inputData) {
+        formData.append(key, inputData[key]);
       }
       const res = await saveDigitalService(formData);
       console.log(res);
@@ -463,7 +461,7 @@ const JobCreate = () => {
                       className="w-100 bg-transparent border-0  job-file-upload-input"
                       style={{ outline: "none" }}
                       placeholder="John Smith"
-                      name="preconditionSurveyPhoto"
+                      name="surveyPhoto"
                     />
                   </div>
                 </div>
@@ -932,7 +930,7 @@ const JobCreate = () => {
                       upload
                     </label>
                     <input
-                      name="signature"
+                      name="clientSignature"
                       onChange={handleChange}
                       type="file"
                       className="w-100 bg-transparent border-0 job-file-upload-input"
@@ -989,8 +987,9 @@ const JobCreate = () => {
                     <label htmlFor="" className="job-file-upload-label">
                       upload
                     </label>
+
                     <input
-                      name="signature"
+                      name="contractorSigniture"
                       onChange={handleChange}
                       type="file"
                       className="w-100 bg-transparent border-0 job-file-upload-input"

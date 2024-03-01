@@ -1,5 +1,5 @@
 const multer = require("multer");
-const uploadFile = (destination) => {
+const uploadMuiltiFieldFiles = (destination) => {
   const storage = multer.diskStorage({
     destination: (req, res, cb) => {
       cb(null, destination);
@@ -9,7 +9,6 @@ const uploadFile = (destination) => {
     },
   });
   const fileFilter = (req, file, cb) => {
-    console.log(file);
     if (
       file.mimetype === "image/svg" ||
       file.mimetype === "image/webp" ||
@@ -35,8 +34,13 @@ const uploadFile = (destination) => {
   });
 
   return function (req, res, next) {
-    upload.array("file")(req, res, function (err) {
+    upload.fields([
+      { name: "surveyPhoto" },
+      { name: "clientSignature" },
+      { name: "contractorSigniture" },
+    ])(req, res, function (err) {
       if (err instanceof multer.MulterError) {
+        console.log(err);
         return res.status(400).send({ error: "File upload error" });
       } else if (err) {
         return res.status(400).send({ error: err.message });
@@ -46,4 +50,4 @@ const uploadFile = (destination) => {
     });
   };
 };
-module.exports = uploadFile;
+module.exports = uploadMuiltiFieldFiles;

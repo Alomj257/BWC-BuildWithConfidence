@@ -6,7 +6,12 @@ export const saveDigitalService = async (digitalData) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/consumer/digital-contractor/`,
-      digitalData
+      digitalData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data;
   } catch (error) {
