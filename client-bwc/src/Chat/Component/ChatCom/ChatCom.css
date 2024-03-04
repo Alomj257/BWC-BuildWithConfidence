@@ -1,0 +1,11 @@
+.chat{
+    display: flex;
+    height: 80vh;
+}
+.chat .chatlist-left{
+    width: 10rem;
+    height: inherit;
+}
+.chat .chat-container-right{
+    height: inherit;
+}

@@ -1,0 +1,26 @@
+.chat-Container-header-img{
+    height: 40px;
+    width: 40px;
+}
+.chat-container{
+    height: inherit;
+}
+.chat-contains{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+   .chat-contains .message {
+        background-color: #ffffff;
+        border-radius: 5px;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.chat-contains .left-message{
+        background-color: #e2f0ff;
+}
+.chat-contains .right-message{
+    background-color: #f8f8f8;
+}
