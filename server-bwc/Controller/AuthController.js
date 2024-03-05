@@ -1,4 +1,5 @@
 const User = require("../Model/User");
+const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   try {
@@ -31,7 +32,10 @@ const login = async (req, res) => {
     if (!isMatched) {
       return res.status(403).json({ message: "Invalid password" });
     }
-    res.status(201).json("login successfully");
+    const token = jwt.sign({ id: user._id }, "yourSecretKey", {
+      expiresIn: "3h",
+    });
+    res.status(201).json({ user, token });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
@@ -47,7 +51,15 @@ const getAllUsers = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
+const getUserById = async (req, res) => {
+  try {
+    const users = await User.findById(req.params.id);
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
 
 const getUsersByRole = async (req, res) => {
   try {
@@ -66,7 +78,6 @@ const getUsersByRole = async (req, res) => {
   }
 };
 
-
 // Sending invitation to tradeperson from consumer panel
 const sendInvitation = async (req, res) => {
   try {
@@ -74,15 +85,21 @@ const sendInvitation = async (req, res) => {
     const tradeperson = await User.findById(tradepersonId);
 
     if (!tradeperson) {
-      return res.status(404).json({ message: 'Tradeperson not found' });
+      return res.status(404).json({ message: "Tradeperson not found" });
     }
 
-    return res.status(200).json({ message: 'Invitation sent successfully' });
+    return res.status(200).json({ message: "Invitation sent successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-
-module.exports = { register, login, getUsersByRole, getAllUsers, sendInvitation };
+module.exports = {
+  register,
+  login,
+  getUsersByRole,
+  getAllUsers,
+  sendInvitation,
+  getUserById,
+};
