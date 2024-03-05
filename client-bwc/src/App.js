@@ -18,6 +18,7 @@ import Consumer from "./Tradeperson/Pages/Consumer";
 import PostJobCom from "./Consumer/components/JobPost/PostJob/PostJobCom";
 import PostJobHome from "./Consumer/components/JobPost/PostJob/PostJobHome/PostJobHome";
 import Chat from "./Chat/Page/Chat";
+import Auth from "./PublicView/Auth/Auth";
 
 function App() {
   return (
@@ -27,7 +28,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/chat" element={<Chat />} />
+
           <Route path="/consumer" element={<DashboardPanel />}>
             <Route path="" element={<Dashboard />} />
             <Route path="tradeperson" element={<TradePerson />} />
@@ -39,6 +42,7 @@ function App() {
             <Route path="post-job/post" element={<PostJobCom />} />
             <Route path="chat" element={<Chat />} />
           </Route>
+
           <Route
             path="/consumer/tradespern/nearby"
             element={<TradesPersonNearby />}

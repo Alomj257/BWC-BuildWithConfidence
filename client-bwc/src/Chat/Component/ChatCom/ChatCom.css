@@ -9,3 +9,21 @@
 .chat .chat-container-right{
     height: inherit;
 }
+.chat-list ul{
+    list-style: none;
+    }
+    
+    .chat-list{
+        height: inherit;
+    }
+    .chat-list .chat-list-img{
+        width: 40px;
+        height: 40px;
+    }
+    .chat-list .chat-list-li{
+        padding: 5px 1rem;
+    }
+    .chat-list .chat-list-li:hover{
+     background-color: lightgray;
+     cursor: pointer;
+    }

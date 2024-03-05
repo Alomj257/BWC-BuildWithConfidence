@@ -26,7 +26,7 @@ const addMessage = async (req, res) => {
 const getMessage = async (req, res) => {
   try {
     const { chatId } = req.params;
-    const result = await MessageModel.find({ chatId });
+    const result = await MessageModel.find({ chatId:chatId });
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
