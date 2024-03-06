@@ -3,7 +3,7 @@ import img from "../../../assests/profile/P1.png";
 
 import "./ChatList.css";
 import useFetch from "../../../Hooks/useFetch";
-const Conversation = ({ data, curUserId }) => {
+const Conversation = ({ data, curUserId, online }) => {
   const [userData, setUserData] = useState(null);
   const userId = data?.members?.find((id) => id !== curUserId);
   const getData = useFetch(`/auth/users/${userId}`);
@@ -17,8 +17,10 @@ const Conversation = ({ data, curUserId }) => {
           <img className="w-100 h-100 rounded-circle" src={img} alt="" />
         </div>
         <div className="my-auto mx-2 d-flex flex-column">
-          <span>{userData?.firstname}</span>
-          <small className="text-success">online</small>
+          <span className="text-capitalize">{userData?.firstname}</span>
+          <small className={`text-${online ? "success" : "muted"}`}>
+            {online ? "online" : "offline"}
+          </small>
         </div>
       </li>
     </>
