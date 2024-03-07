@@ -1,4 +1,5 @@
 const User = require("../Model/User");
+const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   try {
@@ -31,11 +32,74 @@ const login = async (req, res) => {
     if (!isMatched) {
       return res.status(403).json({ message: "Invalid password" });
     }
-    res.status(201).json("login successfully");
+    const token = jwt.sign({ id: user._id }, "yourSecretKey", {
+      expiresIn: "3h",
+    });
+    res.status(201).json({ user, token });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
 
-module.exports = { register, login };
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+const getUserById = async (req, res) => {
+  try {
+    const users = await User.findById(req.params.id);
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getUsersByRole = async (req, res) => {
+  try {
+    let { role } = req.params;
+    role = role.toUpperCase();
+    console.log("Requested role:", role);
+    if (!["ADMIN", "CONSUMER", "TRADEPERSON"].includes(role)) {
+      console.log("Invalid role specified");
+      return res.status(400).json({ message: "Invalid role specified" });
+    }
+    const users = await User.find({ role });
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Sending invitation to tradeperson from consumer panel
+const sendInvitation = async (req, res) => {
+  try {
+    const { tradepersonId } = req.body;
+    const tradeperson = await User.findById(tradepersonId);
+
+    if (!tradeperson) {
+      return res.status(404).json({ message: "Tradeperson not found" });
+    }
+
+    return res.status(200).json({ message: "Invitation sent successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = {
+  register,
+  login,
+  getUsersByRole,
+  getAllUsers,
+  sendInvitation,
+  getUserById,
+};

@@ -3,9 +3,11 @@ import image from "../../../assests/profile/P1.png";
 import "./Navbar.css";
 import Modal from "../../../Utils/Modal/Modal";
 import Profile from "../Profile/Profile";
+import { useNavigate } from "react-router-dom";
 
 function Navbar(props) {
   const [isNav, setNav] = useState(false);
+  const navigate = useNavigate();
   return (
     <>
       <div className="text-end pe-3 py-2">
@@ -40,7 +42,10 @@ function Navbar(props) {
           </div>
         )}
         <div className="navbar-right">
-          <i class="bx bxs-message-dots icon"></i>
+          <button className="btn" onClick={() => navigate("/consumer/chat")}>
+            {" "}
+            <i class="bx bxs-message-dots icon"></i>
+          </button>
           <i class="bx bxs-heart icon"></i>
           <span className="username">Jahangir Alom</span>
           <Modal
