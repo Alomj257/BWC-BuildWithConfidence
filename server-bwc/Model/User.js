@@ -1,7 +1,13 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+
 const userSchema = mongoose.Schema({
-  name: {
+  firstname: {
+    type: String,
+    required: true,
+  },
+  middlename: String,
+  lastname: {
     type: String,
     required: true,
   },
@@ -19,17 +25,23 @@ const userSchema = mongoose.Schema({
     required: true,
     enum: ["Male", "Female", "Other"],
   },
+  phone: String,
+  address: String,
+  location: String,
+  rating: Number,
+  title: String,
+  experience: Number,
+  about: String,
+  image: String,
+  qualification: String,
+  nationality: String,
   role: {
     type: String,
     required: true,
     enum: ["ADMIN", "CONSUMER", "TRADEPERSON"],
   },
-  phoneNo: String,
-  address: String,
-  nationality: String,
-  profile: String,
-  imagePath: String,
-});
+}, { timestamps: true });
+
 
 userSchema.pre("save", async function (next) {
   const user = this;
@@ -44,5 +56,5 @@ userSchema.methods.comparedPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;

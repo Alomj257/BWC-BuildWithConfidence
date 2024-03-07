@@ -2,11 +2,16 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const Router = require("../Routes/AllRoutes");
+const path = require("path");
 dotenv.config();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(
+  "/consumer/digital-contractor/pic",
+  express.static(path.join(__dirname, "../public/DigitalContrator"))
+);
 
 app.use("/api", Router);
 
