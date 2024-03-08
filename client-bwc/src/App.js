@@ -19,12 +19,13 @@ import PostJobCom from "./Consumer/components/JobPost/PostJob/PostJobCom";
 import PostJobHome from "./Consumer/components/JobPost/PostJob/PostJobHome/PostJobHome";
 import Chat from "./Chat/Page/Chat";
 import Auth from "./PublicView/Auth/Auth";
+import AiChatBoat from "./PublicView/AiChatBot/AiChatBoat";
 
 function App() {
   return (
     <>
       <ToastContainer />
-
+      <AiChatBoat />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
