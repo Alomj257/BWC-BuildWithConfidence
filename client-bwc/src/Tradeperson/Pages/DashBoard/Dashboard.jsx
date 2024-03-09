@@ -39,9 +39,9 @@ function TradeDashboard() {
               <p>Click 'start now' if you already choosen a tradeperson</p>
               <button
                 className="banner-button tradeperson"
-                onClick={() => navigate("/consumer/tradespern/nearby")}
+                onClick={() => navigate("/tradeperson/consumer/nearby")}
               >
-                Trade Person
+                Consumer
               </button>
               <button className="banner-button start-now">Start Now</button>
             </div>

@@ -1,0 +1,29 @@
+.job-header{
+    background-color: #037efa;
+    color: white;
+}
+.job-header .btn-blue{
+    background-color: #037efa !important;
+    color: white !important;
+}
+.job-card .btn-blue{
+    background-color: #037efa !important;
+    color: white !important;
+    border: 2px solid #037efa;
+}
+.job-card .btn-blue:hover{
+    background-color: white !important;
+    color: #037efa !important;
+    border: 2px solid #037efa;
+}
+.job-card .logo{
+    background-color: lightgray;
+}
+.job-card .logo:hover{
+    color: darkslategray;
+    cursor: pointer;
+}
+.job-card .threeDot:hover{
+ background-color: lightgray;
+ cursor: pointer;
+}

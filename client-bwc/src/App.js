@@ -10,7 +10,6 @@ import DashboardPanel from "./Consumer/pages/DashBoard/DashboardPanel";
 import TradesPersonNearby from "./Consumer/pages/TradesPersonNearby/TradesPersonNearby";
 import Supplier from "./Consumer/pages/Supplier/Supplier";
 import Profile from "./Consumer/components/Profile/Profile";
-import PostJob from "./Consumer/pages/PostJob/PostJob";
 import Home from "./PublicView/Pages/Home";
 import TradeDashboardPanel from "./Tradeperson/Pages/DashBoard/DashboardPanel";
 import TradeDashboard from "./Tradeperson/Pages/DashBoard/Dashboard";
@@ -18,8 +17,10 @@ import Consumer from "./Tradeperson/Pages/Consumer";
 import PostJobCom from "./Consumer/components/JobPost/PostJob/PostJobCom";
 import PostJobHome from "./Consumer/components/JobPost/PostJob/PostJobHome/PostJobHome";
 import Chat from "./Chat/Page/Chat";
-import Auth from "./PublicView/Auth/Auth";
 import AiChatBoat from "./PublicView/AiChatBot/AiChatBoat";
+import AuthPage from "./PublicView/Auth/AuthPage";
+import NearByConsumer from "./Tradeperson/Pages/NearByConsumer";
+import Jobs from "./Tradeperson/Pages/Jobs";
 
 function App() {
   return (
@@ -29,7 +30,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
+          {/* <Route path="/auth" element={<Auth />} /> */}
+          <Route path="/auth" element={<AuthPage />} />
           <Route path="/chat" element={<Chat />} />
 
           <Route path="/consumer" element={<DashboardPanel />}>
@@ -52,7 +54,13 @@ function App() {
           <Route path="/tradeperson" element={<TradeDashboardPanel />}>
             <Route path="" element={<TradeDashboard />} />
             <Route path="consumer" element={<Consumer />} />
+            <Route path="message" element={<Chat />} />
+            <Route path="jobs" element={<Jobs />} />
           </Route>
+          <Route
+            path="/tradeperson/consumer/nearby"
+            element={<NearByConsumer />}
+          />
         </Routes>
       </BrowserRouter>
     </>
