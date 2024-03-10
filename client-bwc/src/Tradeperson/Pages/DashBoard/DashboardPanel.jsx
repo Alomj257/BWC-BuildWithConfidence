@@ -7,7 +7,7 @@ const TradeDashboardPanel = () => {
   const sidebar = [
     { name: "dashboard", icon: "bx bx-grid-alt" },
     { name: "consumer", icon: "bx bx-user-pin" },
-    { name: "jobs", icon: "bx bx-user-pin" },
+    { name: "jobs", icon: "bx bxs-shopping-bags" },
     { name: "create job", icon: "bx bx-select-multiple" },
     { name: "job history", icon: "bx bx-history" },
     { name: "supplier", icon: "bx bx-bell" },

@@ -14,9 +14,7 @@ const authLogin = async (email, password) => {
 
 export const register = async (user) => {
   try {
-    const res = await Axios.post(`/auth/register`, user, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    const res = await Axios.post(`/auth/register`, user);
     return res.data;
   } catch (error) {
     throw error.response.data.message;
