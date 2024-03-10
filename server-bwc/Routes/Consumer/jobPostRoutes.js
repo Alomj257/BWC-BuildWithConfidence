@@ -16,5 +16,5 @@ jobPostRoutes.put("/jobposts/:id", jobPostController.updateJobPost);
 
 // Delete job post by ID
 jobPostRoutes.delete("/jobposts/:id", jobPostController.deleteJobPost);
-
+jobPostRoutes.post("/apply/:jobId", jobPostController.applyJob);
 module.exports = jobPostRoutes;

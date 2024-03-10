@@ -3,11 +3,14 @@ import image from "../../../assests/profile/P1.png";
 import "./Navbar.css";
 import Modal from "../../../Utils/Modal/Modal";
 import Profile from "../Profile/Profile";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Navbar(props) {
   const [isNav, setNav] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname.split("/");
+  const page = path[path?.length - 1];
   return (
     <>
       <div className="text-end pe-3 py-2">
@@ -25,7 +28,7 @@ function Navbar(props) {
       </div>
       <nav className={isNav ? "cnavbar setNav" : "cnavbar"}>
         <div className="navbar-left">
-          <span className="li-name text-capitalize">{props.liName}</span>
+          <span className="li-name text-capitalize">{page}</span>
         </div>
         {props.liName === "Dashboard" && (
           <div className="navbar-center">

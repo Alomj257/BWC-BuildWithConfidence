@@ -2,7 +2,7 @@ import React from "react";
 
 import "./PostJob.css";
 import img from "../../../../assests/profile/P1.png";
-const ReviewJobPost = ({ data }) => {
+const ReviewJobPost = ({ data, handlePostJob }) => {
   return (
     <div className="col-md-11 mx-auto px-0 review ">
       <div className="d-flex justify-content-between ">
@@ -87,7 +87,9 @@ const ReviewJobPost = ({ data }) => {
       <div className="text-center">
         {" "}
         <button className="btn post-now-btn ">
-          <span className="fw-bold">Post Now</span>{" "}
+          <span className="fw-bold" onClick={() => handlePostJob()}>
+            Post Now
+          </span>{" "}
           <span className="icon">
             <i className="bx bxs-chevrons-right mt-1"></i>
           </span>

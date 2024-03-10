@@ -19,11 +19,17 @@ const TradePersonCard = ({ trade }) => {
         </div>
 
         <div className="col-8 p-2">
-          <h5 className="title"> {trade?.name}</h5>
-          <p>{trade?.exp}</p>
+          <h5 className="title"> {trade?.firstname}</h5>
+          <p className="text-muted">{trade?.title}</p>
           <div>
             <i className="bx bx-map fs-5"></i>
-            <span className=" mx-2">{trade?.location} KM</span>
+            <span className=" mx-2">
+              {trade?.location}, {trade?.nationality}
+            </span>
+          </div>
+          <div className="my-2 d-flex ">
+            <i className="bx bxs-graduation fs-4 me-1"></i>{" "}
+            {trade?.qualification}
           </div>
         </div>
       </div>
