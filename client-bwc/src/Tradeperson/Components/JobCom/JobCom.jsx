@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./JobCom.css";
 import JobComCard from "./JobComCard";
+import useFetch from "../../../Hooks/useFetch";
 const JobCom = () => {
+  const { data } = useFetch("/consumer/jobposts/jobposts");
+  const [jobs, setJobs] = useState([]);
+  useEffect(() => {
+    setJobs(data);
+  }, [data]);
+
   return (
     <div className="container">
       <div className="job-header rounded  p-4">
@@ -26,11 +33,14 @@ const JobCom = () => {
         </div>
       </div>
       <div>
-        <JobComCard />
-        <hr />
-        <JobComCard />
-        <hr />
-        <JobComCard />
+        {Array.isArray(jobs)
+          ? jobs?.map((job, key) => (
+              <>
+                <JobComCard job={job} key={key} />
+                {key < jobs.length && <hr />}
+              </>
+            ))
+          : ""}
       </div>
     </div>
   );

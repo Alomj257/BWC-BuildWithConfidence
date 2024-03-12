@@ -1,14 +1,15 @@
-const JobPost = require('../Model/JobPost');
+const JobPost = require("../Model/JobPost");
 
 // Error handler
 const errorHandler = (res, err) => {
   console.error(err);
-  res.status(500).json({ message: 'Internal server error' });
+  res.status(500).json({ message: "Internal server error" });
 };
 
 // Create a new job post
 exports.createJobPost = async (req, res) => {
   try {
+    console.log(req.body);
     const jobPost = await JobPost.create(req.body);
     res.status(201).json(jobPost);
   } catch (err) {
@@ -19,7 +20,7 @@ exports.createJobPost = async (req, res) => {
 // Get all job posts
 exports.getAllJobPosts = async (req, res) => {
   try {
-    const jobPosts = await JobPost.find();
+    const jobPosts = await JobPost.find().sort({ createdAt: -1 });
     res.json(jobPosts);
   } catch (err) {
     errorHandler(res, err);
@@ -31,7 +32,7 @@ exports.getJobPostById = async (req, res) => {
   try {
     const jobPost = await JobPost.findById(req.params.id);
     if (!jobPost) {
-      return res.status(404).json({ message: 'Job post not found' });
+      return res.status(404).json({ message: "Job post not found" });
     }
     res.json(jobPost);
   } catch (err) {
@@ -42,9 +43,11 @@ exports.getJobPostById = async (req, res) => {
 // Update job post by ID
 exports.updateJobPost = async (req, res) => {
   try {
-    const jobPost = await JobPost.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const jobPost = await JobPost.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!jobPost) {
-      return res.status(404).json({ message: 'Job post not found' });
+      return res.status(404).json({ message: "Job post not found" });
     }
     res.json(jobPost);
   } catch (err) {
@@ -57,10 +60,26 @@ exports.deleteJobPost = async (req, res) => {
   try {
     const jobPost = await JobPost.findByIdAndDelete(req.params.id);
     if (!jobPost) {
-      return res.status(404).json({ message: 'Job post not found' });
+      return res.status(404).json({ message: "Job post not found" });
     }
-    res.json({ message: 'Job post deleted successfully' });
+    res.json({ message: "Job post deleted successfully" });
   } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
+exports.applyJob = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const job = await JobPost.findById(req.params.jobId);
+    if (!job) {
+      return res.status(404).json({ message: "Job post not found" });
+    }
+    console.log(job);
+    job.applied.push(userId);
+    job.save();
+    res.status(201).json("Applied Successfylly");
+  } catch (error) {
     errorHandler(res, err);
   }
 };

@@ -56,11 +56,13 @@ function App() {
             <Route path="consumer" element={<Consumer />} />
             <Route path="message" element={<Chat />} />
             <Route path="jobs" element={<Jobs />} />
+            {/* <Route path="supplier" element={<Suppl />} /> */}
           </Route>
           <Route
             path="/tradeperson/consumer/nearby"
             element={<NearByConsumer />}
           />
+          <Route path="/tradeperson/supplier" element={<Supplier />} />
         </Routes>
       </BrowserRouter>
     </>

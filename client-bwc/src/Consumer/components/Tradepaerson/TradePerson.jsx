@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./TradePerson.css";
 import TradePersonCard from "./TradePersonCard";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Nav/Navbar";
+import useFetch from "../../../Hooks/useFetch";
 const TradePersonCom = () => {
   const navigate = useNavigate();
+  const { data } = useFetch("/auth/users/by/TRADEPERSON");
+  const [tradeperson, setTradePerson] = useState([]);
+  useEffect(() => {
+    setTradePerson(data);
+  }, [data]);
   return (
     <div>
       <div className="px-4">
@@ -14,12 +20,12 @@ const TradePersonCom = () => {
         <button className="btn btn-primary" onClick={() => navigate(-1)}>
           Back
         </button>
-        {data.map((data, key) => {
+        {dataT.map((d, key) => {
           return (
             <>
               <div className="d-flex justify-content-between">
                 <div>
-                  <h4 className="mb-0 mt-3 fw-bold mx-0 px-0">{data?.topic}</h4>
+                  <h4 className="mb-0 mt-3 fw-bold mx-0 px-0">{d?.topic}</h4>
                 </div>
                 {key === 0 && (
                   <>
@@ -38,7 +44,10 @@ const TradePersonCom = () => {
               </div>
 
               <div className="row row-cols-lg-3 w-100  row-cols-md-2 cols-sm-1">
-                {data.tradesperson?.map((trade, key) => (
+                {/* {data.tradesperson?.map((trade, key) => (
+                  <TradePersonCard trade={trade} />
+                ))} */}
+                {tradeperson?.map((trade, key) => (
                   <TradePersonCard trade={trade} />
                 ))}
               </div>
@@ -52,7 +61,7 @@ const TradePersonCom = () => {
 
 export default TradePersonCom;
 
-const data = [
+const dataT = [
   {
     topic: "Papular Tradesperson Nearby",
     tradesperson: [

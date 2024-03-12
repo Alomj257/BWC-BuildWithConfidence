@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./PostJob.css";
 import img from "../../../../assests/job-post/cong.gif";
 import ReviewJobPost from "./ReviewJobPost";
+import { toast } from "react-toastify";
+import jobPostService from "../../../../service/jobPostService";
 const PostJobCom = () => {
   const [work, setWork] = useState([]);
   const [desc, setDesc] = useState("");
@@ -21,12 +23,36 @@ const PostJobCom = () => {
     day: "",
     week: "",
   });
-  const data = { work, desc, budget, headline, location, start, completion };
+  const data = {
+    work,
+    desc,
+    budget,
+    vat,
+    headline,
+    location,
+    start,
+    completion,
+  };
   const handleWork = (value) => {
     if (work.includes(value)) {
       setWork(work.filter((item) => item !== value));
     } else {
       setWork([...work, value]);
+    }
+  };
+
+  const handlePostJob = async () => {
+    try {
+      const res = await jobPostService.createJobPost(data);
+      if (res.message) {
+        toast.error(res.message);
+        return;
+      }
+      toast.success(res);
+      setStep(step + 1);
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong");
     }
   };
   return (
@@ -217,12 +243,17 @@ const PostJobCom = () => {
                       start?.time === "As soon as possible"
                         ? "work-acitive"
                         : ""
-                    } post-1`}
+                    } post-1 position-relative`}
                     onClick={() =>
                       setStart({ ...start, time: "As soon as possible" })
                     }
                   >
-                    As soon as possible
+                    <span> As soon as possible</span>
+                    <input
+                      type="date"
+                      className="position-absolute  border-0  bg-transparent"
+                      style={{ inset: 0, outline: "none", opacity: 0.2 }}
+                    />
                   </div>
                 </div>
                 <div className="p-2">
@@ -251,18 +282,6 @@ const PostJobCom = () => {
                     />
                   </div>
                 </div>
-              </div>
-            </li>
-            <li className="my-5">
-              <span className="fw-bold">Select your Exact Day</span>
-              <div>
-                <input
-                  type="date"
-                  className="bg-transperent border-0  p-2"
-                  style={{ outline: "none" }}
-                  hidden
-                />
-                <i className="bx bx-calendar fs-1 my-2"></i>
               </div>
             </li>
             <li>
@@ -361,7 +380,9 @@ const PostJobCom = () => {
             <img src={img} alt="" className="w-100 h-100" />
           </div>
         )}
-        {step === 7 && <ReviewJobPost data={data} />}
+        {step === 7 && (
+          <ReviewJobPost data={data} handlePostJob={handlePostJob} />
+        )}
       </ul>
       <div className="d-flex justify-content-between my-3 container">
         <div
@@ -381,7 +402,7 @@ const PostJobCom = () => {
         </div>
         <div
           className="btn job-btn mb-5"
-          onClick={() => step < 8 && setStep(step + 1)}
+          onClick={() => step < 7 && setStep(step + 1)}
         >
           <i className="bx bxs-chevrons-right"></i>
         </div>

@@ -11,7 +11,7 @@ AuthRoutes.post("/register", register);
 AuthRoutes.post("/login", login);
 AuthRoutes.get("/users", getAllUsers);
 AuthRoutes.get("/users/:id", getUserById);
-AuthRoutes.get("/users/:role", getUsersByRole);
+AuthRoutes.get("/users/by/:role", getUsersByRole);
 AuthRoutes.post("/sent-invitation", sendInvitation);
 
 module.exports = AuthRoutes;
