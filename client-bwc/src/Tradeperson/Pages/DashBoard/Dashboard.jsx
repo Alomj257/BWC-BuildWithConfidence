@@ -41,9 +41,9 @@ function TradeDashboard() {
                 className="banner-button tradeperson"
                 onClick={() => navigate("/tradeperson/consumer/nearby")}
               >
-                Consumer
+                Start Now
               </button>
-              <button className="banner-button start-now">Start Now</button>
+              {/* <button className="banner-button start-now">Start Now</button> */}
             </div>
           </div>
           <div className="dashboard-box">

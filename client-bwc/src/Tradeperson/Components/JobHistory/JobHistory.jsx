@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import "./JobCom.css";
-import JobComCard from "./JobComCard";
 import useFetch from "../../../Hooks/useFetch";
-const JobCom = () => {
-  const { data } = useFetch("/consumer/jobposts/jobposts");
+import JobComCard from "../JobCom/JobComCard";
+import { useAuth } from "../../../context/AuthContext";
+
+const JobHistoryCom = () => {
+  const [auth] = useAuth();
+  const { data } = useFetch(
+    `/consumer/jobposts/jobposts/applied/${auth?.user?._id}`
+  );
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
     setJobs(data);
   }, [data]);
-  console.log(data);
 
   return (
     <div className="container">
-      <div className="job-header rounded  p-4">
+      {/* <div className="job-header rounded  p-4">
         <h3>Find your dream job there!</h3>
         <p>
           Explore the latest job openings and apply the best job opportunities
@@ -32,7 +35,7 @@ const JobCom = () => {
             <button className="btn btn-blue p-2 px-3 rounded-4">Search</button>
           </div>
         </div>
-      </div>
+      </div> */}
       <div>
         {Array.isArray(jobs)
           ? jobs?.map((job, key) => (
@@ -46,5 +49,4 @@ const JobCom = () => {
     </div>
   );
 };
-
-export default JobCom;
+export default JobHistoryCom;

@@ -10,6 +10,14 @@ jobPostRoutes.get("/jobposts", jobPostController.getAllJobPosts);
 
 // Get job post by ID
 jobPostRoutes.get("/jobposts/:id", jobPostController.getJobPostById);
+jobPostRoutes.get(
+  "/jobposts/posted/:userId",
+  jobPostController.getAllJobsPostedByUser
+);
+jobPostRoutes.get(
+  "/jobposts/applied/:userId",
+  jobPostController.getAllJobsAppliedByUser
+);
 
 // Update job post by ID
 jobPostRoutes.put("/jobposts/:id", jobPostController.updateJobPost);

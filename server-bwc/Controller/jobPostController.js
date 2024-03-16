@@ -71,15 +71,41 @@ exports.deleteJobPost = async (req, res) => {
 exports.applyJob = async (req, res) => {
   try {
     const { userId } = req.body;
+    console.log(req.body);
     const job = await JobPost.findById(req.params.jobId);
-    if (!job) {
+    if (!job || !userId) {
       return res.status(404).json({ message: "Job post not found" });
     }
-    console.log(job);
+    if (job.applied.includes(userId)) {
+      return res.status(403).json({ message: " already apllied " });
+    }
     job.applied.push(userId);
     job.save();
     res.status(201).json("Applied Successfylly");
-  } catch (error) {
+  } catch (err) {
+    console.log(err);
+    errorHandler(res, err);
+  }
+};
+
+exports.getAllJobsPostedByUser = async (req, res) => {
+  try {
+    const userId = req.params;
+    const jobs = await JobPost.find({ postedBy: req.params.userId });
+    res.status(200).json(jobs);
+  } catch (err) {
+    console.log(err);
+    errorHandler(res, err);
+  }
+};
+exports.getAllJobsAppliedByUser = async (req, res) => {
+  try {
+    const userId = req.params;
+    const jobs = await JobPost.find({ applied: { $in: [req.params.userId] } });
+    console.log(userId);
+    res.status(200).json(jobs);
+  } catch (err) {
+    console.log(err);
     errorHandler(res, err);
   }
 };

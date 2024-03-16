@@ -8,7 +8,7 @@ const DashboardPanel = () => {
     { name: "dashboard", icon: "bx bx-grid-alt" },
     { name: "tradeperson", icon: "bx bx-user-pin" },
     { name: "post job", icon: "bx bx-user-pin" },
-    { name: "digital contractor", icon: "bx bx-select-multiple" },
+    { name: "digital contract", icon: "bx bx-select-multiple" },
     { name: "job history", icon: "bx bx-history" },
     { name: "supplier", icon: "bx bx-bell" },
     { name: "message", icon: "bx bx-message-rounded-dots" },

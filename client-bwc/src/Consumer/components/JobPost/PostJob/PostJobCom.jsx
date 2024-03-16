@@ -4,7 +4,9 @@ import img from "../../../../assests/job-post/cong.gif";
 import ReviewJobPost from "./ReviewJobPost";
 import { toast } from "react-toastify";
 import jobPostService from "../../../../service/jobPostService";
+import { useAuth } from "../../../../context/AuthContext";
 const PostJobCom = () => {
+  const [auth] = useAuth();
   const [work, setWork] = useState([]);
   const [desc, setDesc] = useState("");
   const [isBudget, setIsBudget] = useState();
@@ -32,6 +34,7 @@ const PostJobCom = () => {
     location,
     start,
     completion,
+    postedBy: auth?.user?._id,
   };
   const handleWork = (value) => {
     if (work.includes(value)) {

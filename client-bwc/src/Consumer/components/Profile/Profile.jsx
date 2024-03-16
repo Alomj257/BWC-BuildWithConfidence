@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import img from "../../../assests/profile/P1.png";
-const Profile = () => {
+import { useAuth } from "../../../context/AuthContext";
+import useFetch from "../../../Hooks/useFetch";
+const Profile = ({ id }) => {
+  const [auth] = useAuth();
+  const [user, setUser] = useState(null);
+  const { data } = useFetch(`/auth/users/${id}`);
+  useEffect(() => {
+    setUser(data);
+  }, [data]);
   return (
     <div className="container mx-0">
       <div className="row w-100">
@@ -54,7 +62,7 @@ const Profile = () => {
               </div>
               <div>
                 <button className="broder-0 text-white fs-6 p-1 ps-3 fw-bold rounded-5 profile-btn">
-                  Book Now{" "}
+                  {auth?.user?._id === user?._id ? "Edit" : "Invite Now"}
                   <span>
                     <i className="bx bx-chevrons-right  bg-white rounded-circle text-dark p-2" />
                   </span>
