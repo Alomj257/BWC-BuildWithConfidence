@@ -3,8 +3,8 @@ import "./JobHistory.css";
 import { useNavigate } from "react-router-dom";
 const ConsumerJobCard = ({ jobs }) => {
   const navigate = useNavigate();
-  const sendApplieds = (applied) => {
-    navigate("/consumer/job-history/applied/users", { state: applied });
+  const sendApplieds = (job) => {
+    navigate("/consumer/job-history/applied/users", { state: job });
   };
   return (
     <div className="table-container">
@@ -53,7 +53,7 @@ const ConsumerJobCard = ({ jobs }) => {
                 {new Date(row?.createdAt).toLocaleDateString()}
               </td>
               <td
-                onClick={() => sendApplieds(row?.applied)}
+                onClick={() => sendApplieds(row)}
                 className={
                   "this" === "complete" ? "text-success" : "light-gray"
                 }

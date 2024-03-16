@@ -6,8 +6,9 @@ import { toast } from "react-toastify";
 import { chatCreate } from "../../../../service/ChatService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
+import { requestTast } from "../../../../service/TaskAssignService";
 
-const AppliedUser = ({ id, key }) => {
+const AppliedUser = ({ id, key, job }) => {
   const { data } = useFetch(`/auth/users/${id}`);
   const [auth] = useAuth();
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const AppliedUser = ({ id, key }) => {
   useEffect(() => {
     setUser(data);
   }, [data]);
+
   const handleMassage = async (currentUser, oppositeUser) => {
     try {
       const { data } = await chatCreate({
@@ -31,6 +33,29 @@ const AppliedUser = ({ id, key }) => {
       toast.error("something went wrong");
     }
   };
+
+  const handleRequest = async (tradepersonId, consumerId, jobId) => {
+    try {
+      if (!tradepersonId || !consumerId || !jobId) {
+        toast.error(" field missing try again ");
+        return;
+      }
+      const { data } = await requestTast({
+        tradepersonId,
+        consumerId,
+        jobId,
+      });
+      if (data?.message) {
+        toast.error(data.message);
+        return;
+      }
+      toast.success("your request has been sent ");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.data?.message || "something went wrong");
+    }
+  };
+
   return (
     <>
       <tr key={key} className="text-capitalize">
@@ -51,7 +76,7 @@ const AppliedUser = ({ id, key }) => {
         </td>
         <td
           onClick={() => handleMassage(auth?.user?._id, user?._id)}
-          className={"this" === "complete" ? "text-success" : "light-gray"}
+          className="btn btn-dark-blue text-white  w-100 "
         >
           Talk/Message
         </td>
@@ -64,6 +89,12 @@ const AppliedUser = ({ id, key }) => {
           >
             <Profile />
           </Modal>
+        </td>
+        <td
+          onClick={() => handleRequest(user?._id, auth?.user?._id, job?._id)}
+          className="btn btn-outline-success text-dark w-100 "
+        >
+          Request
         </td>
       </tr>
     </>
