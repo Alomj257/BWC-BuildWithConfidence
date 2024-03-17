@@ -53,6 +53,9 @@ const jobPostService = {
   },
 };
 
-export const applyJobService = (user, jobId) =>
-  axios.post(`${BASE_URL}/consumer/jobposts/apply/${jobId}`, user);
+export const applyJobService = async (userId, jobId) =>
+  await axios.post(`${BASE_URL}/consumer/jobposts/apply/${jobId}`, {
+    userId: userId,
+  });
+
 export default jobPostService;

@@ -21,6 +21,8 @@ import AiChatBoat from "./PublicView/AiChatBot/AiChatBoat";
 import AuthPage from "./PublicView/Auth/AuthPage";
 import NearByConsumer from "./Tradeperson/Pages/NearByConsumer";
 import Jobs from "./Tradeperson/Pages/Jobs";
+import TradeJobHistory from "./Tradeperson/Pages/JobHistory";
+import AppliedUsersPage from "./Consumer/pages/AppliedUsers/AppliedUsersPage";
 
 function App() {
   return (
@@ -34,11 +36,16 @@ function App() {
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/chat" element={<Chat />} />
 
+          {/* <Route path="/consumer" element={<ConsumerProtect />}> */}
           <Route path="/consumer" element={<DashboardPanel />}>
             <Route path="" element={<Dashboard />} />
             <Route path="tradeperson" element={<TradePerson />} />
-            <Route path="digital-contractor" element={<CreateJob />} />
+            <Route path="digital-contract" element={<CreateJob />} />
             <Route path="job-history" element={<JobHistory />} />
+            <Route
+              path="job-history/applied/users"
+              element={<AppliedUsersPage />}
+            />
             <Route path="profile" element={<Profile />} />
             {/* <Route path="post-job" element={<PostJob />} /> */}
             <Route path="post-job" element={<PostJobHome />} />
@@ -51,11 +58,13 @@ function App() {
             element={<TradesPersonNearby />}
           />
           <Route path="/consumer/supplier" element={<Supplier />} />
+          {/* Tradeperson */}
           <Route path="/tradeperson" element={<TradeDashboardPanel />}>
             <Route path="" element={<TradeDashboard />} />
             <Route path="consumer" element={<Consumer />} />
             <Route path="message" element={<Chat />} />
             <Route path="jobs" element={<Jobs />} />
+            <Route path="job-history" element={<TradeJobHistory />} />
             {/* <Route path="supplier" element={<Suppl />} /> */}
           </Route>
           <Route

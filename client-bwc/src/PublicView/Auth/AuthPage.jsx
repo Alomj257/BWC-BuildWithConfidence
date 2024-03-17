@@ -8,8 +8,8 @@ import authLogin, {
 } from "../../service/AuthService";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 const AuthPage = () => {
   const [turn, setTurn] = useState("login");
   const [user, setUser] = useState(null);
@@ -56,7 +56,12 @@ const AuthPage = () => {
       // Cookie.set("auth", JSON.stringify(response), { expires: 1 / 24 });
       Cookies.set("auth", JSON.stringify(response));
       setUser({ ...user, user: "", password: "" });
-      navigate("/consumer");
+      if (response?.user?.role === "CONSUMER") {
+        navigate("/consumer");
+      }
+      if (response?.user?.role === "TRADEPERSON") {
+        navigate("/tradeperson");
+      }
     } catch (error) {
       toast.error(error);
       setUser({ ...user, user: "", password: "" });
@@ -136,7 +141,7 @@ const AuthPage = () => {
     <>
       <div className="auth-page d-flex ">
         <div
-          className={` col-md-6 col-12  mt-5 left d-flex flex-column h-100  px-0 mx-auto ${
+          className={` col-md-6 col-12   left d-flex flex-column h-100  px-0 mx-auto ${
             turn === "login" ? "order-1" : "order-2"
           }`}
         >
@@ -154,27 +159,29 @@ const AuthPage = () => {
             >
               {turn === "register" && (
                 <>
-                  <div className="my-3">
-                    <input
-                      type="text"
-                      name="firstname"
-                      value={user?.firstname}
-                      onChange={handleChange}
-                      className="bg-light w-100  p-3 border-0 rounded"
-                      style={{ outline: "none" }}
-                      placeholder="Enter First Name"
-                    />
-                  </div>
-                  <div className="my-3">
-                    <input
-                      type="text"
-                      name="lastname"
-                      value={user?.lastname}
-                      onChange={handleChange}
-                      className="bg-light w-100  p-3 border-0 rounded"
-                      style={{ outline: "none" }}
-                      placeholder="Enter Last Name"
-                    />
+                  <div className="row row-cols-md-2  ">
+                    <div className="my-3">
+                      <input
+                        type="text"
+                        name="firstname"
+                        value={user?.firstname}
+                        onChange={handleChange}
+                        className="bg-light w-100  p-3 border-0 rounded"
+                        style={{ outline: "none" }}
+                        placeholder="Enter First Name"
+                      />
+                    </div>
+                    <div className="my-3">
+                      <input
+                        type="text"
+                        name="lastname"
+                        value={user?.lastname}
+                        onChange={handleChange}
+                        className="bg-light w-100  p-3 border-0 rounded"
+                        style={{ outline: "none" }}
+                        placeholder="Enter Last Name"
+                      />
+                    </div>
                   </div>
                 </>
               )}

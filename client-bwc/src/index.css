@@ -14,7 +14,29 @@ code {
     monospace;
 }
 
+:root{
+  --color-light-green:#d7f7d7;
+  --color-dark-blue:#0f2f4f;
+}
 
 #alan-btn-chat-holder{
   height: 95vh !important;
+}
+
+.btn-light-green{
+background-color: var(--color-light-green) !important;
+border: 2px solid green !important;
+}
+.btn-light-green:hover{
+background-color: transparent !important;
+border: 2px solid green !important;
+}
+.btn-dark-blue{
+background-color: var(--color-dark-blue) !important;
+border: 2px solid  var(--color-dark-blue) !important;
+}
+.btn-dark-blue:hover{
+background-color: transparent !important;
+color: var(--color-dark-blue) !important;
+border: 2px solid  var(--color-dark-blue) !important;
 }

@@ -1,0 +1,32 @@
+.table-container {
+    padding:0 3rem;
+    width: 100%;
+  }
+  
+ .table-container  table {
+    border-collapse: separate;
+    border-spacing: 10px;
+    width: 100%;
+  }
+  
+   .table-container td {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .table-container .dark-blue {
+    background-color: #0f2f4f;
+    color: white;
+    border-radius: 0.5rem;
+    padding: 5px;
+  }
+  
+  .table-container .light-gray {
+    border-radius: 0.5rem;
+    padding: 5px;
+    background-color: lightgray;
+  }
+  .table-container .text-success{
+    background-color: lightgreen !important;
+    border-radius: 5px;
+  }

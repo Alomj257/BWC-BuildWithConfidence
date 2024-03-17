@@ -14,10 +14,11 @@ const JobComCard = ({ key, job }) => {
       }
       toast.success(data);
     } catch (error) {
-      console.log(error);
-      toast.error("smething went wrong");
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
+  console.log(job?.applied?.includes(auth?.user?._id));
   return (
     <div className="job-card p-4" key={key}>
       <div className="d-flex justify-content-between">
@@ -69,9 +70,14 @@ const JobComCard = ({ key, job }) => {
         </span>
         <button
           onClick={() => Handleapplyjob(job?._id)}
-          className="btn btn-blue"
+          disabled={job?.applied?.includes(auth?.user?._id)}
+          className={`btn ${
+            job?.applied?.includes(auth?.user?._id)
+              ? "btn-light-green"
+              : "btn-blue"
+          }`}
         >
-          Apply Now
+          {job?.applied?.includes(auth?.user?._id) ? "Applied" : "Apply Now"}
         </button>
       </div>
     </div>

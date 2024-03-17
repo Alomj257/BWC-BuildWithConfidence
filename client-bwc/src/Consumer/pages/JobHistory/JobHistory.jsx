@@ -1,7 +1,12 @@
 import React from "react";
+import JobHistoryCOm from "../../components/JobHistory/JobHistoryCOm";
 
 function JobHistory() {
-  return <h3>Job history</h3>;
+  return (
+    <>
+      <JobHistoryCOm />
+    </>
+  );
 }
 
 export default JobHistory;

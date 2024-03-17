@@ -2,6 +2,12 @@ const ChatModel = require("../../Model/Chat/Chats");
 
 const createChat = async (req, res) => {
   try {
+    const chat = await ChatModel.findOne({
+      members: { $all: [req.params.firstId, req.params.secondId] },
+    });
+    if (chat) {
+      return res.status(201).json("chat created successfully");
+    }
     const newChat = await new ChatModel({
       members: [req.body.senderId, req.body.receiverId],
     }).save();
