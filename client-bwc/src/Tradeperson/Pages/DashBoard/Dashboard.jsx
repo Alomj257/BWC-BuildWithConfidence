@@ -37,13 +37,18 @@ function TradeDashboard() {
               <h3>Let's create your first job.</h3>
               <p>Click 'tradeperson' to access our vetted tradeperson nearby</p>
               <p>Click 'start now' if you already choosen a tradeperson</p>
-              <button
+              {/* <button
                 className="banner-button tradeperson"
                 onClick={() => navigate("/tradeperson/consumer/nearby")}
               >
+                Consumers
+              </button> */}
+              <button
+                className="banner-button start-now"
+                onClick={() => navigate("/tradeperson/jobs")}
+              >
                 Start Now
               </button>
-              {/* <button className="banner-button start-now">Start Now</button> */}
             </div>
           </div>
           <div className="dashboard-box">

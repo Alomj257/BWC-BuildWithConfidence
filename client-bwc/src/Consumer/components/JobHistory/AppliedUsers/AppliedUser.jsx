@@ -94,7 +94,7 @@ const AppliedUser = ({ id, key, job }) => {
           onClick={() => handleRequest(user?._id, auth?.user?._id, job?._id)}
           className="btn btn-outline-success text-dark w-100 "
         >
-          Request
+          Hire
         </td>
       </tr>
     </>
