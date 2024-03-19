@@ -96,7 +96,29 @@ const sendInvitation = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+const updateUserDetails = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (req.files) {
+      req.body.profile = "/profile/pic/" + req?.files[0]?.originalname;
+    }
 
+    console.log(req.body);
+    const updatedData = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    console.log(updatedData);
+    res.status(200).json("User update successfully");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 module.exports = {
   register,
   login,
@@ -104,4 +126,5 @@ module.exports = {
   getAllUsers,
   sendInvitation,
   getUserById,
+  updateUserDetails,
 };

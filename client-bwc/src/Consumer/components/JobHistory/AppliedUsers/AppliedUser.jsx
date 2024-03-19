@@ -87,7 +87,7 @@ const AppliedUser = ({ id, key, job }) => {
             bodyClass="bg-white"
             closeIcon="fs-3"
           >
-            <Profile />
+            <Profile id={user?._id} />
           </Modal>
         </td>
         <td

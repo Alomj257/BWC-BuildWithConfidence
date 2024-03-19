@@ -1,9 +1,10 @@
 import React from "react";
 import "./TradePerson.css";
-import img from "../../../assests/profile/P1.png";
 import Modal from "../../../Utils/Modal/Modal";
 import Profile from "../Profile/Profile";
+import { server } from "../../../Axios";
 const TradePersonCard = ({ trade }) => {
+  console.log(trade);
   return (
     <div className="container mx-0 pt-3">
       <div className="row w-100 p-3  bg-light">
@@ -12,9 +13,15 @@ const TradePersonCard = ({ trade }) => {
             btnClasss="border-0 bg-white"
             bodyClass="bg-white"
             closeIcon="fs-1"
-            btnText={<img src={img} alt="trade profile" className="w-100" />}
+            btnText={
+              <img
+                src={server + trade?.profile}
+                alt="trade profile"
+                className="w-100"
+              />
+            }
           >
-            <Profile />
+            <Profile id={trade?._id} />
           </Modal>
         </div>
 

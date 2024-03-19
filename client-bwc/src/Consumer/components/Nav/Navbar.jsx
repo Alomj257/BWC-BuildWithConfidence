@@ -4,9 +4,12 @@ import "./Navbar.css";
 import Modal from "../../../Utils/Modal/Modal";
 import Profile from "../Profile/Profile";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import { server } from "../../../Axios";
 
 function Navbar(props) {
   const [isNav, setNav] = useState(false);
+  const [auth] = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split("/");
@@ -53,13 +56,17 @@ function Navbar(props) {
           <span className="username">Jahangir Alom</span>
           <Modal
             btnText={
-              <img src={image} alt="User Profile" className="user-profile" />
+              <img
+                src={auth?.user?.profile ? server + auth?.user?.profile : image}
+                alt="User Profile"
+                className="user-profile"
+              />
             }
             btnClasss="border-0 bg-transparent"
             bodyClass="bg-white"
             closeIcon="fs-1"
           >
-            <Profile />
+            <Profile id={auth?.user?._id} />
           </Modal>
         </div>
       </nav>

@@ -23,8 +23,10 @@ import NearByConsumer from "./Tradeperson/Pages/NearByConsumer";
 import Jobs from "./Tradeperson/Pages/Jobs";
 import TradeJobHistory from "./Tradeperson/Pages/JobHistory";
 import AppliedUsersPage from "./Consumer/pages/AppliedUsers/AppliedUsersPage";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
+  const [auth] = useAuth();
   return (
     <>
       <ToastContainer />
@@ -46,7 +48,7 @@ function App() {
               path="job-history/applied/users"
               element={<AppliedUsersPage />}
             />
-            <Route path="profile" element={<Profile />} />
+            <Route path="profile" element={<Profile id={auth?.user?._id} />} />
             {/* <Route path="post-job" element={<PostJob />} /> */}
             <Route path="post-job" element={<PostJobHome />} />
             <Route path="post-job/post" element={<PostJobCom />} />

@@ -5,3 +5,13 @@
     min-height: 150px;
 
 }
+.update-img-label{
+    bottom: 1.5rem;
+}
+.update-img-label label{
+    background-color: #a9a9a93b;
+    padding: 1rem 5.3rem;
+    border-end-end-radius: 100%;
+    border-bottom-left-radius: 100%;
+    cursor: pointer;
+}

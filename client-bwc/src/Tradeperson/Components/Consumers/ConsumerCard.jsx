@@ -14,7 +14,7 @@ const TradePersonCard = ({ trade }) => {
             closeIcon="fs-1"
             btnText={<img src={img} alt="trade profile" className="w-100" />}
           >
-            <Profile trade={trade} />
+            <Profile trade={trade} id={trade?._id} />
           </Modal>
         </div>
 
