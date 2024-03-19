@@ -87,14 +87,14 @@ const AppliedUser = ({ id, key, job }) => {
             bodyClass="bg-white"
             closeIcon="fs-3"
           >
-            <Profile />
+            <Profile id={user?._id} />
           </Modal>
         </td>
         <td
           onClick={() => handleRequest(user?._id, auth?.user?._id, job?._id)}
           className="btn btn-outline-success text-dark w-100 "
         >
-          Request
+          Hire
         </td>
       </tr>
     </>

@@ -20,17 +20,13 @@ export const register = async (user) => {
     throw error.response.data.message;
   }
 };
+export const updateprofile = async (id, data) =>
+  await Axios.put(`/auth/update/${id}`, data);
+export const updateAuthImage = async (user, id) =>
+  await Axios.put(`/auth/update/img/${id}`, user, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 
-export const updateAuth = async (user, id) => {
-  try {
-    const res = await Axios.put(`/auth/update/${id}`, user, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    return res.data;
-  } catch (error) {
-    throw error.response.data.message;
-  }
-};
 export const deleteAuth = async (id) => {
   try {
     const res = await Axios.delete(`/auth/users/${id}`);

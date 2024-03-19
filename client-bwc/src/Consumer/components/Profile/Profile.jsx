@@ -1,34 +1,125 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
-import img from "../../../assests/profile/P1.png";
+import dummyimg from "../../../assests/profile/P1.png";
 import { useAuth } from "../../../context/AuthContext";
 import useFetch from "../../../Hooks/useFetch";
+import Modal from "../../../Utils/Modal/Modal";
+import UpdateProfile from "./UpdateProfile/UpdateProfile";
+import { toast } from "react-toastify";
+import { updateAuthImage } from "../../../service/AuthService";
+import Axios, { server } from "../../../Axios";
+import { chatCreate } from "../../../service/ChatService";
+import { useNavigate } from "react-router-dom";
 const Profile = ({ id }) => {
+  const navigate = useNavigate();
   const [auth] = useAuth();
   const [user, setUser] = useState(null);
-  const { data } = useFetch(`/auth/users/${id}`);
+  // const { data, reFetch } = useFetch(`/auth/users/${id || auth?.user?._id}`);
+  // const [img, setImg] = useState(null);
+  const getUser = async () => {
+    try {
+      const res = await Axios.get(`/auth/users/${id}`);
+      console.log(res);
+      if (!res.data.message) {
+        setUser(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    setUser(data);
-  }, [data]);
+    getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+  const reFetchUpdate = () => {
+    getUser();
+  };
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    try {
+      if (file) {
+        const reader = new FileReader();
+        // reader.onload = () => {
+        //   setImg(reader.result);
+        // };
+        reader.readAsDataURL(file);
+
+        const formData = new FormData();
+        formData.append("file", file);
+        const { data } = await updateAuthImage(formData, auth?.user?._id);
+        if (data?.message) {
+          toast.error(data);
+        }
+        toast.success(data);
+        reFetchUpdate();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data.message || "Something went wrong");
+    }
+  };
+
+  const handleMassage = async (currentUser, oppositeUser) => {
+    try {
+      const { data } = await chatCreate({
+        senderId: currentUser,
+        receiverId: oppositeUser,
+      });
+      if (data.message) {
+        toast.error(data.message);
+        return;
+      }
+      navigate("/consumer/chat");
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong");
+    }
+  };
+
   return (
     <div className="container mx-0">
       <div className="row w-100">
-        <div className="col-4">
-          <div className="col-8 mx-auto">
+        <div className="col-4 ">
+          <div className="m-auto position-relative">
             <img
-              src={img}
+              src={
+                server +
+                (auth?.user?._id === id ? auth?.user?.profile : user?.profile)
+              }
               alt=" profile pic"
               className="w-100 rounded-circle"
             />
+            {auth?.user?._id === id && (
+              <div className="position-absolute d-flex justify-content-center update-img-label  w-100">
+                <label className="mx-auto label   fw-bold" htmlFor="profile">
+                  Edit
+                </label>
+                <input
+                  onChange={handleFileChange}
+                  type="file"
+                  id="profile"
+                  className="d-none"
+                />
+              </div>
+            )}
           </div>
           <h4 className="fw-bold">About Me</h4>
         </div>
         <div className="col-8">
           <div className="d-flex justify-content-between">
-            <h4 className="fw-bold">John Smith</h4>{" "}
+            <h4 className="fw-bold">
+              {user?.firstname || "John "} {user?.middlename || " Smith "}
+              {user?.lastname}
+            </h4>
             <div className="d-flex">
               <i className="bx bx-map fs-5 "></i>
-              <span>London, UK</span>
+              <span>
+                {(user?.address || "london") +
+                  "," +
+                  (user?.location || "Uk") +
+                  ", " +
+                  (user?.nationality || " ")}
+              </span>
             </div>
             <div>
               <i className="bx bxs-star fs-4 text-warning"></i>
@@ -49,24 +140,61 @@ const Profile = ({ id }) => {
               <div className="bg-light my-3 py-2 rounded text-center fw-bold">
                 Quealification
               </div>
+              <div className="bg-light my-3 py-2 rounded text-center fw-bold">
+                Title
+              </div>
+              <div className="bg-light my-3 py-2 rounded text-center fw-bold">
+                Gender
+              </div>
             </div>
             <div className="col-8">
               <div className="my-3 text-center py-2 rounded bg-light">
-                Electrician
+                {user?.qualification || " Electrician"}
               </div>
               <div className="my-3 text-center py-2 rounded bg-light">
-                5 Years
+                {user?.experience || " 3 year"}
               </div>
               <div className="my-3 text-center py-2 rounded bg-light">
-                Level 3 ETC
+                {user?.qualification || " Level 3 ETC"}
+              </div>
+              <div className="my-3 text-center py-2 rounded bg-light">
+                {user?.title || "Carpet"}
+              </div>
+              <div className="my-3 text-center py-2 rounded bg-light">
+                {user?.gender || ""}
               </div>
               <div>
-                <button className="broder-0 text-white fs-6 p-1 ps-3 fw-bold rounded-5 profile-btn">
-                  {auth?.user?._id === user?._id ? "Edit" : "Invite Now"}
-                  <span>
-                    <i className="bx bx-chevrons-right  bg-white rounded-circle text-dark p-2" />
-                  </span>
-                </button>
+                {auth?.user?._id !== id ? (
+                  <>
+                    {" "}
+                    <button
+                      onClick={() => handleMassage(auth?.user?._id, id)}
+                      className="broder-0 text-white fs-6 p-1 ps-3 fw-bold rounded-5 profile-btn"
+                    >
+                      {" "}
+                      Talk/ Message
+                      <span>
+                        <i className="bx bx-chevrons-right  bg-white rounded-circle text-dark p-2" />
+                      </span>
+                    </button>{" "}
+                  </>
+                ) : (
+                  <Modal
+                    bodyClass="bg-white col-md-8 col-sm-10"
+                    btnClasss="broder-0 text-white fs-6 p-1 ps-3 fw-bold rounded-5 profile-btn"
+                    btnText={
+                      <>
+                        Edit Profile
+                        <span className="mx-2">
+                          <i className="bx bx-chevrons-right  bg-white rounded-circle text-dark p-2" />
+                        </span>
+                      </>
+                    }
+                    closeIcon="fs-1"
+                  >
+                    <UpdateProfile reFetch={reFetchUpdate} />
+                  </Modal>
+                )}
               </div>
             </div>
           </div>
@@ -77,13 +205,13 @@ const Profile = ({ id }) => {
         <h4 className="fw-bold mt-3">Portfolio</h4>
         <div className="row w-100 gap-4 flex-nowrap">
           <div className="col-3">
-            <img src={img} alt="profile" />
+            <img src={dummyimg} alt="profile" />
           </div>
           <div className="col-3">
-            <img src={img} alt="profile" />
+            <img src={dummyimg} alt="profile" />
           </div>
           <div className="col-3">
-            <img src={img} alt="profile" />
+            <img src={dummyimg} alt="profile" />
           </div>
         </div>
       </div>

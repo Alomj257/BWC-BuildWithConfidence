@@ -42,7 +42,12 @@ function Dashboard() {
               >
                 Trade Person
               </button>
-              <button className="banner-button start-now">Start Now</button>
+              <button
+                onClick={() => navigate("/consumer/digital-contract")}
+                className="banner-button start-now"
+              >
+                Start Now
+              </button>
             </div>
           </div>
           <div className="dashboard-box">

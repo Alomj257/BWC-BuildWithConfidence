@@ -5,10 +5,18 @@ const {
   getAllUsers,
   sendInvitation,
   getUserById,
+  updateUserDetails,
 } = require("../Controller/AuthController");
+const uploadFile = require("../Middlewares/uploadFile");
 const AuthRoutes = require("express").Router();
 AuthRoutes.post("/register", register);
 AuthRoutes.post("/login", login);
+AuthRoutes.put("/update/:id", updateUserDetails);
+AuthRoutes.put(
+  "/update/img/:id",
+  uploadFile("./Public/Profile"),
+  updateUserDetails
+);
 AuthRoutes.get("/users", getAllUsers);
 AuthRoutes.get("/users/:id", getUserById);
 AuthRoutes.get("/users/by/:role", getUsersByRole);

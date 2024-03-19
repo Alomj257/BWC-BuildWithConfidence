@@ -31,9 +31,9 @@ const userSchema = mongoose.Schema(
     location: String,
     rating: Number,
     title: String,
-    experience: Number,
+    experience: String,
     about: String,
-    image: String,
+    profile: String,
     qualification: String,
     nationality: String,
     role: {
