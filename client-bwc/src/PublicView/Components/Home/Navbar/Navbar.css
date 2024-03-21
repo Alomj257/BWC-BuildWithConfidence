@@ -1,0 +1,10 @@
+.welcome-navbar{
+border-bottom: 2px solid white;
+}
+.welcome-navbar ul{
+    list-style: none;
+}
+
+.welcome-navbar .bx-right-arrow-alt{
+    transform: rotate(-45deg);
+}

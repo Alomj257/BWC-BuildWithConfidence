@@ -1,0 +1,19 @@
+.welcome{
+    min-height: 100vh;
+    min-width: 100vw;
+background-image: url("../../../../../public/images/Home/Dark\ Blue\ Green\ Modern\ Business\ Landing\ Page\ Desktop\ Prototype\ \(1\).png");
+background-size: cover;
+background-position: center;
+}
+
+.welcome .welcome-btn{
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 20px;
+    background: gainsboro;
+}
+.welcome .welcome-btn:hover{
+    background: gray;
+}
