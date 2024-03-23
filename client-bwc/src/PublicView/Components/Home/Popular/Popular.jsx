@@ -1,31 +1,65 @@
-import React, { useEffect, useState } from "react";
-import useFetch from "../../../../Hooks/useFetch";
-import TradePersonCard from "../../../../Consumer/components/Tradepaerson/TradePersonCard";
-
+import React from "react";
+import {
+  FaBath,
+  FaPaintRoller,
+  FaBoxOpen,
+  FaFilePen,
+  FaScrewdriverWrench,
+} from "react-icons/fa6";
+import { HiMiniSquare3Stack3D } from "react-icons/hi2";
+import { GiVacuumCleaner, GiClosedDoors } from "react-icons/gi";
+import { MdOutlineSmartScreen } from "react-icons/md";
+import { TiMessages } from "react-icons/ti";
+import { TbFileSettings } from "react-icons/tb";
+import { IoStarSharp } from "react-icons/io5";
 const Popular = () => {
-  const { data } = useFetch("/auth/users/by/TRADEPERSON");
-  const [tradeperson, setTradePerson] = useState([]);
-  useEffect(() => {
-    setTradePerson(data);
-  }, [data]);
   return (
-    <div className="container my-5">
-      <h3 className="fw-bold">POPULAR TRADESPEOPLE</h3>
-      <div className="row row-cols-lg-3 w-100  row-cols-md-2 cols-sm-1">
-        {tradeperson?.map((trade, key) => (
-          <>{key < 3 && <TradePersonCard trade={trade} />}</>
-        ))}
-      </div>
-      <h3 className="fw-bold my-3">BROWSE BY TRADE </h3>
-      <div className="d-flex justify-content-between col-md-8 me-auto my-3">
-        {brData?.map((d, key) => (
-          <div key={key} className="d-flex flex-column">
-            <div className="rounded-circle m-auto bg-dark">
-              <div className="p-4 text-warning">{d.icons}</div>
+    <div className="container">
+      <div className="my-5">
+        <div className="text-center mt-5">
+          <h4 className="fw-bold">
+            Allow us to handle the entire process for you
+          </h4>
+          <small>Here are some of our popular services:</small>
+        </div>
+        <div className="d-flex gap-4 justify-content-center">
+          {brData?.map((br, key) => (
+            <div key={key} className="my-2 p-3  mt-0 d-flex flex-column">
+              <div className="p-4 m-auto d-flex  bg-light rounded-circle fs-1 text-info">
+                {br?.icons}
+              </div>
+              <span className="mx-auto">{br?.name}</span>
             </div>
-            <div> {d?.name}</div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div className="text-center">
+          <button className="btn btn-info fw-bold py-2 px-5 text-white rounded-5">
+            Post a job
+          </button>
+        </div>
+      </div>
+      <div className="my-5">
+        <div className="text-center mt-5">
+          <h4 className="fw-bold">
+            Our comprehensive platform that streamlines every step
+          </h4>
+          <small>This is how it works:</small>
+        </div>
+        <div className="d-flex gap-4 justify-content-center">
+          {stepData?.map((br, key) => (
+            <div key={key} className="my-2 p-3  mt-0 d-flex flex-column">
+              <div className="p-4 m-auto d-flex  bg-info rounded-circle fs-1 text-white">
+                {br?.icons}
+              </div>
+              <span className="mx-auto">{br?.name}</span>
+            </div>
+          ))}
+        </div>
+        <div className="text-center">
+          <button className="btn btn-info py-2 fw-bold px-5 text-white rounded-5">
+            See how it works
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -34,10 +68,18 @@ const Popular = () => {
 export default Popular;
 
 const brData = [
-  { name: "Bathroom installation", icons: "text" },
-  { name: "Decoration", icons: "text" },
-  { name: "Flooring", icons: "text" },
-  { name: "Plumbing", icons: "text" },
-  { name: "Cleaning", icons: "text" },
-  { name: "Joinery", icons: "text" },
+  { name: "Bathroom installation", icons: <FaBath /> },
+  { name: "Decoration", icons: <FaPaintRoller /> },
+  { name: "Flooring", icons: <HiMiniSquare3Stack3D /> },
+  { name: "Plumbing", icons: <FaScrewdriverWrench /> },
+  { name: "Cleaning", icons: <GiVacuumCleaner /> },
+  { name: "Joinery", icons: <GiClosedDoors /> },
+];
+const stepData = [
+  { name: "Post a Job", icons: <MdOutlineSmartScreen /> },
+  { name: "Recieve offers", icons: <FaBoxOpen /> },
+  { name: "Confirm scope", icons: <TiMessages /> },
+  { name: "Create a contract", icons: <FaFilePen /> },
+  { name: "Manage the job", icons: <TbFileSettings /> },
+  { name: "Manage the job", icons: <IoStarSharp /> },
 ];

@@ -1,0 +1,9 @@
+.say-client{
+    background-image: url("../../../../../public/images/Home/say-bg.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.say-client .say-card{
+    min-height: 450px !important;
+}

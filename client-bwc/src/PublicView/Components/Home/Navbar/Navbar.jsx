@@ -22,37 +22,37 @@ const Navbar = () => {
             <li>Home</li>
           </Link>
           <Link
-            to="/"
+            to="/about"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>About</li>
           </Link>
           <Link
-            to="/"
+            to="/consumer"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Consumer</li>
           </Link>
           <Link
-            to="/"
+            to="/tradeperson"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Tradeperson</li>
           </Link>
           <Link
-            to="/"
+            to="/faq"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>FAQ</li>
           </Link>
           <Link
-            to="/"
+            to="/articles"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Articles</li>
           </Link>
           <Link
-            to="/"
+            to="/contact"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Contact </li>
