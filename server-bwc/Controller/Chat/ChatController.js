@@ -8,9 +8,10 @@ const createChat = async (req, res) => {
     if (chat) {
       return res.status(201).json("chat created successfully");
     }
-    const newChat = await new ChatModel({
-      members: [req.body.senderId, req.body.receiverId],
-    }).save();
+    console.log(chat);
+    // const newChat = await new ChatModel({
+    //   members: [req.body.senderId, req.body.receiverId],
+    // }).save();
     res.status(201).json("chat created successfully");
   } catch (error) {
     console.log(error);

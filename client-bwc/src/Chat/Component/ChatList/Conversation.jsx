@@ -10,6 +10,7 @@ const Conversation = ({ data, curUserId, online }) => {
   useEffect(() => {
     setUserData(getData?.data);
   }, [getData]);
+  console.log(getData?.data);
   return (
     <>
       <li className="d-flex chat-list-li my-3">
