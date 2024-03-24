@@ -19,6 +19,10 @@ const AppliedUser = ({ id, key, job }) => {
 
   const handleMassage = async (currentUser, oppositeUser) => {
     try {
+      if (!currentUser || !oppositeUser) {
+        toast.error("something wrong");
+        return;
+      }
       const { data } = await chatCreate({
         senderId: currentUser,
         receiverId: oppositeUser,
@@ -26,8 +30,9 @@ const AppliedUser = ({ id, key, job }) => {
       if (data.message) {
         toast.error(data.message);
         return;
+      } else {
+        navigate("/consumer/chat", { state: { currentUser, oppositeUser } });
       }
-      navigate("/consumer/chat");
     } catch (error) {
       console.log(error);
       toast.error("something went wrong");
@@ -75,7 +80,12 @@ const AppliedUser = ({ id, key, job }) => {
           {user?.qualification || "Level 3 ETC"}
         </td>
         <td
-          onClick={() => handleMassage(auth?.user?._id, user?._id)}
+          onClick={() =>
+            handleMassage(
+              auth?.user?._id,
+              auth?.user?._id !== user?._id ? user?._id : ""
+            )
+          }
           className="btn btn-dark-blue text-white  w-100 "
         >
           Talk/Message

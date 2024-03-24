@@ -5,7 +5,10 @@ import { useAuth } from "../../../context/AuthContext";
 import { userChat } from "../../../service/ChatService";
 import Conversation from "../ChatList/Conversation";
 import { io } from "socket.io-client";
+import { useLocation } from "react-router-dom";
 const ChatCom = () => {
+  const { state } = useLocation();
+  console.log(state);
   const [auth] = useAuth();
   const [chats, setChats] = useState([]);
   const [currentChat, setCurChat] = useState(null);
@@ -52,6 +55,7 @@ const ChatCom = () => {
     const online = onlineUsers?.find((user) => user?.userId === chatMemebr);
     return online ? true : false;
   };
+  console.log(chats);
 
   return (
     <div className="container">
