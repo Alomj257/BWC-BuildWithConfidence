@@ -1,3 +1,4 @@
+const JobPost = require("../Model/JobPost");
 const TaskAssign = require("../Model/TaskAssign");
 
 const createTask = async (req, res) => {
@@ -74,6 +75,69 @@ const deleteTask = async (req, res) => {
   }
 };
 
+//  job
+
+const requestHire = async (req, res) => {
+  try {
+    const job = await JobPost.findById(req.params.id);
+    console.log(job);
+    if (!job) {
+      return res.status(404).json({ message: "job id invalid" });
+    }
+    job.requested.push({
+      requesterId: req.body.requesterId,
+      requestedId: req.body.requestedId,
+    });
+    await job.save();
+    return res.status(200).json("Your request has been sent");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+const getAllRequestedJobs = async (req, res) => {
+  try {
+    const jobs = await JobPost.find({
+      requested: { $elemMatch: { requestedId: req.params.id } },
+    });
+    res.status(200).json(jobs);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+const acceptedRequest = async (req, res) => {
+  try {
+    const job = await JobPost.findById(req.params.id);
+    console.log(job);
+    if (!job) {
+      return res.status(404).json({ message: "job id invalid" });
+    }
+    job.accept.push({
+      consumerId: req.body.consumerId,
+      tradepersonId: req.body.tradepersonId,
+    });
+    await job.save();
+    return res.status(200).json("Your request has been sent");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
+const getAllacceptedRequestJobs = async (req, res) => {
+  try {
+    const jobs = await JobPost.find({
+      accept: { $elemMatch: { consumerId: req.params.id } },
+    });
+    res.status(200).json(jobs);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+
 module.exports = {
   createTask,
   getAllTask,
@@ -81,4 +145,8 @@ module.exports = {
   updateTaskAssign,
   deleteTask,
   getRequestTask,
+  requestHire,
+  acceptedRequest,
+  getAllRequestedJobs,
+  getAllacceptedRequestJobs,
 };

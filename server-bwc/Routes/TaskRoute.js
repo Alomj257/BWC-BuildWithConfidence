@@ -1,20 +1,13 @@
 const {
-  createTask,
-  updateTaskAssign,
-  deleteTask,
-  getTaskById,
-  getAllTask,
-  getRequestTask,
+  requestHire,
+  getAllRequestedJobs,
+  acceptedRequest,
 } = require("../Controller/TaskAssignCntroller");
 
 const taskRoute = require("express").Router();
-
-taskRoute.post("/", createTask);
-taskRoute.put("/:id", updateTaskAssign);
-taskRoute.delete("/:id", deleteTask);
-taskRoute.get("/:id", getTaskById);
-taskRoute.get("/", getAllTask);
-// console.log(userId, jobId, consumerId);
-taskRoute.get("/by/:userId/:jobId/:consumerId", getRequestTask);
+taskRoute.post("/:id", requestHire);
+taskRoute.get("/:id", getAllRequestedJobs);
+taskRoute.post("/accept/:id", acceptedRequest);
+taskRoute.get("/accept/:id", getAllRequestedJobs);
 
 module.exports = taskRoute;

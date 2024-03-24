@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react";
-import useFetch from "../../../../Hooks/useFetch";
-import Modal from "../../../../Utils/Modal/Modal";
-import Profile from "../../Profile/Profile";
+import React from "react";
 import { toast } from "react-toastify";
 import { chatCreate } from "../../../../service/ChatService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
-import { requestTast } from "../../../../service/TaskAssignService";
+import { accectRequest } from "../../../../service/TaskAssignService";
 
-const AppliedUser = ({ id, key, job }) => {
-  const { data } = useFetch(`/auth/users/${id}`);
-  const [auth] = useAuth();
+const Req = ({ key, job }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    setUser(data);
-  }, [data]);
-
+  const [auth] = useAuth();
   const handleMassage = async (currentUser, oppositeUser) => {
     try {
+      console.log(currentUser, oppositeUser);
       if (!currentUser || !oppositeUser) {
         toast.error("something wrong");
         return;
@@ -42,23 +34,22 @@ const AppliedUser = ({ id, key, job }) => {
       toast.error("something went wrong");
     }
   };
-
-  const handleRequest = async (tradepersonId, consumerId, jobId) => {
+  const acceptHandle = async (consumerId, tradepersonId, jobId) => {
     try {
       if (!tradepersonId || !consumerId || !jobId) {
         toast.error(" field missing try again ");
         return;
       }
-      const { data } = await requestTast(
+      const { data } = await accectRequest(
         {
-          requesterId: consumerId,
-          requestedId: tradepersonId,
+          tradepersonId,
+          consumerId,
         },
         jobId
       );
-      job?.requested?.push({
-        requesterId: consumerId,
-        requestedId: tradepersonId,
+      job?.accept?.push({
+        tradepersonId,
+        consumerId,
       });
       if (data?.message) {
         toast.error(data.message);
@@ -77,46 +68,48 @@ const AppliedUser = ({ id, key, job }) => {
           {key + 1}
         </td>
         <td className={"this" === "complete" ? "text-success" : "light-gray"}>
-          {user?.firstname} {user?.lastname}
+          {job?.headline}
         </td>
         <td className={"this" === "complete" ? "text-success" : "light-gray"}>
-          {user?.email}
+          {job?.experience || "3 year"}
         </td>
         <td className={"this" === "complete" ? "text-success" : "light-gray"}>
-          {user?.experience || "3 year"}
-        </td>
-        <td className={"this" === "complete" ? "text-success" : "light-gray"}>
-          {user?.qualification || "Level 3 ETC"}
+          {job?.qualification || "Level 3 ETC"}
         </td>
         <td>
           <button
             className="btn btn-dark-blue text-white  w-100 "
-            onClick={() => handleMassage(auth?.user?._id, user?._id)}
+            onClick={() =>
+              handleMassage(
+                auth?.user?._id,
+                job?.requested?.find(
+                  (req) => req.requestedId === auth?.user?._id
+                )?.requesterId
+              )
+            }
           >
             Talk/Message
           </button>
         </td>
-        <td>
-          <Modal
-            btnClasss=" btn btn-outline-success"
-            btnText=" View Profile"
-            bodyClass="bg-white"
-            closeIcon="fs-3"
-          >
-            <Profile id={user?._id} />
-          </Modal>
-        </td>
         <td className="">
           <button
-            disabled={job?.requested?.find(
-              (req) => req?.requestedId === user?._id
+            disabled={job?.accept?.find(
+              (req) => req?.tradepersonId === auth?.user?._id
             )}
-            onClick={() => handleRequest(user?._id, auth?.user?._id, job?._id)}
+            onClick={() =>
+              acceptHandle(
+                job?.requested?.find(
+                  (req) => req.requestedId === auth?.user?._id
+                )?.requesterId,
+                auth?.user?._id,
+                job?._id
+              )
+            }
             className="btn btn-outline-success text-dark w-100 "
           >
-            {job?.requested?.find((req) => req?.requestedId === user?._id)
-              ? "Requested"
-              : "Hire"}
+            {job?.accept?.find((req) => req?.tradepersonId === auth?.user?._id)
+              ? "Accepted"
+              : "Accept"}
           </button>
         </td>
       </tr>
@@ -124,4 +117,4 @@ const AppliedUser = ({ id, key, job }) => {
   );
 };
 
-export default AppliedUser;
+export default Req;

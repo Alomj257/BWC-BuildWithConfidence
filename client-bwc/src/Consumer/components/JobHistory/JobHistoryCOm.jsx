@@ -8,7 +8,6 @@ const JobHistoryCOm = () => {
   const { data } = useFetch(
     `/consumer/jobposts/jobposts/posted/${auth?.user?._id}`
   );
-  console.log(auth?.user?._id);
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
     setJobs(data);

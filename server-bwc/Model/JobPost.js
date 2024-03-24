@@ -39,6 +39,15 @@ const jobPostSchema = new mongoose.Schema(
     },
     postedBy: String,
     applied: Array,
+    requested: Array,
+    accept: Array,
+    taskProgress: [
+      {
+        consumerId: String,
+        tradepersonId: String,
+        task: { type: Number, default: 0 },
+      },
+    ],
   },
   { timestamps: true }
 );
