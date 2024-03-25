@@ -1,11 +1,12 @@
 import React from "react";
 import "./JobHistory.css";
 import { useNavigate } from "react-router-dom";
-const ConsumerJobCard = ({ jobs }) => {
+const ConsumerJobCard = ({ jobs, type }) => {
   const navigate = useNavigate();
   const sendApplieds = (job) => {
-    navigate("/consumer/job-history/applied/users", { state: job });
+    navigate("/consumer/job-history/applied/users", { state: { job, type } });
   };
+
   return (
     <div className="table-container">
       <table>

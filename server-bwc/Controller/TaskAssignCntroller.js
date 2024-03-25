@@ -1,3 +1,4 @@
+const DigitalContractModel = require("../Model/DigitalContract");
 const JobPost = require("../Model/JobPost");
 const TaskAssign = require("../Model/TaskAssign");
 
@@ -137,6 +138,49 @@ const getAllacceptedRequestJobs = async (req, res) => {
     res.status(500).json({ message: "something went wrong" });
   }
 };
+const ConsumerContractSign = async (req, res) => {
+  try {
+    const job = await JobPost.findById(req.params.id);
+    console.log(job);
+    if (!job) {
+      return res.status(404).json({ message: "job id invalid" });
+    }
+    job.taskAssign.consumerId = req.body.consumerId;
+    job.taskAssign.contractId = req.body.contractId;
+    job.taskAssign.tradepersonId = req.body.tradepersonId;
+    await job.save();
+    return res.status(200).json("you contract create successfully");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
+const tradepersonContractSign = async (req, res) => {
+  try {
+    const job = await JobPost.findById(req.params.jobId);
+    const contract = await DigitalContractModel.findById(req.params.contractId);
+    console.log(job);
+    if (!job || !contract) {
+      return res.status(404).json({ message: " id invalid" });
+    }
+    contract.tradepersonSignature.push({
+      name: req.body.name,
+      signiture: req.body.signiture,
+      tradepersonId: req.body.tradepersonId,
+    });
+    job.taskAssign.isContract = true;
+
+    await contract.save();
+    await job.save();
+
+    return res
+      .status(200)
+      .json("Contract signed successfully project in on live");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
 
 module.exports = {
   createTask,
@@ -149,4 +193,6 @@ module.exports = {
   acceptedRequest,
   getAllRequestedJobs,
   getAllacceptedRequestJobs,
+  ConsumerContractSign,
+  tradepersonContractSign,
 };

@@ -6,6 +6,7 @@ const {
   sendInvitation,
   getUserById,
   updateUserDetails,
+  uploadSigniture,
 } = require("../Controller/AuthController");
 const uploadFile = require("../Middlewares/uploadFile");
 const AuthRoutes = require("express").Router();
@@ -17,6 +18,12 @@ AuthRoutes.put(
   uploadFile("./Public/Profile"),
   updateUserDetails
 );
+AuthRoutes.post(
+  "/signiture/:id",
+  uploadFile("./Public/Signitures"),
+  uploadSigniture
+);
+
 AuthRoutes.get("/users", getAllUsers);
 AuthRoutes.get("/users/:id", getUserById);
 AuthRoutes.get("/users/by/:role", getUsersByRole);

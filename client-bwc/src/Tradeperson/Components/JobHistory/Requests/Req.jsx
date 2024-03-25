@@ -3,7 +3,10 @@ import { toast } from "react-toastify";
 import { chatCreate } from "../../../../service/ChatService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
-import { accectRequest } from "../../../../service/TaskAssignService";
+import {
+  accectRequest,
+  tradpersonCotractSignService,
+} from "../../../../service/TaskAssignService";
 
 const Req = ({ key, job }) => {
   const navigate = useNavigate();
@@ -61,6 +64,31 @@ const Req = ({ key, job }) => {
       toast.error(error?.data?.message || "something went wrong");
     }
   };
+  const handleContract = async (jobId, contractId) => {
+    try {
+      if (!jobId || !contractId) {
+        toast.error(" field missing try again ");
+        return;
+      }
+      const { data } = await tradpersonCotractSignService(
+        {
+          name: auth?.user?.firstname + auth?.user?.lastname,
+          signiture: auth?.user?.signiture,
+          tradepersonId: auth?.user?._id,
+        },
+        jobId,
+        contractId
+      );
+      if (data?.message) {
+        toast.error(data.message);
+        return;
+      }
+      toast.success(data);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.data?.message || "something went wrong");
+    }
+  };
   return (
     <>
       <tr key={key} className="text-capitalize">
@@ -92,25 +120,43 @@ const Req = ({ key, job }) => {
           </button>
         </td>
         <td className="">
-          <button
-            disabled={job?.accept?.find(
-              (req) => req?.tradepersonId === auth?.user?._id
+          {job?.taskAssign?.consumerId &&
+            job?.taskAssign?.tradepersonId === auth?.user?._id &&
+            job?.taskAssign?.contractId && (
+              <button
+                onClick={() =>
+                  handleContract(job?._id, job?.taskAssign?.contractId)
+                }
+                className="btn btn-outline-success text-dark w-100 "
+              >
+                Sign for Contract
+              </button>
             )}
-            onClick={() =>
-              acceptHandle(
-                job?.requested?.find(
-                  (req) => req.requestedId === auth?.user?._id
-                )?.requesterId,
-                auth?.user?._id,
-                job?._id
+          {(!job?.taskAssign?.consumerId ||
+            !job?.taskAssign?.contractId ||
+            job?.taskAssign?.tradepersonId !== auth?.user?._id) && (
+            <button
+              disabled={job?.accept?.find(
+                (req) => req?.tradepersonId === auth?.user?._id
+              )}
+              onClick={() =>
+                acceptHandle(
+                  job?.requested?.find(
+                    (req) => req.requestedId === auth?.user?._id
+                  )?.requesterId,
+                  auth?.user?._id,
+                  job?._id
+                )
+              }
+              className="btn btn-outline-success text-dark w-100 "
+            >
+              {job?.accept?.find(
+                (req) => req?.tradepersonId === auth?.user?._id
               )
-            }
-            className="btn btn-outline-success text-dark w-100 "
-          >
-            {job?.accept?.find((req) => req?.tradepersonId === auth?.user?._id)
-              ? "Accepted"
-              : "Accept"}
-          </button>
+                ? "Accepted"
+                : "Accept"}
+            </button>
+          )}
         </td>
       </tr>
     </>

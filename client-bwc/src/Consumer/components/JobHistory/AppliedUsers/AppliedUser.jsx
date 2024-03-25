@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
 import { requestTast } from "../../../../service/TaskAssignService";
 
-const AppliedUser = ({ id, key, job }) => {
+const AppliedUser = ({ id, key, job, type }) => {
   const { data } = useFetch(`/auth/users/${id}`);
   const [auth] = useAuth();
   const navigate = useNavigate();
@@ -70,6 +70,9 @@ const AppliedUser = ({ id, key, job }) => {
       toast.error(error?.data?.message || "something went wrong");
     }
   };
+  const handleContract = (job, userId) => {
+    navigate("/consumer/digital-contract", { state: { job, userId } });
+  };
   return (
     <>
       <tr key={key} className="text-capitalize">
@@ -107,17 +110,30 @@ const AppliedUser = ({ id, key, job }) => {
           </Modal>
         </td>
         <td className="">
-          <button
-            disabled={job?.requested?.find(
-              (req) => req?.requestedId === user?._id
-            )}
-            onClick={() => handleRequest(user?._id, auth?.user?._id, job?._id)}
-            className="btn btn-outline-success text-dark w-100 "
-          >
-            {job?.requested?.find((req) => req?.requestedId === user?._id)
-              ? "Requested"
-              : "Hire"}
-          </button>
+          {type === "post" && (
+            <button
+              disabled={job?.requested?.find(
+                (req) => req?.requestedId === user?._id
+              )}
+              onClick={() =>
+                handleRequest(user?._id, auth?.user?._id, job?._id)
+              }
+              className="btn btn-outline-success text-dark w-100 "
+            >
+              {job?.requested?.find((req) => req?.requestedId === user?._id)
+                ? "Requested"
+                : "Hire"}
+            </button>
+          )}
+
+          {type === "pre" && (
+            <button
+              onClick={() => handleContract(job, user?._id)}
+              className="btn btn-outline-success text-dark w-100 "
+            >
+              Sing for Contract
+            </button>
+          )}
         </td>
       </tr>
     </>

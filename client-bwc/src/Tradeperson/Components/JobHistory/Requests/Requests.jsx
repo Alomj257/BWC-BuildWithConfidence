@@ -24,7 +24,7 @@ const Requests = () => {
                 <th className="dark-blue">Experience</th>
                 <th className="dark-blue">Quealification</th>
                 <th className="dark-blue">Message</th>
-                <th className="dark-blue">Accept</th>
+                <th className="dark-blue text-center">Status</th>
                 {/* <th className="dark-blue">Paid</th>
                 <th className="dark-blue">Status</th> */}
               </tr>

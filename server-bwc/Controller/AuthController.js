@@ -119,6 +119,21 @@ const updateUserDetails = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+const uploadSigniture = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (req.files) {
+      user.signiture.img = "/profile/signitue/" + req?.files[0]?.originalname;
+      user.signiture.path = req?.files[0]?.path;
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 module.exports = {
   register,
   login,
@@ -126,5 +141,6 @@ module.exports = {
   getAllUsers,
   sendInvitation,
   getUserById,
+  uploadSigniture,
   updateUserDetails,
 };

@@ -41,13 +41,13 @@ const jobPostSchema = new mongoose.Schema(
     applied: Array,
     requested: Array,
     accept: Array,
-    taskProgress: [
-      {
-        consumerId: String,
-        tradepersonId: String,
-        task: { type: Number, default: 0 },
-      },
-    ],
+    taskAssign: {
+      consumerId: String,
+      tradepersonId: String,
+      contractId: String,
+      isContract: { type: Boolean, default: false },
+      task: { type: Number, default: 0 },
+    },
   },
   { timestamps: true }
 );
