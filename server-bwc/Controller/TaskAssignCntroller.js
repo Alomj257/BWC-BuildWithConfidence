@@ -111,7 +111,6 @@ const getAllRequestedJobs = async (req, res) => {
 const acceptedRequest = async (req, res) => {
   try {
     const job = await JobPost.findById(req.params.id);
-    console.log(job);
     if (!job) {
       return res.status(404).json({ message: "job id invalid" });
     }
@@ -129,6 +128,7 @@ const acceptedRequest = async (req, res) => {
 
 const getAllacceptedRequestJobs = async (req, res) => {
   try {
+    // console.log(req.params.id);
     const jobs = await JobPost.find({
       accept: { $elemMatch: { consumerId: req.params.id } },
     });
@@ -181,7 +181,18 @@ const tradepersonContractSign = async (req, res) => {
     res.status(500).json({ message: "something went wrong" });
   }
 };
-
+const getAllLiveJobs = async (req, res) => {
+  try {
+    const jobs = await JobPost.find({
+      "taskAssign.consumerId": req.params.consumerId,
+      "taskAssign.isContract": true,
+    });
+    res.status(200).json(jobs);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "something went wrong" });
+  }
+};
 module.exports = {
   createTask,
   getAllTask,
@@ -195,4 +206,5 @@ module.exports = {
   getAllacceptedRequestJobs,
   ConsumerContractSign,
   tradepersonContractSign,
+  getAllLiveJobs,
 };

@@ -30,3 +30,6 @@
     background-color: lightgreen !important;
     border-radius: 5px;
   }
+  .job-histry-active{
+   border-bottom: 1rem solid var(--color-dark-blue);
+  }

@@ -125,10 +125,13 @@ const uploadSigniture = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    console.log(req.files);
     if (req.files) {
-      user.signiture.img = "/profile/signitue/" + req?.files[0]?.originalname;
+      user.signiture.img = "/profile/signiture/" + req?.files[0]?.originalname;
       user.signiture.path = req?.files[0]?.path;
     }
+    user.save();
+    res.status(200).json("signiture upload successfully");
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

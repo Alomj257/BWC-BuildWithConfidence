@@ -9,7 +9,7 @@ const TradeDashboardPanel = () => {
     { name: "consumer", icon: "bx bx-user-pin" },
     { name: "jobs", icon: "bx bxs-shopping-bags" },
     // { name: "Requests", icon: "bx bx-select-multiple" },
-    { name: "job history", icon: "bx bx-history" },
+    { name: "job portal", icon: "bx bx-history" },
     { name: "requests", icon: "bx bx-bell" },
     { name: "message", icon: "bx bx-message-rounded-dots" },
   ];

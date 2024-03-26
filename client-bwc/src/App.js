@@ -46,7 +46,7 @@ function App() {
             <Route path="" element={<Dashboard />} />
             <Route path="tradeperson" element={<TradePerson />} />
             <Route path="digital-contract" element={<CreateJob />} />
-            <Route path="job-history" element={<JobHistory />} />
+            <Route path="job-portal" element={<JobHistory />} />
             <Route
               path="job-history/applied/users"
               element={<AppliedUsersPage />}
@@ -69,7 +69,7 @@ function App() {
             <Route path="consumer" element={<Consumer />} />
             <Route path="message" element={<Chat />} />
             <Route path="jobs" element={<Jobs />} />
-            <Route path="job-history" element={<TradeJobHistory />} />
+            <Route path="job-portal" element={<TradeJobHistory />} />
             <Route path="requests" element={<RequestsPage />} />
             {/* <Route path="supplier" element={<Suppl />} /> */}
           </Route>
