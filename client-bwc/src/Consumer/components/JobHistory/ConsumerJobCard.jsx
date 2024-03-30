@@ -1,11 +1,14 @@
 import React from "react";
 import "./JobHistory.css";
 import { useNavigate } from "react-router-dom";
-const ConsumerJobCard = ({ jobs }) => {
+import { useAuth } from "../../../context/AuthContext";
+const ConsumerJobCard = ({ jobs, type }) => {
+  const [auth] = useAuth();
   const navigate = useNavigate();
   const sendApplieds = (job) => {
-    navigate("/consumer/job-history/applied/users", { state: job });
+    navigate("/consumer/job-history/applied/users", { state: { job, type } });
   };
+
   return (
     <div className="table-container">
       <table>
@@ -65,7 +68,24 @@ const ConsumerJobCard = ({ jobs }) => {
                   "this" === "complete" ? "text-success" : "light-gray"
                 }
               >
-                Not assign
+                {row?.taskAssign?.tradepersonId &&
+                row?.taskAssign?.consumerId === auth?.user?._id &&
+                row?.taskAssign?.contractId &&
+                row?.taskAssign?.isContract
+                  ? " Live project"
+                  : row?.taskAssign?.tradepersonId &&
+                    row?.taskAssign?.consumerId === auth?.user?._id &&
+                    row?.taskAssign?.contractId &&
+                    !row?.taskAssign?.isContract
+                  ? "Sign for Contract"
+                  : (!row?.taskAssign?.consumerId ||
+                      !row?.taskAssign?.contractId ||
+                      !row?.taskAssign?.tradepersonId) &&
+                    row?.accept?.find(
+                      (req) => req?.consumerId === auth?.user?._id
+                    )
+                  ? "Request Accepted"
+                  : "Request"}
               </td>
             </tr>
           ))}

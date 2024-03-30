@@ -53,6 +53,8 @@ const DigitalSchema = new mongoose.Schema({
   surveyPhoto: [{ img: String, path: String }],
   clientSignature: [{ img: String, path: String }],
   contractorSigniture: [{ img: String, path: String }],
+  tradepersonSignature: [{ name: String, signiture: String, path: String }],
+  jobId: String,
 });
 
 DigitalSchema.pre("save", function (next) {

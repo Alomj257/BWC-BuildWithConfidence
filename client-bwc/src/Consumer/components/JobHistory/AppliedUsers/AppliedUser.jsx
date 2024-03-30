@@ -7,8 +7,10 @@ import { chatCreate } from "../../../../service/ChatService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
 import { requestTast } from "../../../../service/TaskAssignService";
+import { FaStar } from "react-icons/fa6";
+import { server } from "../../../../Axios";
 
-const AppliedUser = ({ id, key, job }) => {
+const AppliedUser = ({ id, key, job, type }) => {
   const { data } = useFetch(`/auth/users/${id}`);
   const [auth] = useAuth();
   const navigate = useNavigate();
@@ -21,6 +23,10 @@ const AppliedUser = ({ id, key, job }) => {
     try {
       if (!currentUser || !oppositeUser) {
         toast.error("something wrong");
+        return;
+      }
+      if (currentUser === oppositeUser) {
+        toast.error("you can not apply this job");
         return;
       }
       const { data } = await chatCreate({
@@ -45,24 +51,128 @@ const AppliedUser = ({ id, key, job }) => {
         toast.error(" field missing try again ");
         return;
       }
-      const { data } = await requestTast({
-        tradepersonId,
-        consumerId,
-        jobId,
+      const { data } = await requestTast(
+        {
+          requesterId: consumerId,
+          requestedId: tradepersonId,
+        },
+        jobId
+      );
+      job?.requested?.push({
+        requesterId: consumerId,
+        requestedId: tradepersonId,
       });
       if (data?.message) {
         toast.error(data.message);
         return;
       }
-      toast.success("your request has been sent ");
+      toast.success(data);
     } catch (error) {
       console.log(error);
       toast.error(error?.data?.message || "something went wrong");
     }
   };
-
+  const handleContract = (job, userId) => {
+    navigate("/consumer/digital-contract", { state: { job, userId } });
+  };
   return (
     <>
+      <div className="container my-4">
+        <div className="row row-cols-md-3 row-cols-sm-2">
+          <div className="d-flex gap-4">
+            <div className="img m-auto" style={{ width: "6rem" }}>
+              <Modal
+                btnClasss="btn"
+                btnText={
+                  <img
+                    src={server + user?.profile}
+                    alt="profile"
+                    style={{ aspectRatio: "1/1" }}
+                    className="w-100  rounded-circle"
+                  />
+                }
+                bodyClass="bg-white"
+                closeIcon="fs-3"
+              >
+                <Profile id={user?._id} />
+              </Modal>
+            </div>
+            <div className="d-flex flex-column justify-content-between">
+              <div className="d-flex justify-content-between">
+                <div className="stars text-warning">
+                  <FaStar size={25} />
+                  <FaStar size={25} />
+                  <FaStar size={25} />
+                  <FaStar size={25} />
+                </div>
+                <div className="fw-bold">PDf Download</div>
+              </div>
+              <h5 className="fw-bold text-capitalize fw-bold">
+                {user?.firstname} {user?.lastname}
+              </h5>
+              <div>
+                <small>{user?.address}</small>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h6 className="text-end fw-bold my-2">Duration</h6>
+            <h5 className="text-end fw-bold fs-4 my-2">2 Weeks</h5>
+
+            <div className="d-flex justify-content-between gap-4 mt-4">
+              <button
+                onClick={() => handleMassage(auth?.user?._id, user?._id)}
+                className="btn btn-dark-blue w-100 text-white fw-bold"
+              >
+                Contact
+              </button>
+              {type === "post" && (
+                <button
+                  disabled={job?.requested?.find(
+                    (req) => req?.requestedId === user?._id
+                  )}
+                  onClick={() =>
+                    handleRequest(user?._id, auth?.user?._id, job?._id)
+                  }
+                  className="btn btn-outline-success text-dark w-100 "
+                >
+                  {job?.requested?.find((req) => req?.requestedId === user?._id)
+                    ? "Requested"
+                    : "Hire"}
+                </button>
+              )}
+
+              {type === "pre" && (
+                <button
+                  disabled={job?.taskAssign?.isContract}
+                  onClick={() => handleContract(job, user?._id)}
+                  className="btn btn-outline-success text-dark w-100 "
+                >
+                  {!job?.taskAssign?.isContract
+                    ? "Sing for Contract"
+                    : "Contract Signed"}
+                </button>
+              )}
+              {type === "live" && (
+                <button
+                  onClick={() => handleContract(job, user?._id)}
+                  className="btn btn-outline-success text-dark w-100 "
+                >
+                  {job?.taskAssign?.isContract && "Live Job"}
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="d-flex justify-content-between flex-column">
+            <div className="mx-auto">
+              <h6 className=" fw-bold my-2">Contract Price</h6>
+              <h5 className=" fw-bold fs-4">$23,457</h5>
+            </div>
+            <small className="mx-auto">expires on 12th March 2024</small>
+          </div>
+        </div>
+      </div>
+      {/* 
       <tr key={key} className="text-capitalize">
         <td className={"this" === "complete" ? "text-success" : "light-gray"}>
           {key + 1}
@@ -79,20 +189,17 @@ const AppliedUser = ({ id, key, job }) => {
         <td className={"this" === "complete" ? "text-success" : "light-gray"}>
           {user?.qualification || "Level 3 ETC"}
         </td>
-        <td
-          onClick={() =>
-            handleMassage(
-              auth?.user?._id,
-              auth?.user?._id !== user?._id ? user?._id : ""
-            )
-          }
-          className="btn btn-dark-blue text-white  w-100 "
-        >
-          Talk/Message
+        <td>
+          <button
+            className="btn btn-dark-blue text-white  w-100 "
+            onClick={() => handleMassage(auth?.user?._id, user?._id)}
+          >
+            Talk/Message
+          </button>
         </td>
-        <td className={"this" === "complete" ? "text-success" : "light-gray"}>
+        <td>
           <Modal
-            btnClasss="bg-transparent border-0"
+            btnClasss=" btn btn-outline-success"
             btnText=" View Profile"
             bodyClass="bg-white"
             closeIcon="fs-3"
@@ -100,13 +207,33 @@ const AppliedUser = ({ id, key, job }) => {
             <Profile id={user?._id} />
           </Modal>
         </td>
-        <td
-          onClick={() => handleRequest(user?._id, auth?.user?._id, job?._id)}
-          className="btn btn-outline-success text-dark w-100 "
-        >
-          Hire
+        <td className="">
+          {type === "post" && (
+            <button
+              disabled={job?.requested?.find(
+                (req) => req?.requestedId === user?._id
+              )}
+              onClick={() =>
+                handleRequest(user?._id, auth?.user?._id, job?._id)
+              }
+              className="btn btn-outline-success text-dark w-100 "
+            >
+              {job?.requested?.find((req) => req?.requestedId === user?._id)
+                ? "Requested"
+                : "Hire"}
+            </button>
+          )}
+
+          {type === "pre" && (
+            <button
+              onClick={() => handleContract(job, user?._id)}
+              className="btn btn-outline-success text-dark w-100 "
+            >
+              Sing for Contract
+            </button>
+          )}
         </td>
-      </tr>
+      </tr> */}
     </>
   );
 };

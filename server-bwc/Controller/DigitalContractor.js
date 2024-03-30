@@ -38,7 +38,7 @@ const createDigital = async (req, res) => {
     req.body.contractor = JSON.parse(contractor)[0];
     req.body.constractSum = JSON.parse(contractSum);
     const createdData = await new DigitalContractModel(req.body).save();
-    return res.status(201).json("digital contractor created successfully");
+    return res.status(201).json(createdData);
   } catch (error) {
     console.error("Error creating data:", error);
     res.status(500).json(new Error({ message: error.message }));

@@ -8,9 +8,9 @@ const TradeDashboardPanel = () => {
     { name: "dashboard", icon: "bx bx-grid-alt" },
     { name: "consumer", icon: "bx bx-user-pin" },
     { name: "jobs", icon: "bx bxs-shopping-bags" },
-    // { name: "create job", icon: "bx bx-select-multiple" },
-    { name: "job history", icon: "bx bx-history" },
-    // { name: "supplier", icon: "bx bx-bell" },
+    // { name: "Requests", icon: "bx bx-select-multiple" },
+    { name: "job portal", icon: "bx bx-history" },
+    { name: "requests", icon: "bx bx-bell" },
     { name: "message", icon: "bx bx-message-rounded-dots" },
   ];
   return (

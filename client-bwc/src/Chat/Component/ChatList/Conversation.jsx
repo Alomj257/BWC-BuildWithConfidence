@@ -6,7 +6,7 @@ import useFetch from "../../../Hooks/useFetch";
 const Conversation = ({ data, curUserId, online }) => {
   const [userData, setUserData] = useState(null);
   const userId = data?.members?.find((id) => id !== curUserId);
-  const getData = useFetch(`/auth/users/${userId}`);
+  const getData = useFetch(`/auth/users/${userId ? userId : ""}`);
   useEffect(() => {
     setUserData(getData?.data);
   }, [getData]);

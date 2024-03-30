@@ -68,3 +68,5 @@ export const resetPassword = async (email, password, cnfPassword) => {
     throw error.response.data.message;
   }
 };
+export const uploadSignitureService = async (data, id) =>
+  await Axios.post(`/auth/signiture/${id}`, data);

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import dummyimg from "../../../assests/profile/P1.png";
 import { useAuth } from "../../../context/AuthContext";
-import useFetch from "../../../Hooks/useFetch";
 import Modal from "../../../Utils/Modal/Modal";
 import UpdateProfile from "./UpdateProfile/UpdateProfile";
 import { toast } from "react-toastify";
@@ -18,7 +17,7 @@ const Profile = ({ id }) => {
   // const [img, setImg] = useState(null);
   const getUser = async () => {
     try {
-      const res = await Axios.get(`/auth/users/${id}`);
+      const res = await Axios.get(`/auth/users/${id ? id : ""}`);
       console.log(res);
       if (!res.data.message) {
         setUser(res.data);

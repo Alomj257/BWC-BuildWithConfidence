@@ -39,6 +39,15 @@ const jobPostSchema = new mongoose.Schema(
     },
     postedBy: String,
     applied: Array,
+    requested: Array,
+    accept: Array,
+    taskAssign: {
+      consumerId: String,
+      tradepersonId: String,
+      contractId: String,
+      isContract: { type: Boolean, default: false },
+      task: { type: Number, default: 0 },
+    },
   },
   { timestamps: true }
 );

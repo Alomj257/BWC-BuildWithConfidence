@@ -3,9 +3,14 @@ import "./CreateJob.css";
 import DatePicker from "react-datepicker";
 import { saveDigitalService } from "../../../service/DigitalContractor";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import { consumerContractSignService } from "../../../service/TaskAssignService";
+import { useAuth } from "../../../context/AuthContext";
 
 const JobCreate = () => {
   const [digital, setDigital] = useState("digital");
+  const [auth] = useAuth();
+  const { state } = useLocation();
   const [client, setClient] = useState({
     institute: "",
     individual: "",
@@ -54,6 +59,7 @@ const JobCreate = () => {
       inputData.isBothAgree = isBothAgree;
       inputData.partyContact = partyContact;
       inputData.isMilestone = isMilestone;
+      inputData.jobId = state?.job?._id;
 
       const formData = new FormData();
       procurement.forEach((value, index) => {
@@ -67,10 +73,18 @@ const JobCreate = () => {
         formData.append(key, inputData[key]);
       }
       const res = await saveDigitalService(formData);
-      if (res.message) {
-        toast.error(res.message);
+      const { data } = await consumerContractSignService(
+        {
+          consumerId: auth?.user?._id,
+          contractId: res?._id,
+          tradepersonId: state?.userId,
+        },
+        state?.job?._id
+      );
+      if (res.message || data?.message) {
+        toast.error("something went wrong please try again ");
       }
-      toast.success(res);
+      toast.success(data);
     } catch (err) {
       console.log(err);
       toast.error(err);
@@ -114,6 +128,13 @@ const JobCreate = () => {
   return (
     <div>
       <h2 className="my-2 fw-bold text-center mt-5">Job Create</h2>
+      {!state?.job?._id && (
+        <div className="text-warning bg-light text-center my-3 p-2 rounded-2">
+          {" "}
+          Please got to the job history and click job which you want contract in
+          the pre contract otherwise you can not sign.
+        </div>
+      )}
 
       <form action="" onSubmit={handleSubmit}>
         {/* field */}
