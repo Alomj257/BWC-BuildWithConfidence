@@ -1,3 +1,4 @@
+const BidModel = require("../Model/BidForJob");
 const JobPost = require("../Model/JobPost");
 
 // Error handler
@@ -11,6 +12,13 @@ exports.createJobPost = async (req, res) => {
   try {
     console.log(req.body);
     const jobPost = await JobPost.create(req.body);
+    if (jobPost) {
+      await new BidModel({
+        jobId: jobPost._id,
+        consumerId: jobPost.postedBy,
+        bids: [{ consumerBid: jobPost?.budget }],
+      }).save();
+    }
     res.status(201).json(jobPost);
   } catch (err) {
     errorHandler(res, err);

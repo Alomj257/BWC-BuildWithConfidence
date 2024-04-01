@@ -11,7 +11,7 @@ const TradePersonCard = ({ trade }) => {
         <div className="col-4 px-0">
           <Modal
             btnClasss="border-0 bg-white"
-            bodyClass="bg-white"
+            bodyClass="bg-white col-md-8 col-sm-10 col-12"
             closeIcon="fs-1"
             btnText={
               <img

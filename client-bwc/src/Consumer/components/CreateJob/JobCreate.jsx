@@ -164,7 +164,7 @@ const JobCreate = () => {
                 Upload Premade
               </div>
             </div>
-            {digital === "premade" && (
+            {/* {digital === "premade" && (
               <div className="p-2 text-center">
                 <div
                   className={`job-file-upload-container p-2 w-100 fw-bold job-create-field rounded`}
@@ -183,7 +183,7 @@ const JobCreate = () => {
                   />
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </div>
         {digital === "digital" && (

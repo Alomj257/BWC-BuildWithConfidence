@@ -11,8 +11,9 @@ const DashboardPanel = () => {
     { name: "digital contract", icon: "bx bx-select-multiple" },
     { name: "job portal", icon: "bx bx-history" },
     { name: "supplier", icon: "bx bx-bell" },
-    { name: "message", icon: "bx bx-message-rounded-dots" },
+    // { name: "message", icon: "bx bx-message-rounded-dots" },
   ];
+  
   return (
     <div className="wrapper">
       <Sidebar sidebar={sidebar} role="consumer" />

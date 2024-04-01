@@ -5,6 +5,7 @@ import ReviewJobPost from "./ReviewJobPost";
 import { toast } from "react-toastify";
 import jobPostService from "../../../../service/jobPostService";
 import { useAuth } from "../../../../context/AuthContext";
+import DatePicker from "react-datepicker";
 const PostJobCom = () => {
   const [auth] = useAuth();
   const [work, setWork] = useState([]);
@@ -247,15 +248,18 @@ const PostJobCom = () => {
                         ? "work-acitive"
                         : ""
                     } post-1 position-relative`}
-                    onClick={() =>
-                      setStart({ ...start, time: "As soon as possible" })
-                    }
                   >
-                    <span> As soon as possible</span>
-                    <input
+                    {/* <span> As soon as possible</span> */}
+                    {/* <input
                       type="date"
                       className="position-absolute  border-0  bg-transparent"
                       style={{ inset: 0, outline: "none", opacity: 0.2 }}
+                    /> */}
+                    <DatePicker
+                      selected={start?.time || new Date()}
+                      className="w-100 bg-transparent border-0 shadow-none date-peacker"
+                      onChange={(date) => setStart({ ...start, time: date })}
+                      popperPlacement="bottom-start"
                     />
                   </div>
                 </div>
@@ -297,14 +301,15 @@ const PostJobCom = () => {
                         ? "work-acitive"
                         : ""
                     } post-1`}
-                    onClick={() =>
-                      setCompletion({
-                        ...completion,
-                        time: "As soon as possible",
-                      })
-                    }
                   >
-                    As soon as possible
+                    <DatePicker
+                      selected={completion?.time || new Date()}
+                      className="w-100 bg-transparent border-0 shadow-none date-peacker"
+                      onChange={(date) =>
+                        setCompletion({ ...completion, time: date })
+                      }
+                      popperPlacement="bottom-start"
+                    />
                   </div>
                 </div>
                 <div className="p-2">

@@ -91,7 +91,7 @@ const AppliedUser = ({ id, key, job, type }) => {
                     className="w-100  rounded-circle"
                   />
                 }
-                bodyClass="bg-white"
+                bodyClass="bg-white col-md-8 col-sm-10 col-12"
                 closeIcon="fs-3"
               >
                 <Profile id={user?._id} />
