@@ -40,3 +40,16 @@ background-color: transparent !important;
 color: var(--color-dark-blue) !important;
 border: 2px solid  var(--color-dark-blue) !important;
 }
+.btn-outline-dark-blue{
+background-color: transparent !important;
+color: var(--color-dark-blue) !important;
+border: 2px solid  var(--color-dark-blue) !important;
+}
+.btn-outline-dark-blue:hover{
+color: white !important;
+background: var(--color-dark-blue) !important;
+border: 2px solid  var(--color-dark-blue) !important;
+}
+.bg-dark-blue{
+  background-color: var(--color-dark-blue);
+}

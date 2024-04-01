@@ -26,6 +26,7 @@ import AppliedUsersPage from "./Consumer/pages/AppliedUsers/AppliedUsersPage";
 import { useAuth } from "./context/AuthContext";
 import AboutUs from "./PublicView/Pages/AboutUs";
 import RequestsPage from "./Tradeperson/Pages/RequestsPage";
+import TradeJobDetails from "./Tradeperson/Components/TradeJobDetails/TradeJobDetails";
 
 function App() {
   const [auth] = useAuth();
@@ -71,6 +72,7 @@ function App() {
             <Route path="jobs" element={<Jobs />} />
             <Route path="job-portal" element={<TradeJobHistory />} />
             <Route path="requests" element={<RequestsPage />} />
+            <Route path="overview" element={<TradeJobDetails />} />
             {/* <Route path="supplier" element={<Suppl />} /> */}
           </Route>
           <Route

@@ -1,0 +1,4 @@
+.tradeJobDetail .trade-active{
+    font-weight: bold;
+    border-bottom: 3px solid var(--color-dark-blue); 
+}
