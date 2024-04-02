@@ -109,7 +109,9 @@ const JobDetails = () => {
             <span className="fw-bold">{job?.applied?.length}</span> applied
           </span>
         </span> */}
-        {job?.applied?.includes(auth?.user?._id) ? (
+        {auth?.user?.role === "CONSUMER" ? (
+          ""
+        ) : job?.applied?.includes(auth?.user?._id) ? (
           <button
             onClick={() => Handleapplyjob(job?._id)}
             disabled={job?.applied?.includes(auth?.user?._id)}

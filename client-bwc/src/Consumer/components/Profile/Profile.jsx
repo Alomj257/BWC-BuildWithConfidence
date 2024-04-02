@@ -18,7 +18,6 @@ const Profile = ({ id }) => {
   const getUser = async () => {
     try {
       const res = await Axios.get(`/auth/users/${id ? id : ""}`);
-      console.log(res);
       if (!res.data.message) {
         setUser(res.data);
       }

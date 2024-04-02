@@ -10,6 +10,7 @@ import { useAuth } from "../../../context/AuthContext";
 const JobCreate = () => {
   const [digital, setDigital] = useState("digital");
   const [auth] = useAuth();
+  const [font, setFont] = useState("font1");
   const { state } = useLocation();
   const [client, setClient] = useState({
     institute: "",
@@ -131,7 +132,7 @@ const JobCreate = () => {
       {!state?.job?._id && (
         <div className="text-warning bg-light text-center my-3 p-2 rounded-2">
           {" "}
-          Please got to the job history and click job which you want contract in
+          Please go to the job portal and click job which you want contract in
           the pre contract otherwise you can not sign.
         </div>
       )}
@@ -154,7 +155,7 @@ const JobCreate = () => {
                 Digital Service
               </div>
             </div>
-            <div className="p-2 text-center">
+            {/* <div className="p-2 text-center">
               <div
                 className={`${
                   digital === "premade" ? "create-job-active" : ""
@@ -163,7 +164,7 @@ const JobCreate = () => {
               >
                 Upload Premade
               </div>
-            </div>
+            </div> */}
             {/* {digital === "premade" && (
               <div className="p-2 text-center">
                 <div
@@ -1158,8 +1159,17 @@ const JobCreate = () => {
                   </div>
                 </div>
               </div>
-
-              <hr />
+              <div className="text-center my-2 d-flex align-items-center">
+                <span
+                  style={{ height: "1px" }}
+                  className="w-100 bg-secondary"
+                ></span>{" "}
+                <span className="px-2">Or</span>{" "}
+                <span
+                  style={{ height: "1px" }}
+                  className="w-100 bg-secondary"
+                ></span>
+              </div>
               <div className="row row-cols-md-2 w-100">
                 <div> Company Name</div>
                 <div className="p-2  ">
@@ -1183,7 +1193,7 @@ const JobCreate = () => {
                       onChange={handleChange}
                       name="contratorName"
                       type="text"
-                      className="w-100 bg-transparent border-0"
+                      className={`w-100 bg-transparent border-0 ${font}`}
                       style={{ outline: "none" }}
                       placeholder="contractor"
                     />
@@ -1192,7 +1202,7 @@ const JobCreate = () => {
                 <div> Signature</div>
                 <div className="p-2  text-center">
                   <div className="p-2 w-100 fw-bold job-create-field rounded job-file-upload-container">
-                    <label htmlFor="" className="job-file-upload-label">
+                    {/* <label htmlFor="" className="job-file-upload-label">
                       {inputData.contractorSigniture
                         ? inputData.contractorSigniture.name
                         : "Upload Signiture"}
@@ -1205,7 +1215,34 @@ const JobCreate = () => {
                       className="w-100 bg-transparent border-0 job-file-upload-input"
                       style={{ outline: "none" }}
                       placeholder=" £200 per week"
-                    />
+                    /> */}
+                    <select
+                      name="font"
+                      onChange={(e) => setFont(e.target.value)}
+                      id=""
+                      className="bg-transparent w-100 border-0"
+                      style={{ outline: "none" }}
+                    >
+                      <option className={"font1"}>Select Font</option>
+                      <option className={"font1"} value="font1">
+                        {inputData?.contratorName}
+                      </option>
+                      <option className={"font2"} value="font2">
+                        {inputData?.contratorName}
+                      </option>
+                      <option className={"font3"} value="font3">
+                        {inputData?.contratorName}
+                      </option>
+                      <option className={"font4"} value="font4">
+                        {inputData?.contratorName}
+                      </option>
+                      <option className={"font5"} value="font5">
+                        {inputData?.contratorName}
+                      </option>
+                      <option className={"font6"} value="font6">
+                        {inputData?.contratorName}
+                      </option>
+                    </select>
                   </div>
                 </div>
                 <div>Date</div>

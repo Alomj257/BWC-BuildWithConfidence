@@ -1,0 +1,67 @@
+.tradeperson-profile {
+    width: 100%;
+    max-width: 70%;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+  }
+  
+  .profile-header {
+    display: flex;
+  }
+  
+  .profile-image {
+    flex: 0 0 auto;
+    margin-right: 20px;
+  }
+  
+  .profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  
+  .profile-info {
+    margin-top: 25px;
+    flex: 1 1 auto;
+  }
+  
+  .info-row {
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    color: blue;
+  }
+  .info-row.name{
+    font-size: 25px;
+  }
+  
+  .profile-details {
+    margin-top: 20px;
+  }
+  
+  .details h2,
+  .about-me h2 {
+    background-color: rgb(70, 70, 247);
+    color: white;
+    padding: 4px 15px;
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .details ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .details li {
+    margin-bottom: 5px;
+  }
+  
+  .about-me p {
+    line-height: 1.5;
+  }
+  

@@ -11,6 +11,8 @@ const bidSchema = new mongoose.Schema(
     consumerId: String,
     bids: [{ consumerBid: String, tradepersonBid: String }],
     attach: String,
+    duration: String,
+    expireQuotation: String,
   },
   { timestamps: true }
 );

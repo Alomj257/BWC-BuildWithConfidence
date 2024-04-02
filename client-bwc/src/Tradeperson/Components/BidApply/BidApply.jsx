@@ -8,7 +8,8 @@ const BidApply = ({ job }) => {
   const [bid, setBid] = useState(null);
   const Handleapplyjob = async (jobId) => {
     try {
-      const { data } = await applyJobService(auth?.user?._id, jobId);
+      bid.userId = auth?.user?._id;
+      const { data } = await applyJobService(jobId, bid);
       if (data.message) {
         toast.error(data.message);
         return;
