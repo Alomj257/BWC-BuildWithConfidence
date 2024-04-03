@@ -1,3 +1,4 @@
+const BidModel = require("../Model/BidForJob");
 const JobPost = require("../Model/JobPost");
 
 // Error handler
@@ -11,6 +12,14 @@ exports.createJobPost = async (req, res) => {
   try {
     console.log(req.body);
     const jobPost = await JobPost.create(req.body);
+    if (jobPost) {
+      await new BidModel({
+        jobId: jobPost._id,
+        consumerId: jobPost.postedBy,
+        duration: req.body.duration,
+        bids: [{ consumerBid: jobPost?.budget }],
+      }).save();
+    }
     res.status(201).json(jobPost);
   } catch (err) {
     errorHandler(res, err);
@@ -81,6 +90,13 @@ exports.applyJob = async (req, res) => {
     }
     job.applied.push(userId);
     job.save();
+    const bid = await BidModel.findOne({ jobId: job?._id });
+    bid.tradepersonId = userId;
+    bid.bids[bid.bids.length - 1].tradepersonBid = req.body.bid;
+    bid.duration = req.body.duration;
+    bid.expireQuotation = req.body.expireQuotation;
+    bid.save();
+
     res.status(201).json("Applied Successfylly");
   } catch (err) {
     console.log(err);
@@ -105,6 +121,32 @@ exports.getAllJobsAppliedByUser = async (req, res) => {
     console.log(userId);
     res.status(200).json(jobs);
   } catch (err) {
+    console.log(err);
+    errorHandler(res, err);
+  }
+};
+
+exports.getBidsByTradepersonAndConsumerId = async (req, res) => {
+  try {
+    const bids = await BidModel.find();
+    res.status(200).json(bids);
+  } catch (error) {
+    console.log(err);
+    errorHandler(res, err);
+  }
+};
+
+exports.getAllBidsbyjobIdAndConsumerId = async (req, res) => {
+  try {
+    const { jobId, consumerId, tradepersonId } = req.params;
+    const bids = await BidModel.findOne({
+      jobId: jobId,
+      consumerId: consumerId,
+      tradepersonId: tradepersonId,
+    });
+    // console.log(jobId, consumerId, tradepersonId, bids);
+    res.status(200).json(bids);
+  } catch (error) {
     console.log(err);
     errorHandler(res, err);
   }

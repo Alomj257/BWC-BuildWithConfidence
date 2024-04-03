@@ -4,7 +4,7 @@ const createDigital = async (req, res) => {
     let {
       surveyPhoto,
       clientSignature,
-      contractorSigniture,
+
       client,
       contractor,
       contractSum,
@@ -24,15 +24,9 @@ const createDigital = async (req, res) => {
           req?.files?.clientSignature[0]?.originalname,
         path: req?.files?.clientSignature[0]?.path,
       };
-      contractorSigniture = {
-        img:
-          "/consumer/digital-contractor/pic/" +
-          req?.files?.contractorSigniture[0]?.originalname,
-        path: req?.files?.contractorSigniture[0]?.path,
-      };
+
       req.body.surveyPhoto = surveyPhoto;
       req.body.clientSignature = clientSignature;
-      req.body.contractorSigniture = contractorSigniture;
     }
     req.body.client = JSON.parse(client)[0];
     req.body.contractor = JSON.parse(contractor)[0];

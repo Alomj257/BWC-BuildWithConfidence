@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./PostJobHome.css";
 import backgroundImage from "../../../../../assests/banner/b.png";
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../../../../Hooks/useFetch";
-import { useAuth } from "../../../../../context/AuthContext";
-import JobComCard from "../../../../../Tradeperson/Components/JobCom/JobComCard";
+import PostedList from "../../PostedList/PostedList";
 const PostJobHome = () => {
   const navigate = useNavigate();
-  const [auth] = useAuth();
-  // console.log(`/consumer/jobposts/jobposts/posted/${auth?.user?._id}`);
-  const { data } = useFetch(
-    `/consumer/jobposts/jobposts/posted/${auth?.user?._id}`
-  );
-  const [jobs, setJobs] = useState([]);
-  useEffect(() => {
-    setJobs(data);
-  }, [data]);
   return (
     <>
       <div className="d-flex">
@@ -51,14 +40,7 @@ const PostJobHome = () => {
           </div>
         </div>
       </div>
-      {Array.isArray(jobs)
-        ? jobs?.map((job, key) => (
-            <>
-              <JobComCard job={job} key={key} />
-              {key < jobs.length && <hr />}
-            </>
-          ))
-        : ""}
+      <PostedList />
     </>
   );
 };

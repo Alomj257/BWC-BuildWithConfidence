@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
 import { requestTast } from "../../../../service/TaskAssignService";
 import { FaStar } from "react-icons/fa6";
-import { server } from "../../../../Axios";
+import Axios, { server } from "../../../../Axios";
 
 const AppliedUser = ({ id, key, job, type }) => {
   const { data } = useFetch(`/auth/users/${id}`);
   const [auth] = useAuth();
+
+  const [bid, setBid] = useState(null);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -75,6 +77,21 @@ const AppliedUser = ({ id, key, job, type }) => {
   const handleContract = (job, userId) => {
     navigate("/consumer/digital-contract", { state: { job, userId } });
   };
+  useEffect(() => {
+    const getAllBid = async () => {
+      try {
+        const res = await Axios.get(
+          `/consumer/jobposts/bids/${job?._id}/${auth?.user?._id}/${id}`
+        );
+        console.log(res.data);
+        setBid(res.data);
+      } catch (error) {
+        console.log(error);
+        console.log(error);
+      }
+    };
+    getAllBid();
+  }, [job?._id, auth?.user?._id, id]);
   return (
     <>
       <div className="container my-4">
@@ -91,7 +108,7 @@ const AppliedUser = ({ id, key, job, type }) => {
                     className="w-100  rounded-circle"
                   />
                 }
-                bodyClass="bg-white"
+                bodyClass="bg-white col-md-8 col-sm-10 col-12"
                 closeIcon="fs-3"
               >
                 <Profile id={user?._id} />
@@ -117,7 +134,9 @@ const AppliedUser = ({ id, key, job, type }) => {
           </div>
           <div>
             <h6 className="text-end fw-bold my-2">Duration</h6>
-            <h5 className="text-end fw-bold fs-4 my-2">2 Weeks</h5>
+            <h5 className="text-end fw-bold fs-4 my-2">
+              {bid?.duration} Weeks
+            </h5>
 
             <div className="d-flex justify-content-between gap-4 mt-4">
               <button
@@ -166,9 +185,13 @@ const AppliedUser = ({ id, key, job, type }) => {
           <div className="d-flex justify-content-between flex-column">
             <div className="mx-auto">
               <h6 className=" fw-bold my-2">Contract Price</h6>
-              <h5 className=" fw-bold fs-4">$23,457</h5>
+              <h5 className=" fw-bold fs-4">
+                {bid?.bids[bid?.bids?.length - 1]?.tradepersonBid}
+              </h5>
             </div>
-            <small className="mx-auto">expires on 12th March 2024</small>
+            <small className="mx-auto">
+              expires on {bid?.expireQuotation}{" "}
+            </small>
           </div>
         </div>
       </div>

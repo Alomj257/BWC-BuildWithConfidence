@@ -18,7 +18,6 @@ const Profile = ({ id }) => {
   const getUser = async () => {
     try {
       const res = await Axios.get(`/auth/users/${id ? id : ""}`);
-      console.log(res);
       if (!res.data.message) {
         setUser(res.data);
       }
@@ -102,22 +101,21 @@ const Profile = ({ id }) => {
               </div>
             )}
           </div>
-          <h4 className="fw-bold">About Me</h4>
         </div>
         <div className="col-8">
           <div className="d-flex justify-content-between">
             <h4 className="fw-bold">
-              {user?.firstname || "John "} {user?.middlename || " Smith "}
-              {user?.lastname}
+              {user?.firstname || ""} {user?.middlename || ""}
+              {user?.lastname || ""}
             </h4>
             <div className="d-flex">
               <i className="bx bx-map fs-5 "></i>
               <span>
-                {(user?.address || "london") +
+                {(user?.address || "") +
                   "," +
-                  (user?.location || "Uk") +
+                  (user?.location || "") +
                   ", " +
-                  (user?.nationality || " ")}
+                  (user?.nationality || "")}
               </span>
             </div>
             <div>
@@ -148,58 +146,74 @@ const Profile = ({ id }) => {
             </div>
             <div className="col-8">
               <div className="my-3 text-center py-2 rounded bg-light">
-                {user?.qualification || " Electrician"}
+                {user?.qualification || ""}
               </div>
               <div className="my-3 text-center py-2 rounded bg-light">
-                {user?.experience || " 3 year"}
+                {user?.experience || ""}
               </div>
               <div className="my-3 text-center py-2 rounded bg-light">
-                {user?.qualification || " Level 3 ETC"}
+                {user?.qualification || ""}
               </div>
               <div className="my-3 text-center py-2 rounded bg-light">
-                {user?.title || "Carpet"}
+                {user?.title || ""}
               </div>
               <div className="my-3 text-center py-2 rounded bg-light">
                 {user?.gender || ""}
-              </div>
-              <div>
-                {auth?.user?._id !== id ? (
-                  <>
-                    {" "}
-                    <button
-                      onClick={() => handleMassage(auth?.user?._id, id)}
-                      className="broder-0 text-white fs-6 p-1 ps-3 fw-bold rounded-5 profile-btn"
-                    >
-                      {" "}
-                      Talk/ Message
-                      <span>
-                        <i className="bx bx-chevrons-right  bg-white rounded-circle text-dark p-2" />
-                      </span>
-                    </button>{" "}
-                  </>
-                ) : (
-                  <Modal
-                    bodyClass="bg-white col-md-8 col-sm-10"
-                    btnClasss="broder-0 text-white fs-6 p-1 ps-3 fw-bold rounded-5 profile-btn"
-                    btnText={
-                      <>
-                        Edit Profile
-                        <span className="mx-2">
-                          <i className="bx bx-chevrons-right  bg-white rounded-circle text-dark p-2" />
-                        </span>
-                      </>
-                    }
-                    closeIcon="fs-1"
-                  >
-                    <UpdateProfile reFetch={reFetchUpdate} />
-                  </Modal>
-                )}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="bg-light profile-about"></div>
+      <div className="text-center my-3">
+        {auth?.user?._id !== id ? (
+          <>
+            {" "}
+            <button
+              onClick={() => handleMassage(auth?.user?._id, id)}
+              className="broder-0 text-white fs-6 p-1 ps-3 fw-bold rounded-5 profile-btn"
+            >
+              {" "}
+              Talk/ Message
+              <span>
+                <i className="bx bx-chevrons-right  bg-white rounded-circle text-dark p-2" />
+              </span>
+            </button>{" "}
+          </>
+        ) : (
+          <Modal
+            bodyClass="bg-white col-md-8 col-sm-10"
+            btnClasss="broder-0 text-white fs-6 p-1 ps-3 fw-bold rounded-5 profile-btn"
+            btnText={
+              <>
+                Edit Profile
+                <span className="mx-2">
+                  <i className="bx bx-chevrons-right  bg-white rounded-circle text-dark p-2" />
+                </span>
+              </>
+            }
+            closeIcon="fs-1"
+          >
+            <UpdateProfile reFetch={reFetchUpdate} />
+          </Modal>
+        )}
+      </div>
+      <div className="bg-light profile-about rounded p-2">
+        <h4 className="fw-bold">About Me</h4>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
+          pariatur repellat quam, nesciunt ratione odit, dolorum praesentium
+          repellendus voluptate repudiandae quae doloremque expedita. Ullam
+          rerum culpa enim ipsam sunt expedita laudantium quas voluptate saepe
+          id laboriosam perferendis nulla numquam facilis in necessitatibus vero
+          itaque ab corrupti sit atque cupiditate, mollitia iusto. Quae possimus
+          accusantium repudiandae sint, nesciunt explicabo natus obcaecati? Illo
+          praesentium sequi corporis veniam asperiores unde! Assumenda labore
+          quibusdam, aliquam maiores deleniti dicta nobis sapiente temporibus
+          hic debitis itaque vero, odit, aspernatur sed. In autem minima animi,
+          harum dicta vel esse ad, assumenda repellat repellendus ex eveniet ab
+          odit.
+        </p>
+      </div>
       <div className="portfolio my-3 col-12">
         <h4 className="fw-bold mt-3">Portfolio</h4>
         <div className="row w-100 gap-4 flex-nowrap">

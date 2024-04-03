@@ -1,24 +1,27 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const tradePersonSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
+const tradePersonSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    experience: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
   },
-  experience: {
-    type: String,
-    required: true
-  },
-  location: {
-    type: String,
-    required: true
-  },
-  image: {
-    type: String,
-    required: true
-  }
-}, { timestamps: true });
+  { timestamps: true }
+);
 
-const TradePerson = mongoose.model('TradePerson', tradePersonSchema);
+const TradePerson = mongoose.model("TradePerson", tradePersonSchema);
 
 module.exports = TradePerson;

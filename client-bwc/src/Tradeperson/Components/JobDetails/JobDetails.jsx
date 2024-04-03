@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import "./JobCom.css";
-import { applyJobService } from "../../../service/jobPostService";
+import React from "react";
+import "./JobDetails.css";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { applyJobService } from "../../../service/jobPostService";
+import { useLocation } from "react-router-dom";
 import Modal from "../../../Utils/Modal/Modal";
 import BidApply from "../BidApply/BidApply";
-const JobComCard = ({ key, job }) => {
+const JobDetails = () => {
   const [auth] = useAuth();
-  const navigate = useNavigate();
-  const [isDropDown, setDropDown] = useState(false);
+  const { state } = useLocation();
+  const job = state;
   const Handleapplyjob = async (jobId) => {
     try {
       const { data } = await applyJobService(auth?.user?._id, jobId);
@@ -23,8 +23,9 @@ const JobComCard = ({ key, job }) => {
       toast.error(error.response.data.message);
     }
   };
+  console.log(job?.applied?.includes(auth?.user?._id));
   return (
-    <div className="job-card p-4" key={key}>
+    <div className="job-card p-4">
       <div className="d-flex justify-content-between">
         <div className="d-flex">
           <span className="my-auto p-3 logo rounded-circle">
@@ -35,34 +36,17 @@ const JobComCard = ({ key, job }) => {
             <small className="text-muted">company</small>
           </div>
         </div>
-        <div className="d-flex position-relative">
-          <span
-            onClick={() => setDropDown(!isDropDown)}
-            className="threeDot p-1 my-auto rounded-circle"
-          >
+        <span className="d-flex align-items-center">
+          <i className="bx fs-3 pe-2  bx-group text-primary"></i>
+          <span className="my-auto ">
+            <span className="fw-bold">{job?.applied?.length}</span> applied
+          </span>
+        </span>
+        {/* <div className="d-flex">
+          <span className="threeDot p-1 my-auto rounded-circle">
             <i className="bx  fs-3 bx-dots-vertical-rounded"></i>
           </span>
-          {isDropDown && (
-            <ul
-              className="position-absolute"
-              style={{
-                right: "1rem",
-                top: "3rem",
-                width: "max-content",
-                listStyle: "none",
-              }}
-            >
-              <li
-                style={{ cursor: "pointer" }}
-                onClick={() =>
-                  navigate("/tradeperson/job-details", { state: job })
-                }
-              >
-                View Details
-              </li>
-            </ul>
-          )}
-        </div>
+        </div> */}
       </div>
       <div className="d-flex justify-content-between my-2 mt-4 fw-bold ">
         <span className="d-flex">
@@ -82,6 +66,36 @@ const JobComCard = ({ key, job }) => {
       <div>
         <p>{job?.description || job?.desc}</p>
       </div>
+      <div className="d-flex my-4 justify-content-between align-items-center">
+        <div>
+          <div className="d-flex gap-4">
+            <small className="fw-bold fs-6">Start Date:</small>{" "}
+            <small>{job?.start?.time}</small>
+          </div>
+          <div className="d-flex gap-4">
+            <small className="fw-bold fs-6">Desired Day:</small>{" "}
+            <small>{job?.start?.day}</small>
+          </div>
+          <div className="d-flex gap-4">
+            <small className="fw-bold fs-6"> Desired Week:</small>{" "}
+            <small>{job?.start?.week}</small>
+          </div>
+        </div>
+        <div>
+          <div className="d-flex gap-4">
+            <small className="fw-bold fs-6">Completion Date:</small>{" "}
+            <small>{job?.completion?.time}</small>
+          </div>
+          <div className="d-flex gap-4">
+            <small className="fw-bold fs-6">Desired Day:</small>{" "}
+            <small>{job?.completion?.day}</small>
+          </div>
+          <div className="d-flex gap-4">
+            <small className="fw-bold fs-6"> Desired Week:</small>{" "}
+            <small>{job?.completion?.week}</small>
+          </div>
+        </div>
+      </div>
       <div className="d-flex justify-content-between">
         <span className="d-flex">
           <i className="bx fs-3 pe-2 bx-dollar-circle text-primary"></i>
@@ -89,13 +103,15 @@ const JobComCard = ({ key, job }) => {
             <span className="fw-bold">${job?.budget}</span> /Month
           </span>
         </span>
-        <span className="d-flex">
+        {/* <span className="d-flex">
           <i className="bx fs-3 pe-2 bx-group text-primary"></i>
           <span className="my-auto">
             <span className="fw-bold">{job?.applied?.length}</span> applied
           </span>
-        </span>
-        {job?.applied?.includes(auth?.user?._id) ? (
+        </span> */}
+        {auth?.user?.role === "CONSUMER" ? (
+          ""
+        ) : job?.applied?.includes(auth?.user?._id) ? (
           <button
             onClick={() => Handleapplyjob(job?._id)}
             disabled={job?.applied?.includes(auth?.user?._id)}
@@ -122,4 +138,4 @@ const JobComCard = ({ key, job }) => {
   );
 };
 
-export default JobComCard;
+export default JobDetails;

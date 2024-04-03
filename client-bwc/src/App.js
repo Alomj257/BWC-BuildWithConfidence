@@ -17,7 +17,7 @@ import Consumer from "./Tradeperson/Pages/Consumer";
 import PostJobCom from "./Consumer/components/JobPost/PostJob/PostJobCom";
 import PostJobHome from "./Consumer/components/JobPost/PostJob/PostJobHome/PostJobHome";
 import Chat from "./Chat/Page/Chat";
-import AiChatBoat from "./PublicView/AiChatBot/AiChatBoat";
+// import AiChatBoat from "s./PublicView/AiChatBot/AiChatBoat";
 import AuthPage from "./PublicView/Auth/AuthPage";
 import NearByConsumer from "./Tradeperson/Pages/NearByConsumer";
 import Jobs from "./Tradeperson/Pages/Jobs";
@@ -27,13 +27,14 @@ import { useAuth } from "./context/AuthContext";
 import AboutUs from "./PublicView/Pages/AboutUs";
 import RequestsPage from "./Tradeperson/Pages/RequestsPage";
 import TradeJobDetails from "./Tradeperson/Components/TradeJobDetails/TradeJobDetails";
+import JobDetails from "./Tradeperson/Components/JobDetails/JobDetails";
 
 function App() {
   const [auth] = useAuth();
   return (
     <>
       <ToastContainer />
-      <AiChatBoat />
+      {/* <AiChatBoat /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -48,6 +49,7 @@ function App() {
             <Route path="tradeperson" element={<TradePerson />} />
             <Route path="digital-contract" element={<CreateJob />} />
             <Route path="job-portal" element={<JobHistory />} />
+            <Route path="job/details" element={<JobDetails />} />
             <Route
               path="job-history/applied/users"
               element={<AppliedUsersPage />}
@@ -73,6 +75,7 @@ function App() {
             <Route path="job-portal" element={<TradeJobHistory />} />
             <Route path="requests" element={<RequestsPage />} />
             <Route path="overview" element={<TradeJobDetails />} />
+            <Route path="job-details" element={<JobDetails />} />
             {/* <Route path="supplier" element={<Suppl />} /> */}
           </Route>
           <Route

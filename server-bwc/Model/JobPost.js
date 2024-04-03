@@ -11,6 +11,10 @@ const jobPostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    experience: {
+      type: String,
+    },
+
     start: {
       type: {},
       required: true,

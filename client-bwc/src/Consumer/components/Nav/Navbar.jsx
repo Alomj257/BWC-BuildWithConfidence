@@ -53,7 +53,9 @@ function Navbar(props) {
             <i class="bx bxs-message-dots icon"></i>
           </button>
           <i class="bx bxs-heart icon"></i>
-          <span className="username">Jahangir Alom</span>
+          <span className="username">
+            {auth?.user?.firstname} {auth?.user?.lastname}
+          </span>
           <Modal
             btnText={
               <img
@@ -63,7 +65,7 @@ function Navbar(props) {
               />
             }
             btnClasss="border-0 bg-transparent"
-            bodyClass="bg-white"
+            bodyClass="bg-white col-md-8 col-sm-10 col-12"
             closeIcon="fs-1"
           >
             <Profile id={auth?.user?._id} />
