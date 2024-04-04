@@ -23,12 +23,12 @@ const SupplierCom = () => {
         >
           Back
         </button>
-        {data.map((data, key) => {
+        {supplier.map((syp, key) => {
           return (
             <>
               <div className="d-flex justify-content-between">
                 <div>
-                  <h4 className="mb-0 mt-3 fw-bold mx-0 px-0">{data?.topic}</h4>
+                  <h4 className="mb-0 mt-3 fw-bold mx-0 px-0">{syp?._id}</h4>
                 </div>
                 {key === 0 && (
                   <>
@@ -46,7 +46,7 @@ const SupplierCom = () => {
                 )}
               </div>
               <div className="row row-cols-lg-3  row-cols-md-2 row cols-sm-1">
-                {supplier.supplier?.map((supplier, key) => (
+                {syp?.categories?.map((supplier, key) => (
                   <SupplierCard supplier={supplier} />
                 ))}
               </div>

@@ -49,6 +49,7 @@ function App() {
             <Route path="tradeperson" element={<TradePerson />} />
             <Route path="digital-contract" element={<CreateJob />} />
             <Route path="job-portal" element={<JobHistory />} />
+            <Route path="overview" element={<TradeJobDetails />} />
             <Route path="job/details" element={<JobDetails />} />
             <Route
               path="job-history/applied/users"

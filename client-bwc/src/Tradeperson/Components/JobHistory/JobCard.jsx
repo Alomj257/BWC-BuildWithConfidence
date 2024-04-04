@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const JobCard = ({ jobs, type }) => {
   const [auth] = useAuth();
@@ -45,7 +46,18 @@ export default JobCard;
 
 const Job = ({ row, key, type }) => {
   const [auth] = useAuth();
+  const navigate = useNavigate();
   //   console.log(type);
+  const handleRedirect = () => {
+    if (
+      row?.taskAssign?.consumerId &&
+      row?.taskAssign?.tradepersonId === auth?.user?._id &&
+      row?.taskAssign?.contractId &&
+      row?.taskAssign?.isContract
+    ) {
+      navigate("tradeperson/overview", { state: row });
+    }
+  };
   return (
     <>
       <tr key={key} className="text-capitalize">
@@ -61,7 +73,10 @@ const Job = ({ row, key, type }) => {
         <td className={"this" === "complete" ? "text-success" : "light-gray"}>
           {new Date(row?.createdAt).toLocaleDateString()}
         </td>
-        <td className={"this" === "complete" ? "text-success" : "light-gray"}>
+        <td
+          className={"this" === "complete" ? "text-success" : "light-gray"}
+          onClick={handleRedirect}
+        >
           {row?.taskAssign?.consumerId &&
           row?.taskAssign?.tradepersonId === auth?.user?._id &&
           row?.taskAssign?.contractId &&

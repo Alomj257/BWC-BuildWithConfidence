@@ -8,6 +8,16 @@ const ConsumerJobCard = ({ jobs, type }) => {
   const sendApplieds = (job) => {
     navigate("/consumer/job-history/applied/users", { state: { job, type } });
   };
+  const handleOverview = (job) => {
+    if (
+      job?.taskAssign?.tradepersonId &&
+      job?.taskAssign?.consumerId === auth?.user?._id &&
+      job?.taskAssign?.contractId &&
+      job?.taskAssign?.isContract
+    ) {
+      navigate("/consumer/overview", { state: job });
+    }
+  };
 
   return (
     <div className="table-container">
@@ -64,6 +74,8 @@ const ConsumerJobCard = ({ jobs, type }) => {
                 {row?.applied?.length}
               </td>
               <td
+                style={{ cursor: "pointer" }}
+                onClick={() => handleOverview(row)}
                 className={
                   "this" === "complete" ? "text-success" : "light-gray"
                 }

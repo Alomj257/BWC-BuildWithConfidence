@@ -6,6 +6,7 @@ import Profile from "../Profile/Profile";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { server } from "../../../Axios";
+import { useNotice } from "../../../context/NoticeContext";
 
 function Navbar(props) {
   const [isNav, setNav] = useState(false);
@@ -14,6 +15,7 @@ function Navbar(props) {
   const location = useLocation();
   const path = location.pathname.split("/");
   const page = path[path?.length - 1];
+  const { state } = useNotice();
   return (
     <>
       <div className="text-end pe-3 py-2">
@@ -48,9 +50,18 @@ function Navbar(props) {
           </div>
         )}
         <div className="navbar-right">
-          <button className="btn" onClick={() => navigate("/consumer/chat")}>
+          <button
+            className="btn position-relative"
+            onClick={() => navigate("/consumer/chat")}
+          >
             {" "}
             <i class="bx bxs-message-dots icon"></i>
+            <span
+              style={{ fontSize: "11px" }}
+              className="position-absolute top-0 bg-danger px-1 d-flex ms-auto text-white rounded-circle"
+            >
+              {state?.chat > 0 ? state?.chat : ""}
+            </span>
           </button>
           <i class="bx bxs-heart icon"></i>
           <span className="username">

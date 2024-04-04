@@ -26,12 +26,39 @@ const addMessage = async (req, res) => {
 const getMessage = async (req, res) => {
   try {
     const { chatId } = req.params;
-    const result = await MessageModel.find({ chatId:chatId });
+    const result = await MessageModel.find({ chatId: chatId });
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
+const readAllMessage = async (req, res) => {
+  try {
+    const { chatId, userId } = req.params;
+    const messages = await MessageModel.updateMany(
+      { chatId, senderId: { $ne: userId } },
+      { read: true }
+    );
+    res.status(200).json(messages);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+const getUnreadMessage = async (req, res) => {
+  try {
+    const { chatId, userId } = req.params;
+    const unreadCount = await MessageModel.countDocuments({
+      chatId,
+      senderId: { $ne: userId },
+      read: false,
+    });
+    res.status(200).json(unreadCount);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
 
-module.exports = { addMessage, getMessage };
+module.exports = { addMessage, getMessage, readAllMessage, getUnreadMessage };
