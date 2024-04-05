@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { paymentRelease } from "../../../service/TaskAssignService";
 import useFetch from "../../../Hooks/useFetch";
 import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 
 const stripePromise = loadStripe("your_public_stripe_key");
 
@@ -62,25 +63,26 @@ const TradeJobDetails = () => {
       return;
     }
     try {
-      // const response = await axios.post("/create-payment-intent", {
-      //   amount: calculateTotalAmount(data),
-      //   currency: "usd",
-      // });
-      // const clientSecret = response.data.clientSecret;
-      // const stripe = await stripePromise;
-      // const result = await stripe.confirmCardPayment(clientSecret, {
-      //   payment_method: {
-      //     card: elements.getElement(CardElement),
-      //   },
-      // });
-      // if (result.error) {
-      //   console.error(result.error.message);
-      // } else {
-      //   // Payment success, handle accordingly
-      // }
+      const response = await axios.post("/create-payment-intent", {
+        // amount: calculateTotalAmount(data), // Implement this function to calculate total amount
+        currency: "usd", // Change this based on your currency
+      });
+      const clientSecret = response.data.clientSecret;
+      const stripe = await stripePromise;
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          // card: elements.getElement(CardElement),
+        },
+      });
+      if (result.error) {
+        console.error(result.error.message);
+      } else {
+        // Payment success, handle accordingly
+      }
     } catch (error) {
       console.error("Error:", error);
     }
+
     setPaymentLoading(false);
   };
 

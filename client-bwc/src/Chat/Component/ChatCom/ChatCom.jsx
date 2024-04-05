@@ -55,7 +55,7 @@ const ChatCom = () => {
           unreadMessagesMap[data[index]._id] = count;
           sum += count?.data || 0;
         });
-        console.log(sum);
+        // console.log(sum);
         noticeDispatch({
           type: "notice",
           payload: sum,
@@ -66,7 +66,7 @@ const ChatCom = () => {
       }
     };
     getChats();
-  }, [auth?.user]);
+  }, [auth?.user, noticeDispatch]);
 
   const checkOnlieStatus = (chat) => {
     const chatMemebr = chat?.members?.find(
