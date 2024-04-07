@@ -7,9 +7,13 @@ import {
   FaQuestion,
   FaRegCreditCard,
 } from "react-icons/fa6";
+import Navbar from "../Home/Navbar/Navbar";
 const AboutHome = () => {
   return (
     <div className="about">
+      <div className="bg-info">
+        <Navbar />
+      </div>
       <div>
         <div className="container">
           <h1 className="fs-1 fw-bold my-2">About Us</h1>

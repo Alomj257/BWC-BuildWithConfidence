@@ -4,7 +4,7 @@ import FaqCom from "./FaqCom";
 const ConsumerFaq = () => {
   return (
     <div>
-      <div className="container">
+      <div className="container" id="consumer-faq">
         <h3 className="fw-bold my-4">Consumer FAQs</h3>
         <FaqCom faqs={consumerFaqData} />
       </div>

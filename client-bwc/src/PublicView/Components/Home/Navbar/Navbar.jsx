@@ -1,11 +1,13 @@
 import React from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { Link } from "react-scroll";
+
 const Navbar = () => {
   return (
     <nav className="welcome-navbar">
       <ul className="d-flex m-0">
-        <Link
+        <NavLink
           to="/"
           className="text-decoration-none p-3 fs-4 fw-bold text-white"
         >
@@ -13,46 +15,62 @@ const Navbar = () => {
             <i className="bx bx-right-arrow-alt mx-3 my-auto fs-1"></i>{" "}
             <span className="my-auto"> BWC</span>
           </li>
-        </Link>
+        </NavLink>
         <ul className="d-flex ms-auto me-2 my-0 welcome-navbar ">
           <Link
-            to="/"
+            to="home"
+            spy={true}
+            offset={-150}
+            duration={0}
+            smooth={true}
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Home</li>
           </Link>
-          <Link
+          <NavLink
             to="/about"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>About</li>
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/consumer"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Consumer</li>
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/tradeperson"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Tradeperson</li>
-          </Link>
+          </NavLink>
           <Link
-            to="/faq"
+            to="faq"
+            spy={true}
+            offset={-150}
+            duration={0}
+            smooth={true}
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>FAQ</li>
           </Link>
           <Link
-            to="/articles"
+            to="articles"
+            spy={true}
+            offset={-150}
+            duration={0}
+            smooth={true}
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Articles</li>
           </Link>
           <Link
-            to="/contact"
+            to="contact"
+            spy={true}
+            offset={-150}
+            duration={0}
+            smooth={true}
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Contact </li>

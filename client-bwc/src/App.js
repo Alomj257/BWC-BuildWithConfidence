@@ -28,6 +28,10 @@ import AboutUs from "./PublicView/Pages/AboutUs";
 import RequestsPage from "./Tradeperson/Pages/RequestsPage";
 import TradeJobDetails from "./Tradeperson/Components/TradeJobDetails/TradeJobDetails";
 import JobDetails from "./Tradeperson/Components/JobDetails/JobDetails";
+import {
+  ConsumerProtect,
+  TraderPersonProtect,
+} from "./ProtectRoutes/ProtectRoutes";
 
 function App() {
   const [auth] = useAuth();
@@ -43,47 +47,46 @@ function App() {
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/chat" element={<Chat />} />
 
-          {/* <Route path="/consumer" element={<ConsumerProtect />}> */}
-          <Route path="/consumer" element={<DashboardPanel />}>
-            <Route path="" element={<Dashboard />} />
-            <Route path="tradeperson" element={<TradePerson />} />
-            <Route path="digital-contract" element={<CreateJob />} />
-            <Route path="job-portal" element={<JobHistory />} />
-            <Route path="overview" element={<TradeJobDetails />} />
-            <Route path="job/details" element={<JobDetails />} />
-            <Route
-              path="job-history/applied/users"
-              element={<AppliedUsersPage />}
-            />
-            <Route path="profile" element={<Profile id={auth?.user?._id} />} />
-            {/* <Route path="post-job" element={<PostJob />} /> */}
-            <Route path="post-job" element={<PostJobHome />} />
-            <Route path="post-job/post" element={<PostJobCom />} />
-            <Route path="chat" element={<Chat />} />
+          <Route path="/consumer" element={<ConsumerProtect />}>
+            <Route path="" element={<DashboardPanel />}>
+              <Route path="" element={<Dashboard />} />
+              <Route path="tradeperson" element={<TradePerson />} />
+              <Route path="digital-contract" element={<CreateJob />} />
+              <Route path="job-portal" element={<JobHistory />} />
+              <Route path="overview" element={<TradeJobDetails />} />
+              <Route path="job/details" element={<JobDetails />} />
+              <Route
+                path="job-history/applied/users"
+                element={<AppliedUsersPage />}
+              />
+              <Route
+                path="profile"
+                element={<Profile id={auth?.user?._id} />}
+              />
+              {/* <Route path="post-job" element={<PostJob />} /> */}
+              <Route path="post-job" element={<PostJobHome />} />
+              <Route path="post-job/post" element={<PostJobCom />} />
+              <Route path="chat" element={<Chat />} />
+            </Route>
+            <Route path="tradespern/nearby" element={<TradesPersonNearby />} />
+            <Route path="supplier" element={<Supplier />} />
           </Route>
-
-          <Route
-            path="/consumer/tradespern/nearby"
-            element={<TradesPersonNearby />}
-          />
-          <Route path="/consumer/supplier" element={<Supplier />} />
           {/* Tradeperson */}
-          <Route path="/tradeperson" element={<TradeDashboardPanel />}>
-            <Route path="" element={<TradeDashboard />} />
-            <Route path="consumer" element={<Consumer />} />
-            <Route path="message" element={<Chat />} />
-            <Route path="jobs" element={<Jobs />} />
-            <Route path="job-portal" element={<TradeJobHistory />} />
-            <Route path="requests" element={<RequestsPage />} />
-            <Route path="overview" element={<TradeJobDetails />} />
-            <Route path="job-details" element={<JobDetails />} />
-            {/* <Route path="supplier" element={<Suppl />} /> */}
+          <Route path="/tradeperson" element={<TraderPersonProtect />}>
+            <Route path="" element={<TradeDashboardPanel />}>
+              <Route path="" element={<TradeDashboard />} />
+              <Route path="consumer" element={<Consumer />} />
+              <Route path="message" element={<Chat />} />
+              <Route path="jobs" element={<Jobs />} />
+              <Route path="job-portal" element={<TradeJobHistory />} />
+              <Route path="requests" element={<RequestsPage />} />
+              <Route path="overview" element={<TradeJobDetails />} />
+              <Route path="job-details" element={<JobDetails />} />
+              {/* <Route path="supplier" element={<Suppl />} /> */}
+            </Route>
+            <Route path="consumer/nearby" element={<NearByConsumer />} />
+            {/* <Route path="supplier" element={<Supplier />} /> */}
           </Route>
-          <Route
-            path="/tradeperson/consumer/nearby"
-            element={<NearByConsumer />}
-          />
-          <Route path="/tradeperson/supplier" element={<Supplier />} />
         </Routes>
       </BrowserRouter>
     </>

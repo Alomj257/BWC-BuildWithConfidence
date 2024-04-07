@@ -2,7 +2,7 @@ import React from "react";
 import "./AboutHome.css";
 const JoinNow = () => {
   return (
-    <div className="bg-info p-5" style={{ marginTop: "10rem" }}>
+    <div id="contact" className="bg-info p-5" style={{ marginTop: "10rem" }}>
       <div className="container">
         <div className="row">
           <div className="col-md-3 d-flex">

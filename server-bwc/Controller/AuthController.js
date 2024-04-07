@@ -1,5 +1,6 @@
 const User = require("../Model/User");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 const register = async (req, res) => {
   try {
@@ -43,6 +44,34 @@ const login = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+//  google login start
+const googleLogin = passport.authenticate("google", {
+  scope: ["profile", "email"],
+});
+const googleCallback = (req, res) => {
+  try {
+    const { user } = req;
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET || "yourSecretKey",
+      {
+        expiresIn: "3h",
+      }
+    );
+    res.redirect(`http://localhost:3001/?token=${token}`);
+  } catch (error) {
+    console.error("Error generating JWT token:", error);
+    res.redirect("/login");
+  }
+};
+
+const logout = (req, res) => {
+  req.logout();
+  res.redirect("/");
+};
+
+//  google login end
 
 const getAllUsers = async (req, res) => {
   try {
@@ -146,4 +175,7 @@ module.exports = {
   getUserById,
   uploadSigniture,
   updateUserDetails,
+  googleLogin,
+  googleCallback,
+  logout,
 };
