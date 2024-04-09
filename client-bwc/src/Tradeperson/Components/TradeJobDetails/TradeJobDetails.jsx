@@ -1,12 +1,95 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./TradeJobDetails.css";
+import { useLocation } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import { toast } from "react-toastify";
+import { paymentRelease } from "../../../service/TaskAssignService";
+import useFetch from "../../../Hooks/useFetch";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+
+const stripePromise = loadStripe("your_public_stripe_key");
 
 const TradeJobDetails = () => {
   const [isActive, setActive] = useState("overview");
+  const { state } = useLocation();
+  const [total, setTotal] = useState(0);
+  const [paid, setPaid] = useState(0);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+  const [auth] = useAuth();
+  const { data } = useFetch(
+    `/consumer/digital-contractor/${state?.taskAssign?.contractId}`
+  );
+  const userdata = useFetch(`/auth/users/${state?.taskAssign?.tradepersonId}`);
+  const [contract, setContract] = useState({});
+
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    if (data) {
+      setContract(data);
+
+      let totalSum = 0;
+      data?.constractSum?.forEach((cost) => {
+        totalSum +=
+          cost.designFees.total +
+          cost.materialCost.total +
+          cost.labourCost.total +
+          cost.disposalCost.total +
+          cost.cleaningCost.total;
+      });
+      let totalPaid = 0;
+      data?.paid?.forEach((pay) => {
+        totalPaid += pay.amount;
+      });
+
+      setTotal(totalSum);
+      setPaid(totalPaid);
+    }
+  }, [data]);
+  useEffect(() => {
+    setUser(userdata?.data);
+  }, [userdata?.data]);
+
+  const handlePayment = async (money) => {
+    setPaymentLoading(true);
+    const tradeId =
+      state?.taskAssign?.consumerId === auth?.user?._id &&
+      state?.taskAssign?.contractId &&
+      state?.taskAssign?.isContract
+        ? state?.taskAssign?.tradepersonId
+        : "";
+    if (tradeId === "") {
+      toast.error("your are not signed contract ");
+      return;
+    }
+    try {
+      const response = await axios.post("/create-payment-intent", {
+        // amount: calculateTotalAmount(data), // Implement this function to calculate total amount
+        currency: "usd", // Change this based on your currency
+      });
+      const clientSecret = response.data.clientSecret;
+      const stripe = await stripePromise;
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          // card: elements.getElement(CardElement),
+        },
+      });
+      if (result.error) {
+        console.error(result.error.message);
+      } else {
+        // Payment success, handle accordingly
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    setPaymentLoading(false);
+  };
+
   return (
     <div className="tradeJobDetail container my-5">
       <div className="trade-header bg-dark-blue text-white p-4 rounded">
-        <h5 className="fw-bold">Building a kitchen</h5>
+        <h5 className="fw-bold text-capitalize">{state?.headline}</h5>
         <div className="d-flex justify-content-between my-4">
           <div
             className="my-auto d-flex gap-3"
@@ -17,7 +100,9 @@ const TradeJobDetails = () => {
               alt=" img"
               className="w-100 h-100 rounded-circle"
             />{" "}
-            <span className="my-auto fw-bold">Tradeperson</span>
+            <span className="my-auto fw-bold text-capitalize">
+              {user?.name}
+            </span>
           </div>
           <div className="my-auto fw-bold pe-3">Download Contract </div>
         </div>
@@ -42,20 +127,20 @@ const TradeJobDetails = () => {
         <div className="trade-overview">
           <div className="my-2">
             <div className="fw-bold"> Contract Sum </div>
-            <div>$5,000</div>
+            <div>${total}</div>
           </div>
           <div className="d-flex gap-4 my-3">
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Milstone Paid</span>
-              <span>$1,000</span>
+              <span>${paid}</span>
             </div>
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Milstone Remaining</span>
-              <span>$3,000</span>
+              <span>${total - paid}</span>
             </div>
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Escrow Amount</span>
-              <span>$4,000</span>
+              <span>${total}</span>
             </div>
           </div>
 
@@ -86,7 +171,11 @@ const TradeJobDetails = () => {
               <span>Milestone 2</span>
               <span>Due 15 March 2024</span>
               <div className="d-flex gap-3 ms-auto">
-                <button className="btn btn-dark-blue text-white">
+                <button
+                  onClick={() => handlePayment(state?.paid)}
+                  disabled={paymentLoading || auth?.user?.role !== "CONSUMER"}
+                  className="btn btn-dark-blue text-white"
+                >
                   Release Payment
                 </button>
                 <button className="btn btn-outline-dark-blue ">Dispute</button>
@@ -106,20 +195,7 @@ const TradeJobDetails = () => {
         <div className="tradejob-details">
           <div className="my-4 p-3 mx-0 px-0">
             <h5 className="fw-bold">Description</h5>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Laudantium veniam tenetur, saepe accusantium quidem ad rerum
-              reiciendis dolorem, consequuntur hic, unde quas ipsam optio. Ab
-              autem laudantium animi aliquam, doloribus optio commodi veritatis
-              illum assumenda aut dolores facere ipsa debitis nam dignissimos
-              deserunt perspiciatis fugiat odit nesciunt quam neque. Molestias
-              nemo culpa impedit, quam a tenetur at eveniet vel quo magni
-              repellendus aliquam consectetur ipsum quae dolorem voluptate modi
-              rem ipsa explicabo. A voluptatem velit deserunt nisi blanditiis
-              nemo ut quod similique! Velit voluptas reiciendis, saepe eius
-              exercitationem deleniti culpa quas est illo fuga incidunt,
-              laboriosam odit rem libero! Voluptatibus.
-            </p>
+            <p>{state?.description || state?.desc}</p>
           </div>
           <h4 className="fw-bold my-3">Summary</h4>
           <div className="d-flex flex-column">

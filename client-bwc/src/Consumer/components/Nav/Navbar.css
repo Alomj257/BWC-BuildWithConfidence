@@ -89,3 +89,27 @@
     }
    
   }
+
+  .cnavbar .nav-profile{
+    right: 0;
+    padding: 0 5px;
+    top: 5rem;
+    position: absolute;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    font-size: 20px;
+    align-items: center;
+  
+  }
+.isNav-profile{
+  height: 0;
+  overflow: hidden;
+  padding:0;
+  transition: all 1s;
+}
+.Nav-profile{
+  height: auto;
+  transition: all 1s;
+}

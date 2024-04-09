@@ -1,15 +1,23 @@
-const Supplier = require('../Model/Supplier');
+const Supplier = require("../Model/Supplier");
 
 // Error handler
 const errorHandler = (res, err) => {
   console.error(err);
-  res.status(500).json({ message: 'Internal server error' });
+  res.status(500).json({ message: "Internal server error" });
 };
 
 // Get all suppliers
 exports.getAllSuppliers = async (req, res) => {
   try {
-    const suppliers = await Supplier.find();
+    // const suppliers = await Supplier.find();
+    const suppliers = await Supplier.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          categories: { $push: "$$ROOT" },
+        },
+      },
+    ]);
     res.json(suppliers);
   } catch (err) {
     errorHandler(res, err);
@@ -21,7 +29,7 @@ exports.getSupplierById = async (req, res) => {
   try {
     const supplier = await Supplier.findById(req.params.id);
     if (!supplier) {
-      return res.status(404).json({ message: 'Supplier not found' });
+      return res.status(404).json({ message: "Supplier not found" });
     }
     res.json(supplier);
   } catch (err) {
@@ -42,9 +50,11 @@ exports.createSupplier = async (req, res) => {
 // Update supplier by ID
 exports.updateSupplier = async (req, res) => {
   try {
-    const supplier = await Supplier.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const supplier = await Supplier.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!supplier) {
-      return res.status(404).json({ message: 'Supplier not found' });
+      return res.status(404).json({ message: "Supplier not found" });
     }
     res.json(supplier);
   } catch (err) {
@@ -57,9 +67,9 @@ exports.deleteSupplier = async (req, res) => {
   try {
     const supplier = await Supplier.findByIdAndDelete(req.params.id);
     if (!supplier) {
-      return res.status(404).json({ message: 'Supplier not found' });
+      return res.status(404).json({ message: "Supplier not found" });
     }
-    res.json({ message: 'Supplier deleted successfully' });
+    res.json({ message: "Supplier deleted successfully" });
   } catch (err) {
     errorHandler(res, err);
   }

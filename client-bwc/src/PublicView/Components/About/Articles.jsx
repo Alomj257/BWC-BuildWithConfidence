@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 const Articles = () => {
   return (
-    <div>
+    <div id="articles">
       <div className="container">
         <h2 className=" fw-bold my-2">ARTICILES</h2>
         <div className="row">

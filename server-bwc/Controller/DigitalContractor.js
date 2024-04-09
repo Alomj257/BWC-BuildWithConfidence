@@ -1,4 +1,5 @@
 const DigitalContractModel = require("../Model/DigitalContract");
+const stripe = require("stripe")("your_secret_stripe_key");
 const createDigital = async (req, res) => {
   try {
     let {
@@ -97,6 +98,19 @@ const getAllDigitalContractor = async (req, res) => {
   } catch (error) {
     console.error("Error deleting data by ID:", error);
     res.status(500).json({ message: error.message });
+  }
+};
+
+const makePeymant = async (req, res) => {
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: req.body.amount,
+      currency: req.body.currency,
+    });
+    res.send({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send({ error: "Something went wrong!" });
   }
 };
 

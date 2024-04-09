@@ -4,7 +4,7 @@ import FaqCom from "./FaqCom";
 const TradepersonFaq = () => {
   return (
     <div>
-      <div className="container">
+      <div className="container" id="tradeperson-faq">
         <h3 className="fw-bold my-4">Traderperson FAQs</h3>
         <FaqCom faqs={traderpersonFaqs} />
       </div>

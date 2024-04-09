@@ -69,7 +69,10 @@ export const Redirect = ({ path }) => {
   }, [count, navigate, location, path]);
   return (
     <>
-      <div className="protect-redirect" style={{ height: "60vh" }}>
+      <div
+        className="protect-redirect d-flex flex-column align-items-center justify-content-center"
+        style={{ height: "100vh" }}
+      >
         <img style={{ width: "20%" }} src="/image/auth.jpg" alt="" />
         <h3>Sorry! You are not authenticated persons</h3>
         <h1 className="Text-center">redirecting to you in {count} second </h1>

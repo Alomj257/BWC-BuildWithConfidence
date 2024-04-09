@@ -285,9 +285,11 @@ const AuthPage = () => {
                 {turn === "register" && "SignUp"} with
               </div>
               <div class="socials d-flex gap-3 justify-content-center ">
-                <i class="fab fa-facebook-f my-auto fs-4 rounded-circle"></i>
-                <i class="fab fa-google-plus-g my-auto fs-4 rounded-circle"></i>
-                <i class="fab fa-linkedin-in my-auto fs-4 rounded-circle"></i>
+                <a href="http://localhost:5500/api/auth/google">
+                  {/* <i class="fab fa-facebook-f my-auto fs-4 rounded-circle"></i> */}
+                  <i class="fab fa-google-plus-g my-auto fs-4 rounded-circle"></i>
+                </a>
+                {/* <i class="fab fa-linkedin-in my-auto fs-4 rounded-circle"></i> */}
               </div>
             </div>
           </div>
