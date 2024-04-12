@@ -32,6 +32,9 @@ import {
   ConsumerProtect,
   TraderPersonProtect,
 } from "./ProtectRoutes/ProtectRoutes";
+import FaqPage from "./PublicView/Pages/FaqPage";
+import ArticlePage from "./PublicView/Pages/ArticlePage";
+import ContactPage from "./PublicView/Pages/ContactPage";
 
 function App() {
   const [auth] = useAuth();
@@ -43,6 +46,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/faq" element={<FaqPage />} />
+          <Route path="/article" element={<ArticlePage />} />
+          <Route path="/contact" element={<ContactPage />} />
           {/* <Route path="/auth" element={<Auth />} /> */}
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/chat" element={<Chat />} />

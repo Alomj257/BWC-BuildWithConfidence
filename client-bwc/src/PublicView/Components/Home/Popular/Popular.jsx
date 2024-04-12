@@ -12,6 +12,8 @@ import { MdOutlineSmartScreen } from "react-icons/md";
 import { TiMessages } from "react-icons/ti";
 import { TbFileSettings } from "react-icons/tb";
 import { IoStarSharp } from "react-icons/io5";
+import { NavLink } from "react-router-dom";
+import { Link } from "react-scroll";
 const Popular = () => {
   return (
     <div className="container">
@@ -33,9 +35,12 @@ const Popular = () => {
           ))}
         </div>
         <div className="text-center">
-          <button className="btn btn-info fw-bold py-2 px-5 text-white rounded-5">
+          <NavLink
+            to="/auth"
+            className="btn btn-info fw-bold py-2 px-5 text-white rounded-5"
+          >
             Post a job
-          </button>
+          </NavLink>
         </div>
       </div>
       <div className="my-5">
@@ -56,9 +61,17 @@ const Popular = () => {
           ))}
         </div>
         <div className="text-center">
-          <button className="btn btn-info py-2 fw-bold px-5 text-white rounded-5">
+          <Link
+            style={{ cursor: "pointer" }}
+            to="how-it-works"
+            spy={true}
+            offset={-150}
+            duration={0}
+            smooth={true}
+            className="btn btn-info py-2 fw-bold px-5 text-white rounded-5"
+          >
             See how it works
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -93,7 +93,7 @@ function Navbar(props) {
           <ul
             ref={logNavRef}
             style={{ listStyle: "none" }}
-            className={`nav-profile ${
+            className={`nav-profile shadow  ${
               !logoutNav ? "isNav-profile" : "Nav-profile"
             }`}
           >
