@@ -1,7 +1,7 @@
 import React from "react";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
-import { Link } from "react-scroll";
+// import { Link } from "react-scroll";
 
 const Navbar = () => {
   return (
@@ -17,8 +17,8 @@ const Navbar = () => {
           </li>
         </NavLink>
         <ul className="d-flex ms-auto me-2 my-0 welcome-navbar ">
-          <Link
-            to="home"
+          <NavLink
+            to="/"
             spy={true}
             offset={-150}
             duration={0}
@@ -26,7 +26,7 @@ const Navbar = () => {
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Home</li>
-          </Link>
+          </NavLink>
           <NavLink
             to="/about"
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
@@ -45,8 +45,8 @@ const Navbar = () => {
           >
             <li>Tradeperson</li>
           </NavLink>
-          <Link
-            to="faq"
+          <NavLink
+            to="/faq"
             spy={true}
             offset={-150}
             duration={0}
@@ -54,9 +54,9 @@ const Navbar = () => {
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>FAQ</li>
-          </Link>
-          <Link
-            to="articles"
+          </NavLink>
+          <NavLink
+            to="/article"
             spy={true}
             offset={-150}
             duration={0}
@@ -64,9 +64,9 @@ const Navbar = () => {
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Articles</li>
-          </Link>
-          <Link
-            to="contact"
+          </NavLink>
+          <NavLink
+            to="/contact"
             spy={true}
             offset={-150}
             duration={0}
@@ -74,7 +74,7 @@ const Navbar = () => {
             className="text-decoration-none  p-3 fs-lg-4 fs-md-5 text-white"
           >
             <li>Contact </li>
-          </Link>
+          </NavLink>
         </ul>
       </ul>
     </nav>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./OurServices.css";
+import { Link } from "react-router-dom";
 const OurServices = () => {
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState("source");
   const [step, setStep] = useState(0);
   const steps = ["source", "build", "payment", "project"];
   const handleSet = (val) => {
@@ -9,7 +10,7 @@ const OurServices = () => {
     setActive(data[step]);
   };
   return (
-    <div className="our-services bg-info text-white">
+    <div className="our-services bg-info text-white" id="how-it-works">
       <div className="container my-3 pt-3">
         <h1 className="text-center">Our Service</h1>
         <div className="w-100 row">
@@ -26,24 +27,28 @@ const OurServices = () => {
         </div>
         <div className="d-flex justify-content-between container text-uppercase border-bottom border-4 my-3">
           <div
+            style={{ cursor: "pointer" }}
             className={`p-3 fw-bold fs-5 + ${step === 0 ? " text-dark" : ""}`}
             onClick={() => handleSet("source")}
           >
             sourcing tradespeople
           </div>
           <div
+            style={{ cursor: "pointer" }}
             className={`p-3 fw-bold fs-5 + ${step === 1 ? " text-dark" : ""}`}
             onClick={() => handleSet("build")}
           >
             build a digital contract{" "}
           </div>
           <div
+            style={{ cursor: "pointer" }}
             className={`p-3 fw-bold fs-5 + ${step === 2 ? " text-dark" : ""}`}
             onClick={() => handleSet("payment")}
           >
             payment protection services
           </div>
           <div
+            style={{ cursor: "pointer" }}
             className={`p-3 fw-bold fs-5 + ${step === 3 ? " text-dark" : ""}`}
             onClick={() => handleSet("project")}
           >
@@ -64,9 +69,13 @@ const OurServices = () => {
               </div>
               <div className="my-auto fs-1"> +</div>
             </div>
-            <button className="btn bg-white rounded-5 px-3 fw-bold text-uppercase">
+            <Link
+              style={{ cursor: "pointer" }}
+              to="auth"
+              className="btn btn-white our-service-btn bg-white rounded-5 px-3 fw-bold text-uppercase"
+            >
               LET’S GET STARTED
-            </button>
+            </Link>
           </div>
         </div>
       </div>
