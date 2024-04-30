@@ -8,8 +8,6 @@ import useFetch from "../../../Hooks/useFetch";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 
-const stripePromise = loadStripe("your_public_stripe_key");
-
 const TradeJobDetails = () => {
   const [isActive, setActive] = useState("overview");
   const { state } = useLocation();
@@ -31,11 +29,11 @@ const TradeJobDetails = () => {
       let totalSum = 0;
       data?.constractSum?.forEach((cost) => {
         totalSum +=
-          cost.designFees.total +
-          cost.materialCost.total +
-          cost.labourCost.total +
-          cost.disposalCost.total +
-          cost.cleaningCost.total;
+          parseInt(cost.designFees.total | 0) +
+          parseInt(cost.materialCost.total | 0) +
+          parseInt(cost.labourCost.total | 0) +
+          parseInt(cost.disposalCost.total | 0) +
+          parseInt(cost.cleaningCost.total | 0);
       });
       let totalPaid = 0;
       data?.paid?.forEach((pay) => {
@@ -62,27 +60,28 @@ const TradeJobDetails = () => {
       toast.error("your are not signed contract ");
       return;
     }
-    try {
-      const response = await axios.post("/create-payment-intent", {
-        // amount: calculateTotalAmount(data), // Implement this function to calculate total amount
-        currency: "usd", // Change this based on your currency
-      });
-      const clientSecret = response.data.clientSecret;
-      const stripe = await stripePromise;
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          // card: elements.getElement(CardElement),
-        },
-      });
-      if (result.error) {
-        console.error(result.error.message);
-      } else {
-        // Payment success, handle accordingly
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    // payment handle
+    const stripe = await loadStripe(
+      "pk_test_51PBNGfSCZnl4fNe7OhyqOs5WH04BKl5VIpwEMOch1wYJNv3zwDtrgWKaXhE8HSfoSmjatibrbu7JFau7pFDWr36V00pzjNjava"
+    );
 
+    const response = await paymentRelease({
+      money,
+      consumerId: auth?.user?._id,
+      job: state,
+      contract,
+      tradepersonId: tradeId,
+    });
+
+    const session = response;
+
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error);
+    }
     setPaymentLoading(false);
   };
 
@@ -172,7 +171,7 @@ const TradeJobDetails = () => {
               <span>Due 15 March 2024</span>
               <div className="d-flex gap-3 ms-auto">
                 <button
-                  onClick={() => handlePayment(state?.paid)}
+                  onClick={() => handlePayment(total)}
                   disabled={paymentLoading || auth?.user?.role !== "CONSUMER"}
                   className="btn btn-dark-blue text-white"
                 >

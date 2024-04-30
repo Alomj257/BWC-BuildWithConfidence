@@ -55,7 +55,7 @@ const Job = ({ row, key, type }) => {
       row?.taskAssign?.contractId &&
       row?.taskAssign?.isContract
     ) {
-      navigate("tradeperson/overview", { state: row });
+      navigate("/tradeperson/overview", { state: row });
     }
   };
   return (

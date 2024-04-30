@@ -1,3 +1,4 @@
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const DigitalContractModel = require("../Model/DigitalContract");
 const JobPost = require("../Model/JobPost");
 const TaskAssign = require("../Model/TaskAssign");
@@ -193,6 +194,33 @@ const getAllLiveJobs = async (req, res) => {
     res.status(500).json({ message: "something went wrong" });
   }
 };
+
+const sendPayment = async (req, res) => {
+  const { money, consumerId, job, contract, tradepersonId } = req.body;
+  if (!money || !job) {
+    return res.status(400).json({ error: "Invalid request body" });
+  }
+  const priceId = "price_id_from_stripe_dashboard";
+
+  // Create line items with the price ID
+  const lineItems = [
+    {
+      price: priceId,
+      quantity: 1,
+    },
+  ];
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    mode: "payment",
+    success_url: "http://localhost:3000/sucess",
+    cancel_url: "http://localhost:3000/cancel",
+  });
+
+  res.json({ id: session.id });
+};
+
 module.exports = {
   createTask,
   getAllTask,
@@ -207,4 +235,5 @@ module.exports = {
   ConsumerContractSign,
   tradepersonContractSign,
   getAllLiveJobs,
+  sendPayment,
 };

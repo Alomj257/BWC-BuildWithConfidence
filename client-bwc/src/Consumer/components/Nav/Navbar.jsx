@@ -68,7 +68,13 @@ function Navbar(props) {
         <div className="navbar-right">
           <button
             className="btn position-relative"
-            onClick={() => navigate("/consumer/chat")}
+            onClick={() =>
+              navigate(
+                auth?.user?.role === "TRADEPERSON"
+                  ? "/tradeperson/chat"
+                  : "/consumer/chat"
+              )
+            }
           >
             {" "}
             <i class="bx bxs-message-dots icon"></i>

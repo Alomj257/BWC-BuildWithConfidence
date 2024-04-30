@@ -30,7 +30,7 @@ const Req = ({ key, job }) => {
         toast.error(data.message);
         return;
       } else {
-        navigate("/consumer/chat", { state: { currentUser, oppositeUser } });
+        navigate("/tradeperson/chat", { state: { currentUser, oppositeUser } });
       }
     } catch (error) {
       console.log(error);

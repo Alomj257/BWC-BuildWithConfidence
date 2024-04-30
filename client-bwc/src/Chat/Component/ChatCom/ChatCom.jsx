@@ -97,7 +97,7 @@ const ChatCom = () => {
                         data={chat}
                         curUserId={auth?.user?._id}
                         online={checkOnlieStatus(chat)}
-                        unreadCount={unreadMessages[chat._id] || ""}
+                        unreadCount={unreadMessages[chat?._id] || ""}
                       />
                     </div>
                   ))

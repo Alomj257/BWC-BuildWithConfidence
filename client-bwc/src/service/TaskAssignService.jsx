@@ -11,10 +11,5 @@ export const consumerContractSignService = async (data, id) =>
 export const tradpersonCotractSignService = async (data, jobId, contractId) =>
   await Axios.post(`/task/traderperson/${jobId}/${contractId}`, data);
 
-export const paymentRelease = async (money, consumerId, jobId, tradepersonId) =>
-  await Axios.post(`/task/peyment/consumer/`, {
-    consumerId,
-    jobId,
-    tradepersonId,
-    money,
-  });
+export const paymentRelease = async (data) =>
+  await Axios.post(`/task/payment/consumer/`, data);

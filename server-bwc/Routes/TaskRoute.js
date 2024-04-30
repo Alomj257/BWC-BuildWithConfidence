@@ -6,6 +6,7 @@ const {
   tradepersonContractSign,
   getAllLiveJobs,
   getAllacceptedRequestJobs,
+  sendPayment,
 } = require("../Controller/TaskAssignCntroller");
 
 const taskRoute = require("express").Router();
@@ -16,5 +17,6 @@ taskRoute.get("/accept/:id", getAllacceptedRequestJobs);
 taskRoute.post("/consumer/:id", ConsumerContractSign);
 taskRoute.post("/traderperson/:jobId/:contractId", tradepersonContractSign);
 taskRoute.get("/live-jobs/:consumerId", getAllLiveJobs);
+taskRoute.post("/payment/consumer", sendPayment);
 
 module.exports = taskRoute;

@@ -67,7 +67,7 @@ function Sidebar({ sidebar, role }) {
             </li>
           ))}
           <li>
-            <Link to="/consumer/chat">
+            <Link to="/chat">
               <i class="bx bx-message-rounded-dots"></i>
               <span className="links_name">Message</span>
             </Link>
