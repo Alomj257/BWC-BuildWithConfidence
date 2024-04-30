@@ -12,7 +12,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 const AuthPage = () => {
   const [turn, setTurn] = useState("login");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    firstname: "",
+    role: "CONSUMER",
+    lastname: "",
+  });
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
   const handleChange = (e) => {
