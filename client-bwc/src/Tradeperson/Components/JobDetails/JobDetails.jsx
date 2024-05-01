@@ -23,7 +23,6 @@ const JobDetails = () => {
       toast.error(error.response.data.message);
     }
   };
-  console.log(job?.applied?.includes(auth?.user?._id));
   return (
     <div className="job-card p-4">
       <div className="d-flex justify-content-between">
@@ -70,7 +69,11 @@ const JobDetails = () => {
         <div>
           <div className="d-flex gap-4">
             <small className="fw-bold fs-6">Start Date:</small>{" "}
-            <small>{job?.start?.time}</small>
+            <small>
+              {job?.start?.time
+                ? new Date(job?.start?.time).toLocaleDateString()
+                : new Date().toLocaleDateString()}
+            </small>
           </div>
           <div className="d-flex gap-4">
             <small className="fw-bold fs-6">Desired Day:</small>{" "}
@@ -84,7 +87,12 @@ const JobDetails = () => {
         <div>
           <div className="d-flex gap-4">
             <small className="fw-bold fs-6">Completion Date:</small>{" "}
-            <small>{job?.completion?.time}</small>
+            <small>
+              {" "}
+              {job?.completion?.time
+                ? new Date(job?.completion?.time).toLocaleDateString()
+                : new Date().toLocaleDateString()}
+            </small>
           </div>
           <div className="d-flex gap-4">
             <small className="fw-bold fs-6">Desired Day:</small>{" "}

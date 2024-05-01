@@ -13,24 +13,29 @@ const createDigital = async (req, res) => {
     } = req.body;
     req.body = other;
     if (req.files) {
-      surveyPhoto = {
-        img:
-          "/consumer/digital-contractor/pic/" +
-          req?.files?.surveyPhoto[0]?.originalname,
-        path: req?.files?.surveyPhoto[0]?.path,
-      };
-      clientSignature = {
-        img:
-          "/consumer/digital-contractor/pic/" +
-          req?.files?.clientSignature[0]?.originalname,
-        path: req?.files?.clientSignature[0]?.path,
-      };
-
+      if (req?.files?.surveyPhoto && req?.files?.surveyPhoto[0]) {
+        surveyPhoto = {
+          img:
+            "/consumer/digital-contractor/pic/" +
+            req?.files?.surveyPhoto[0]?.originalname,
+          path: req?.files?.surveyPhoto[0]?.path,
+        };
+      }
+      if (req?.files?.clientSignature && req?.files?.clientSignature[0]) {
+        clientSignature = {
+          img:
+            "/consumer/digital-contractor/pic/" +
+            req?.files?.clientSignature[0]?.originalname,
+          path: req?.files?.clientSignature[0]?.path,
+        };
+      }
       req.body.surveyPhoto = surveyPhoto;
       req.body.clientSignature = clientSignature;
     }
-    req.body.client = JSON.parse(client)[0];
-    req.body.contractor = JSON.parse(contractor)[0];
+    req.body.client = JSON.parse(client)[0] ? JSON.parse(client)[0] : "";
+    req.body.contractor = JSON.parse(contractor)[0]
+      ? JSON.parse(contractor)[0]
+      : "";
     req.body.constractSum = JSON.parse(contractSum);
     const createdData = await new DigitalContractModel(req.body).save();
     return res.status(201).json(createdData);

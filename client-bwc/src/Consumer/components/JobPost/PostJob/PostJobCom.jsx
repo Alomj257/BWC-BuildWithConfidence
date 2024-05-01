@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./PostJob.css";
 import img from "../../../../assests/job-post/cong.gif";
 import ReviewJobPost from "./ReviewJobPost";
-import { toast } from "react-toastify";
-import jobPostService from "../../../../service/jobPostService";
 import { useAuth } from "../../../../context/AuthContext";
 import DatePicker from "react-datepicker";
 const PostJobCom = () => {
@@ -45,20 +43,6 @@ const PostJobCom = () => {
     }
   };
 
-  const handlePostJob = async () => {
-    try {
-      const res = await jobPostService.createJobPost(data);
-      if (res.message) {
-        toast.error(res.message);
-        return;
-      }
-      toast.success(res);
-      setStep(step + 1);
-    } catch (error) {
-      console.log(error);
-      toast.error("something went wrong");
-    }
-  };
   return (
     <div>
       <h2 className="text-center my-4 fw-bold work-heading">
@@ -389,7 +373,7 @@ const PostJobCom = () => {
           </div>
         )}
         {step === 7 && (
-          <ReviewJobPost data={data} handlePostJob={handlePostJob} />
+          <ReviewJobPost data={data} step={step} setStep={setStep} />
         )}
       </ul>
       <div className="d-flex justify-content-between my-3 container">

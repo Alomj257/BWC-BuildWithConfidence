@@ -5,7 +5,9 @@ const {
   getAllDigitalContractor,
   getDigitalById,
 } = require("../../Controller/DigitalContractor");
-const uploadMuiltiFieldFiles = require("../../Middlewares/uploadMultifieldFiles");
+const {
+  uploadMuiltiFieldFiles,
+} = require("../../Middlewares/uploadMultifieldFiles");
 
 const DigitalRoutes = require("express").Router();
 
