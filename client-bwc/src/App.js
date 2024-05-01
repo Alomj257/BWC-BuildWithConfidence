@@ -88,6 +88,7 @@ function App() {
               <Route path="requests" element={<RequestsPage />} />
               <Route path="overview" element={<TradeJobDetails />} />
               <Route path="job-details" element={<JobDetails />} />
+              <Route path="chat" element={<Chat />} />
               {/* <Route path="supplier" element={<Suppl />} /> */}
             </Route>
             <Route path="consumer/nearby" element={<NearByConsumer />} />

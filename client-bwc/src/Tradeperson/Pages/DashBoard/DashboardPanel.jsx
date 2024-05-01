@@ -6,7 +6,7 @@ import Navbar from "../../../Consumer/components/Nav/Navbar";
 const TradeDashboardPanel = () => {
   const sidebar = [
     { name: "dashboard", icon: "bx bx-grid-alt" },
-    { name: "consumer", icon: "bx bx-user-pin" },
+    // { name: "consumer", icon: "bx bx-user-pin" },
     { name: "jobs", icon: "bx bxs-shopping-bags" },
     // { name: "Requests", icon: "bx bx-select-multiple" },
     { name: "job portal", icon: "bx bx-history" },

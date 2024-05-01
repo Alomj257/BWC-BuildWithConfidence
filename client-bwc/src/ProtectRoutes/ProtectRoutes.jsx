@@ -8,7 +8,7 @@ export function TraderPersonProtect() {
 
   useEffect(() => {
     const authCheck = async () => {
-      if (auth?.token && auth.user.role === "TRADERPERSON") {
+      if (auth?.token && auth.user.role === "TRADEPERSON") {
         setOk(true);
       } else {
         setOk(false);
