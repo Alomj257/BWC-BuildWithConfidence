@@ -155,36 +155,6 @@ const JobCreate = () => {
                 Digital Service
               </div>
             </div>
-            {/* <div className="p-2 text-center">
-              <div
-                className={`${
-                  digital === "premade" ? "create-job-active" : ""
-                } p-2 w-100 fw-bold job-create-field rounded`}
-                onClick={() => setDigital("premade")}
-              >
-                Upload Premade
-              </div>
-            </div> */}
-            {/* {digital === "premade" && (
-              <div className="p-2 text-center">
-                <div
-                  className={`job-file-upload-container p-2 w-100 fw-bold job-create-field rounded`}
-                >
-                  <label for="file-upload-input" class="job-file-upload-label">
-                    Upload a file
-                  </label>
-
-                  <input
-                    type="file"
-                    onChange={handleChange}
-                    data-browse-on-zone-click="true"
-                    className="w-100 bg-transparent border-0  job-file-upload-input"
-                    style={{ outline: "none" }}
-                    placeholder="John Smith"
-                  />
-                </div>
-              </div>
-            )} */}
           </div>
         </div>
         {digital === "digital" && (
@@ -669,6 +639,7 @@ const JobCreate = () => {
                       style={{ outline: "none" }}
                       placeholder="John Smith"
                       name="surveyPhoto"
+                      required
                     />
                   </div>
                 </div>

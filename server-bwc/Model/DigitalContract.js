@@ -1,62 +1,68 @@
 const mongoose = require("mongoose");
-const DigitalSchema = new mongoose.Schema({
-  ArchitectDrawing: Boolean,
-  DateOfConditionSurvey: String,
-  LiquidatedDamage: String,
-  Milestone: String,
-  PPSService: String,
-  Specification: String,
-  advancePayment: String,
-  bothPayment: Boolean,
-  client: [{ address: String, individual: String, institute: String }],
-  contractor: [
-    {
-      address: String,
-      companyNo: String,
-      individual: String,
-      institute: String,
-    },
-  ],
-  constractSum: [
-    {
-      designFees: { qty: String, rate: String, total: String },
-      materialCost: { qty: String, rate: String, total: String },
-      labourCost: { qty: String, rate: String, total: String },
-      disposalCost: { qty: String, rate: String, total: String },
-      cleaningCost: { qty: String, rate: String, total: String },
-    },
-  ],
-  clientName: String,
-  companyName: String,
-  conpanyName: String,
-  contractDate: String,
-  contratorName: String,
-  dateForCompletion: String,
-  defectsLiabilityPeriod: String,
-  digitalService: String,
-  eachMilestone: String,
-  isBothAgree: Boolean,
-  isMilestone: Boolean,
-  isProtection: Boolean,
-  isRetention: Boolean,
-  measurements: String,
-  partyContact: Boolean,
-  procurement: [String],
-  requiredToAccess: Boolean,
-  retention: String,
-  scopeOfWork: String,
-  siteAccess: String,
-  siteRestrictions: String,
-  todayDate: String,
-  workCommencementDate: String,
-  workingHours: String,
-  surveyPhoto: [{ img: String, path: String }],
-  clientSignature: [{ img: String, path: String }],
-  contractorSigniture: [{ img: String, path: String }],
-  tradepersonSignature: [{ name: String, signiture: String, path: String }],
-  paid: Array,
-  jobId: String,
-});
+const DigitalSchema = new mongoose.Schema(
+  {
+    ArchitectDrawing: Boolean,
+    DateOfConditionSurvey: String,
+    LiquidatedDamage: String,
+    Specification: String,
+
+    bothPayment: Boolean,
+    client: [{ address: String, individual: String, institute: String }],
+    contractor: [
+      {
+        address: String,
+        companyNo: String,
+        individual: String,
+        institute: String,
+      },
+    ],
+    constractSum: [
+      {
+        designFees: { qty: String, rate: String, total: String },
+        materialCost: { qty: String, rate: String, total: String },
+        labourCost: { qty: String, rate: String, total: String },
+        disposalCost: { qty: String, rate: String, total: String },
+        cleaningCost: { qty: String, rate: String, total: String },
+      },
+    ],
+    clientName: String,
+    companyName: String,
+    conpanyName: String,
+    contractDate: String,
+    contratorName: String,
+    dateForCompletion: String,
+    defectsLiabilityPeriod: String,
+    // fees payment
+    digitalService: String,
+    PPSService: String,
+    advancePayment: String,
+    isMilestone: Boolean,
+    Milestone: String,
+    eachMilestone: String,
+    // end fees
+    isBothAgree: Boolean,
+    isProtection: Boolean,
+    isRetention: Boolean,
+    measurements: String,
+    partyContact: Boolean,
+    procurement: [String],
+    requiredToAccess: Boolean,
+    retention: String,
+    scopeOfWork: String,
+    siteAccess: String,
+    siteRestrictions: String,
+    todayDate: String,
+    workCommencementDate: String,
+    workingHours: String,
+    surveyPhoto: [{ img: String, path: String }],
+    clientSignature: [{ img: String, path: String }],
+    contractorSigniture: [{ img: String, path: String }],
+    tradepersonSignature: [{ name: String, signiture: String, path: String }],
+    paid: Array,
+    jobId: String,
+  },
+  { timestamps: true }
+);
 
 DigitalSchema.pre("save", function (next) {
   const calculateTotal = (cost) => {
@@ -73,7 +79,12 @@ DigitalSchema.pre("save", function (next) {
     cost.disposalCost.total = calculateTotal(cost.disposalCost);
     cost.cleaningCost.total = calculateTotal(cost.cleaningCost);
   });
-
+  this.constractSum =
+    this.constractSum +
+    this.digitalService +
+    this.PPSService +
+    this.advancePayment +
+    this.Milestone * this.eachMilestone;
   next();
 });
 

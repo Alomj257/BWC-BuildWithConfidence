@@ -1,8 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./PostJob.css";
 import img from "../../../../assests/profile/P1.png";
-const ReviewJobPost = ({ data, handlePostJob }) => {
+import { toast } from "react-toastify";
+import jobPostService from "../../../../service/jobPostService";
+const ReviewJobPost = ({ data, setStep, step }) => {
+  const [portfolio, setImg] = useState();
+  const [fileName, setFileName] = useState("");
+  const handlePostJob = async () => {
+    try {
+      // data?.jobPic=portfolio;
+      const formData = new FormData();
+      for (const [key, value] of Object.entries(data)) {
+        if (key === "start" || key === "completion") {
+          formData.append(key, JSON.stringify(value));
+        } else {
+          formData.append(key, value);
+        }
+      }
+      formData.append("jobPic", portfolio);
+      const res = await jobPostService.createJobPost(formData);
+      if (res.message) {
+        toast.error(res.message);
+        return;
+      }
+      toast.success(res);
+      setStep(step + 1);
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong");
+    }
+  };
+  const handleImgChange = (e) => {
+    const { files } = e.target;
+    setImg(files ? files[0] : "");
+    if (files) {
+      setFileName(files[0]?.name);
+    }
+  };
   return (
     <div className="col-md-11 mx-auto px-0 review ">
       <div className="d-flex justify-content-between ">
@@ -29,11 +64,14 @@ const ReviewJobPost = ({ data, handlePostJob }) => {
         <div className="col-4">
           <div className="file-upload-container">
             <label htmlFor="file-upload" className="file-upload-label">
-              Upload a photo of the existing condition
+              {fileName
+                ? fileName
+                : " Upload a photo of the existing condition"}
               <input
                 type="file"
                 id="file-upload"
                 className="file-upload-input"
+                onChange={handleImgChange}
               />
             </label>
           </div>
@@ -104,8 +142,18 @@ const ReviewJobPost = ({ data, handlePostJob }) => {
       </div>
       <div>
         <h4 className="fw-bold my-2">Condition of exsiting</h4>
-        <div className="d-flex gap-4">
-          <div>
+        <div
+          className="d-flex gap-4 "
+          style={{ overflowX: "scroll", scrollbarWidth: "none" }}
+        >
+          <div className="col-3">
+            <img
+              src={portfolio ? URL.createObjectURL(portfolio) : img}
+              alt="portfolio"
+              className="w-100"
+            />
+          </div>
+          {/* <div>
             <img src={img} alt="" />
           </div>
           <div>
@@ -113,10 +161,7 @@ const ReviewJobPost = ({ data, handlePostJob }) => {
           </div>
           <div>
             <img src={img} alt="" />
-          </div>
-          <div>
-            <img src={img} alt="" />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

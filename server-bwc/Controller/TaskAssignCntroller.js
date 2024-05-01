@@ -2,6 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const DigitalContractModel = require("../Model/DigitalContract");
 const JobPost = require("../Model/JobPost");
 const TaskAssign = require("../Model/TaskAssign");
+const User = require("../Model/User");
 
 const createTask = async (req, res) => {
   try {
@@ -196,29 +197,49 @@ const getAllLiveJobs = async (req, res) => {
 };
 
 const sendPayment = async (req, res) => {
-  const { money, consumerId, job, contract, tradepersonId } = req.body;
-  if (!money || !job) {
-    return res.status(400).json({ error: "Invalid request body" });
+  try {
+    const { tradepersonId, consumerId, contract, milestone, job, price } =
+      req.body.items[0];
+    const tradeperson = await User.findById(tradepersonId);
+    const consumer = await User.findById(consumerId);
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: req.body.items.map((item) => {
+        return {
+          price_data: {
+            currency: "inr",
+            product_data: {
+              name: item?.job?.headline,
+              description: `Consumer: ${
+                consumer?.firstname + " " + consumer?.lastname
+              } to Tradeperson: ${
+                tradeperson?.firstname + " " + tradeperson?.lastname
+              } for milestone ${milestone}`,
+            },
+            unit_amount: item?.price * 100,
+          },
+          quantity: item?.quantity,
+        };
+      }),
+      mode: "payment",
+      success_url: "http://localhost:3000/sucess",
+      cancel_url: "http://localhost:3000/cancel",
+    });
+    const getcontract = await DigitalContractModel.findById(contract?._id);
+    getcontract.paid.push({
+      payementId: session.id,
+      price,
+      jobId: job?._id,
+      tradepersonId,
+      consumerId,
+      milestone,
+    });
+    getcontract.save();
+    res.json({ id: session.id });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
-  const priceId = "price_id_from_stripe_dashboard";
-
-  // Create line items with the price ID
-  const lineItems = [
-    {
-      price: priceId,
-      quantity: 1,
-    },
-  ];
-
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: lineItems,
-    mode: "payment",
-    success_url: "http://localhost:3000/sucess",
-    cancel_url: "http://localhost:3000/cancel",
-  });
-
-  res.json({ id: session.id });
 };
 
 module.exports = {

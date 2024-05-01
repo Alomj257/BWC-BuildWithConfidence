@@ -1,9 +1,14 @@
 const express = require("express");
 const jobPostRoutes = require("express").Router();
 const jobPostController = require("../../Controller/jobPostController");
+const { uploadJobPic } = require("../../Middlewares/uploadMultifieldFiles");
 
 // Create a new job post
-jobPostRoutes.post("/jobposts", jobPostController.createJobPost);
+jobPostRoutes.post(
+  "/jobposts",
+  uploadJobPic("./Public/Job"),
+  jobPostController.createJobPost
+);
 
 // Get all job posts
 jobPostRoutes.get("/jobposts", jobPostController.getAllJobPosts);

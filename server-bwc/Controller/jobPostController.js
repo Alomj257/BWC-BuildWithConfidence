@@ -11,6 +11,12 @@ const errorHandler = (res, err) => {
 exports.createJobPost = async (req, res) => {
   try {
     console.log(req.body);
+    let { jobPic, start, completion } = req.body;
+    if (req.files) {
+      req.body.jobPic = "/job/pic/" + req?.files?.jobPic[0]?.originalname;
+    }
+    req.body.start = JSON.parse(start);
+    req.body.completion = JSON.parse(completion);
     const jobPost = await JobPost.create(req.body);
     if (jobPost) {
       await new BidModel({

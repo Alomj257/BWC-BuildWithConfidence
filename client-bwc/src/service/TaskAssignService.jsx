@@ -12,4 +12,4 @@ export const tradpersonCotractSignService = async (data, jobId, contractId) =>
   await Axios.post(`/task/traderperson/${jobId}/${contractId}`, data);
 
 export const paymentRelease = async (data) =>
-  await Axios.post(`/task/payment/consumer/`, data);
+  await Axios.post(`/task/payment/consumer/`, { items: data });

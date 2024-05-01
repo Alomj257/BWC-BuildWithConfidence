@@ -6,13 +6,11 @@ import { toast } from "react-toastify";
 import { paymentRelease } from "../../../service/TaskAssignService";
 import useFetch from "../../../Hooks/useFetch";
 import { loadStripe } from "@stripe/stripe-js";
-import axios from "axios";
 
 const TradeJobDetails = () => {
   const [isActive, setActive] = useState("overview");
   const { state } = useLocation();
   const [total, setTotal] = useState(0);
-  const [paid, setPaid] = useState(0);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [auth] = useAuth();
   const { data } = useFetch(
@@ -22,6 +20,13 @@ const TradeJobDetails = () => {
   const [contract, setContract] = useState({});
 
   const [user, setUser] = useState({});
+  const {
+    digitalService,
+    Milestone,
+    eachMilestone,
+    PPSService,
+    advancePayment,
+  } = contract;
   useEffect(() => {
     if (data) {
       setContract(data);
@@ -33,22 +38,20 @@ const TradeJobDetails = () => {
           parseInt(cost.materialCost.total | 0) +
           parseInt(cost.labourCost.total | 0) +
           parseInt(cost.disposalCost.total | 0) +
+          parseInt(digitalService | 0) +
+          parseInt(PPSService | 0) +
+          parseInt(advancePayment | 0) +
+          parseInt(Milestone | 0) * parseInt(eachMilestone | 0) +
           parseInt(cost.cleaningCost.total | 0);
       });
-      let totalPaid = 0;
-      data?.paid?.forEach((pay) => {
-        totalPaid += pay.amount;
-      });
-
       setTotal(totalSum);
-      setPaid(totalPaid);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
   useEffect(() => {
     setUser(userdata?.data);
   }, [userdata?.data]);
-
-  const handlePayment = async (money) => {
+  const handlePayment = async (money, milestone) => {
     setPaymentLoading(true);
     const tradeId =
       state?.taskAssign?.consumerId === auth?.user?._id &&
@@ -64,23 +67,31 @@ const TradeJobDetails = () => {
     const stripe = await loadStripe(
       "pk_test_51PBNGfSCZnl4fNe7OhyqOs5WH04BKl5VIpwEMOch1wYJNv3zwDtrgWKaXhE8HSfoSmjatibrbu7JFau7pFDWr36V00pzjNjava"
     );
+    const details = [
+      {
+        price: money || 0,
+        quantity: 1,
+        id: 1,
+        consumerId: auth?.user?._id,
+        job: state,
+        contract,
+        milestone: milestone,
+        tradepersonId: tradeId,
+      },
+    ];
+    try {
+      const response = await paymentRelease(details);
+      // const session = response;
+      const result = stripe.redirectToCheckout({
+        sessionId: response?.data?.id,
+      });
 
-    const response = await paymentRelease({
-      money,
-      consumerId: auth?.user?._id,
-      job: state,
-      contract,
-      tradepersonId: tradeId,
-    });
-
-    const session = response;
-
-    const result = stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (result.error) {
-      console.log(result.error);
+      if (result.error) {
+        console.log(result.error);
+      }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
     setPaymentLoading(false);
   };
@@ -131,11 +142,11 @@ const TradeJobDetails = () => {
           <div className="d-flex gap-4 my-3">
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Milstone Paid</span>
-              <span>${paid}</span>
+              <span>${getSum(contract?.paid)}</span>
             </div>
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Milstone Remaining</span>
-              <span>${total - paid}</span>
+              <span>${total - getSum(contract?.paid)}</span>
             </div>
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Escrow Amount</span>
@@ -145,41 +156,48 @@ const TradeJobDetails = () => {
 
           <h4 className="my-3 fw-bold">Payment Milestones</h4>
           <div>
-            <div className="d-flex gap-4 my-3 align-items-center">
-              <div>
-                <div className="d-flex">
-                  <span className="rounded-circle m-auto  text-white p-3 px-4 bg-dark-blue">
-                    1
-                  </span>{" "}
+            {Array.from({ length: parseInt(contract?.Milestone || 0) }).map(
+              (_, i) => (
+                <div className="d-flex gap-4 my-3 align-items-center">
+                  <div>
+                    <div className="d-flex">
+                      <span className="rounded-circle m-auto  text-white p-3 px-4 bg-dark-blue">
+                        {i + 1}
+                      </span>{" "}
+                    </div>
+                  </div>
+                  <span>Milestone {i + 1}</span>
+                  <span>
+                    {contract?.dateForCompletion
+                      ? new Date(contract?.dateForCompletion).toDateString()
+                      : new Date().toDateString()}
+                  </span>
+                  {contract?.paid?.find((paid) => paid?.milestone === i + 1) ? (
+                    <div className="ms-auto">
+                      <button className="btn btn-dark-blue text-white">
+                        Paid
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="d-flex gap-3 ms-auto">
+                      <button
+                        onClick={() => handlePayment(eachMilestone, i + 1)}
+                        disabled={
+                          paymentLoading || auth?.user?.role !== "CONSUMER"
+                        }
+                        className="btn btn-dark-blue text-white"
+                      >
+                        Release Payment
+                      </button>
+                      <button className="btn btn-outline-dark-blue ">
+                        Dispute
+                      </button>
+                    </div>
+                  )}
                 </div>
-              </div>
-              <span>Milestone 1</span>
-              <span>Due 12 March 2024</span>
-              <div className="ms-auto">
-                <button className="btn btn-dark-blue text-white">Paid</button>
-              </div>
-            </div>
-            <div className="d-flex gap-4 my-3 align-items-center">
-              <div>
-                <div className="d-flex">
-                  <span className="rounded-circle m-auto  text-white p-3 px-4 bg-dark-blue">
-                    2
-                  </span>{" "}
-                </div>
-              </div>
-              <span>Milestone 2</span>
-              <span>Due 15 March 2024</span>
-              <div className="d-flex gap-3 ms-auto">
-                <button
-                  onClick={() => handlePayment(total)}
-                  disabled={paymentLoading || auth?.user?.role !== "CONSUMER"}
-                  className="btn btn-dark-blue text-white"
-                >
-                  Release Payment
-                </button>
-                <button className="btn btn-outline-dark-blue ">Dispute</button>
-              </div>
-            </div>
+              )
+            )}
+
             <div className=" col-md-5 ms-auto">
               <p>
                 Tradeperson has requested payment, you have up to 3 working days
@@ -207,13 +225,17 @@ const TradeJobDetails = () => {
             <div className="d-flex justify-content-between align-items-center my-3">
               <div className="fw-bold">Start Time</div>
               <div className="px-3 bg-dark-blue text-white rounded py-2">
-                12 mar 2024
+                {contract?.workCommencementDate
+                  ? new Date(
+                      contract?.workCommencementDate
+                    ).toLocaleDateString()
+                  : new Date().toLocaleDateString()}
               </div>
             </div>
             <div className="d-flex justify-content-between align-items-center my-3">
               <div className="fw-bold">Total spent</div>
               <div className="px-3 bg-dark-blue text-white rounded py-2">
-                $23,000
+                ${getSum(contract?.paid)}
               </div>
             </div>
           </div>
@@ -224,3 +246,12 @@ const TradeJobDetails = () => {
 };
 
 export default TradeJobDetails;
+
+const getSum = (arr) => {
+  let total = 0;
+  Array.isArray(arr) &&
+    arr.forEach((e) => {
+      total += parseInt(e?.price || 0);
+    });
+  return total;
+};
