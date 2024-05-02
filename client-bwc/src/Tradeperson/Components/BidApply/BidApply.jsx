@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
 import "./BidApply.css";
 import { applyJobService } from "../../../service/jobPostService";
 import { useAuth } from "../../../context/AuthContext";
@@ -6,9 +7,14 @@ import { toast } from "react-toastify";
 const BidApply = ({ job }) => {
   const [auth] = useAuth();
   const [bid, setBid] = useState(null);
+  const [nameFile, set] = useState("");
   const Handleapplyjob = async (jobId) => {
     try {
       bid.userId = auth?.user?._id;
+      const formData = new FormData();
+      for (const [key, value] of Object.entries(bid)) {
+        formData?.append(key, value);
+      }
       const { data } = await applyJobService(jobId, bid);
       if (data.message) {
         toast.error(data.message);
@@ -23,6 +29,9 @@ const BidApply = ({ job }) => {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setBid({ ...bid, [name]: files ? files[0] : value });
+    if (files) {
+      set(files[0]?.name);
+    }
   };
   return (
     <div>
@@ -34,6 +43,7 @@ const BidApply = ({ job }) => {
               style={{ outline: "none" }}
               type="text"
               name="bid"
+              required
               className="w-100 bg-transparent border-0 px-2"
               placeholder="£25,000"
               onChange={handleChange}
@@ -62,7 +72,13 @@ const BidApply = ({ job }) => {
         <li className="d-flex justify-content-between align-items-center">
           <div className="w-100"> When will this quotation expire?</div>
           <div className="w-100 text-center bg-light  py-2 rounded mx-2">
-            <input
+            <DatePicker
+              selected={bid?.expireQuotation || new Date()}
+              className="w-100 bg-transparent border-0 shadow-none date-peacker"
+              onChange={(date) => setBid({ ...bid, expireQuotation: date })}
+              popperPlacement="bottom-start"
+            />
+            {/* <input
               style={{ outline: "none" }}
               type="text"
               name="expireQuotation"
@@ -70,7 +86,7 @@ const BidApply = ({ job }) => {
               placeholder="12 March 2024
               "
               onChange={handleChange}
-            />
+            /> */}
           </div>
           <div className="w-100 text-center bg-secondary text-white py-2 rounded mx-2">
             Fixed Date
@@ -79,10 +95,16 @@ const BidApply = ({ job }) => {
         <li className="d-flex justify-content-between align-items-center">
           <div className="w-100"> Upload supporting information?</div>
           <div className="w-100 text-center bg-light  py-2 rounded mx-2">
-            <label htmlFor="upload w-100 text-muted">Upload</label>
+            <label
+              htmlFor="document"
+              className="w-100"
+              style={{ cursor: "pointer" }}
+            >
+              {nameFile ? nameFile : "Upload"}
+            </label>
             <input
               type="file"
-              id="upload"
+              id="document"
               name="file"
               className="position-absolute"
               style={{ zIndex: "-1" }}

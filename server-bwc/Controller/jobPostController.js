@@ -12,7 +12,7 @@ exports.createJobPost = async (req, res) => {
   try {
     console.log(req.body);
     let { jobPic, start, completion } = req.body;
-    if (req.files) {
+    if (req.files && req?.files?.jobPic && req?.files?.jobPic[0]) {
       req.body.jobPic = "/job/pic/" + req?.files?.jobPic[0]?.originalname;
     }
     req.body.start = JSON.parse(start);
@@ -85,8 +85,7 @@ exports.deleteJobPost = async (req, res) => {
 
 exports.applyJob = async (req, res) => {
   try {
-    const { userId } = req.body;
-    console.log(req.body);
+    const { userId, file } = req.body;
     const job = await JobPost.findById(req.params.jobId);
     if (!job || !userId) {
       return res.status(404).json({ message: "Job post not found" });
@@ -101,6 +100,10 @@ exports.applyJob = async (req, res) => {
     bid.bids[bid.bids.length - 1].tradepersonBid = req.body.bid;
     bid.duration = req.body.duration;
     bid.expireQuotation = req.body.expireQuotation;
+    if (req.files) {
+      bid.document = "/job/supportind-document/" + req?.files[0]?.originalname;
+    }
+    // console.log(bid);
     bid.save();
 
     res.status(201).json("Applied Successfylly");

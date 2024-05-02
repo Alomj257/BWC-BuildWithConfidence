@@ -12,14 +12,9 @@ const authLogin = async (email, password) => {
   }
 };
 
-export const register = async (user) => {
-  try {
-    const res = await Axios.post(`/auth/register`, user);
-    return res.data;
-  } catch (error) {
-    throw error.response.data.message;
-  }
-};
+export const register = async (user) =>
+  await Axios.post(`/auth/register`, user);
+
 export const updateprofile = async (id, data) =>
   await Axios.put(`/auth/update/${id}`, data);
 export const updateAuthImage = async (user, id) =>

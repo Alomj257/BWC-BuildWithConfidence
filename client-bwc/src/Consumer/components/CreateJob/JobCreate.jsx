@@ -1173,20 +1173,6 @@ const JobCreate = () => {
                 <div> Signature</div>
                 <div className="p-2  text-center">
                   <div className="p-2 w-100 fw-bold job-create-field rounded job-file-upload-container">
-                    {/* <label htmlFor="" className="job-file-upload-label">
-                      {inputData.contractorSigniture
-                        ? inputData.contractorSigniture.name
-                        : "Upload Signiture"}
-                    </label>
-
-                    <input
-                      name="contractorSigniture"
-                      onChange={handleChange}
-                      type="file"
-                      className="w-100 bg-transparent border-0 job-file-upload-input"
-                      style={{ outline: "none" }}
-                      placeholder=" £200 per week"
-                    /> */}
                     <select
                       name="font"
                       onChange={(e) => setFont(e.target.value)}

@@ -150,7 +150,7 @@ const TradeJobDetails = () => {
             </div>
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Escrow Amount</span>
-              <span>${total}</span>
+              <span>${contract?.eachMilestone}</span>
             </div>
           </div>
 

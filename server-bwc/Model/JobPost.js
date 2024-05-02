@@ -34,6 +34,9 @@ const jobPostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    type: {
+      type: String,
+    },
     location: {
       type: String,
       required: true,
@@ -45,6 +48,10 @@ const jobPostSchema = new mongoose.Schema(
     applied: Array,
     requested: Array,
     accept: Array,
+    // status:{
+    //   type:String,
+    //   enum:["Live" ,"Applied","Hire Request","Accept","Sign Contract",""]
+    // },
     taskAssign: {
       consumerId: String,
       tradepersonId: String,
