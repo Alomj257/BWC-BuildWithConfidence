@@ -37,8 +37,7 @@ const DigitalSchema = new mongoose.Schema(
     PPSService: String,
     advancePayment: String,
     isMilestone: Boolean,
-    Milestone: String,
-    eachMilestone: String,
+    milestone: Array,
     // end fees
     isBothAgree: Boolean,
     isProtection: Boolean,
@@ -58,7 +57,6 @@ const DigitalSchema = new mongoose.Schema(
     clientSignature: [{ img: String, path: String }],
     contractorSigniture: [{ img: String, path: String }],
     tradepersonSignature: [{ name: String, signiture: String, path: String }],
-    paid: Array,
     jobId: String,
   },
   { timestamps: true }
@@ -83,8 +81,7 @@ DigitalSchema.pre("save", function (next) {
     this.constractSum +
     this.digitalService +
     this.PPSService +
-    this.advancePayment +
-    this.Milestone * this.eachMilestone;
+    this.advancePayment;
   next();
 });
 

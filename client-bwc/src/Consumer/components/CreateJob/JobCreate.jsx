@@ -34,6 +34,8 @@ const JobCreate = () => {
   const [isBothAgree, setBothAgree] = useState(false);
   const [partyContact, setPartyContact] = useState(false);
   const [isMilestone, setMilestone] = useState(false);
+  const [milestone, setMilestones] = useState([]);
+  const [sumMile, setSumMile] = useState(0);
   const handleProcurement = (value) => {
     if (procurement.includes(value)) {
       setProcurement(procurement.filter((item) => item !== value));
@@ -70,6 +72,7 @@ const JobCreate = () => {
       formData.append("client", JSON.stringify([client]));
       formData.append("contractor", JSON.stringify([contractor]));
       formData.append("contractSum", JSON.stringify(contractSum));
+      formData.append("milestone", JSON.stringify(milestone));
 
       for (let key in inputData) {
         formData.append(key, inputData[key]);
@@ -991,8 +994,28 @@ const JobCreate = () => {
               </div>
               {isMilestone && (
                 <>
-                  {" "}
-                  <Milestone handleChange={handleChange} />
+                  <div className="row w-100 row-cols-md-2">
+                    <div>Number of Milestone</div>
+                    <div className="p-2  text-center">
+                      <div className="p-2 w-100 fw-bold job-create-field rounded">
+                        <input
+                          onChange={handleChange}
+                          name="Milestone"
+                          type="text"
+                          className="w-100 bg-transparent border-0"
+                          style={{ outline: "none" }}
+                          placeholder="Milestones"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <Milestone
+                    milstones={inputData?.Milestone}
+                    milestone={milestone}
+                    sumMile={sumMile}
+                    setSumMile={setSumMile}
+                    setMilestones={setMilestones}
+                  />
                 </>
               )}
               <div className="row w-100 row-cols-md-2">
@@ -1003,8 +1026,7 @@ const JobCreate = () => {
                     {parseInt(inputData?.advancePayment || 0) +
                       parseInt(inputData?.PPSService || 0) +
                       parseInt(inputData?.digitalService || 0) +
-                      parseInt(inputData?.Milestone || 0) *
-                        parseInt(inputData?.eachMilestone || 0)}
+                      parseInt(sumMile || 0)}
                   </div>
                 </div>
               </div>

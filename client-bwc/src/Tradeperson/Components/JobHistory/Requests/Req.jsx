@@ -89,6 +89,7 @@ const Req = ({ index, job }) => {
       toast.error(error?.data?.message || "something went wrong");
     }
   };
+  console.log(job);
   return (
     <>
       <tr key={index} className="text-capitalize">
@@ -121,34 +122,28 @@ const Req = ({ index, job }) => {
         </td>
         <td className="">
           {job?.taskAssign?.consumerId &&
-            job?.taskAssign?.tradepersonId === auth?.user?._id &&
+          job?.taskAssign?.tradepersonId === auth?.user?._id &&
+          job?.taskAssign?.contractId &&
+          job?.taskAssign?.isContract ? (
+            <button
+              onClick={() => navigate("/tradeperson/overview", { state: job })}
+              className="btn btn-outline-success text-dark w-100 "
+            >
+              Live project
+            </button>
+          ) : job?.taskAssign?.consumerId &&
             job?.taskAssign?.contractId &&
-            job?.taskAssign?.isContract && (
-              <button
-                onClick={() =>
-                  navigate("/tradeperson/overview", { state: job })
-                }
-                className="btn btn-outline-success text-dark w-100 "
-              >
-                Live project
-              </button>
-            )}
-          {job?.taskAssign?.consumerId &&
-            job?.taskAssign?.tradepersonId === auth?.user?._id &&
-            job?.taskAssign?.contractId &&
-            !job?.taskAssign?.isContract && (
-              <button
-                onClick={() =>
-                  handleContract(job?._id, job?.taskAssign?.contractId)
-                }
-                className="btn btn-outline-success text-dark w-100 "
-              >
-                Sign for Contract
-              </button>
-            )}
-          {(!job?.taskAssign?.consumerId ||
-            !job?.taskAssign?.contractId ||
-            job?.taskAssign?.tradepersonId !== auth?.user?._id) && (
+            (!(job?.taskAssign?.tradepersonId === auth?.user?._id) ||
+              !job?.taskAssign?.isContract) ? (
+            <button
+              onClick={() =>
+                handleContract(job?._id, job?.taskAssign?.contractId)
+              }
+              className="btn btn-outline-success text-dark w-100 "
+            >
+              Sign for Contract
+            </button>
+          ) : (
             <button
               disabled={job?.accept?.find(
                 (req) => req?.tradepersonId === auth?.user?._id

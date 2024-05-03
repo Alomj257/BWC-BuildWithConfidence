@@ -96,6 +96,7 @@ const TradeJobDetails = () => {
     setPaymentLoading(false);
   };
 
+  console.log(contract?.milestone);
   return (
     <div className="tradeJobDetail container my-5">
       <div className="trade-header bg-dark-blue text-white p-4 rounded">
@@ -110,8 +111,8 @@ const TradeJobDetails = () => {
               alt=" img"
               className="w-100 h-100 rounded-circle"
             />{" "}
-            <span className="my-auto fw-bold text-capitalize">
-              {user?.name}
+            <span className="my-auto fw-bold text-capitalize d-flex">
+              {user?.firstname} {user?.lastname}
             </span>
           </div>
           <div className="my-auto fw-bold pe-3">Download Contract </div>
@@ -150,53 +151,60 @@ const TradeJobDetails = () => {
             </div>
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Escrow Amount</span>
-              <span>${contract?.eachMilestone}</span>
+              <span>
+                $
+                {contract?.milestone && contract?.paid?.length
+                  ? contract?.milestone[contract?.paid[contract?.paid?.length]]
+                  : 0}
+              </span>
             </div>
           </div>
 
           <h4 className="my-3 fw-bold">Payment Milestones</h4>
           <div>
-            {Array.from({ length: parseInt(contract?.Milestone || 0) }).map(
-              (_, i) => (
-                <div className="d-flex gap-4 my-3 align-items-center">
-                  <div>
-                    <div className="d-flex">
-                      <span className="rounded-circle m-auto  text-white p-3 px-4 bg-dark-blue">
-                        {i + 1}
-                      </span>{" "}
+            {Array.isArray(contract?.milestone)
+              ? contract?.milestone.map((value, i) => (
+                  <div key={i} className="d-flex gap-4 my-3 align-items-center">
+                    <div>
+                      <div className="d-flex">
+                        <span className="rounded-circle m-auto  text-white p-3 px-4 bg-dark-blue">
+                          {i + 1}
+                        </span>{" "}
+                      </div>
                     </div>
+                    <span>Milestone {i + 1}</span>
+                    <span>
+                      {value?.milestone + i
+                        ? new Date(value?.milestone + i).toDateString()
+                        : new Date().toDateString()}
+                    </span>
+                    {contract?.paid?.find(
+                      (paid) => paid?.milestone === i + 1
+                    ) ? (
+                      <div className="ms-auto">
+                        <button className="btn btn-dark-blue text-white">
+                          Paid
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="d-flex gap-3 ms-auto">
+                        <button
+                          onClick={() => handlePayment(eachMilestone, i + 1)}
+                          disabled={
+                            paymentLoading || auth?.user?.role !== "CONSUMER"
+                          }
+                          className="btn btn-dark-blue text-white"
+                        >
+                          Release Payment
+                        </button>
+                        <button className="btn btn-outline-dark-blue ">
+                          Dispute
+                        </button>
+                      </div>
+                    )}
                   </div>
-                  <span>Milestone {i + 1}</span>
-                  <span>
-                    {contract?.dateForCompletion
-                      ? new Date(contract?.dateForCompletion).toDateString()
-                      : new Date().toDateString()}
-                  </span>
-                  {contract?.paid?.find((paid) => paid?.milestone === i + 1) ? (
-                    <div className="ms-auto">
-                      <button className="btn btn-dark-blue text-white">
-                        Paid
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="d-flex gap-3 ms-auto">
-                      <button
-                        onClick={() => handlePayment(eachMilestone, i + 1)}
-                        disabled={
-                          paymentLoading || auth?.user?.role !== "CONSUMER"
-                        }
-                        className="btn btn-dark-blue text-white"
-                      >
-                        Release Payment
-                      </button>
-                      <button className="btn btn-outline-dark-blue ">
-                        Dispute
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )
-            )}
+                ))
+              : ""}
 
             <div className=" col-md-5 ms-auto">
               <p>

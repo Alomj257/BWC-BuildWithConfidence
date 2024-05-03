@@ -9,7 +9,7 @@ const ConsumerJobRow = ({ row, index, type }) => {
   const sendApplieds = (job) => {
     navigate("/consumer/job-history/applied/users", { state: { job, type } });
   };
-  const handleOverview = (job) => {
+  const handleOverview = (job, tradepersonId) => {
     if (
       (!row?.taskAssign?.consumerId ||
         !row?.taskAssign?.contractId ||
@@ -17,7 +17,7 @@ const ConsumerJobRow = ({ row, index, type }) => {
       row?.accept?.find((req) => req?.consumerId === auth?.user?._id)
     ) {
       navigate("/consumer/digital-contract", {
-        state: { job, userId: auth?.user?._id },
+        state: { job, userId: tradepersonId },
       });
     } else if (
       job?.taskAssign?.tradepersonId &&
@@ -55,7 +55,13 @@ const ConsumerJobRow = ({ row, index, type }) => {
         )}
         <td
           style={{ cursor: "pointer" }}
-          onClick={() => handleOverview(row)}
+          onClick={() =>
+            handleOverview(
+              row,
+              row?.accept?.find((req) => req?.consumerId === auth?.user?._id)
+                .tradepersonId
+            )
+          }
           className={"this" === "complete" ? "text-success" : "light-gray"}
         >
           {row?.taskAssign?.tradepersonId &&

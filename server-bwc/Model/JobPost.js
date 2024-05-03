@@ -48,10 +48,18 @@ const jobPostSchema = new mongoose.Schema(
     applied: Array,
     requested: Array,
     accept: Array,
-    // status:{
-    //   type:String,
-    //   enum:["Live" ,"Applied","Hire Request","Accept","Sign Contract",""]
-    // },
+    status: {
+      type: String,
+      enum: [
+        "post",
+        "apply",
+        "hire",
+        "accept",
+        "consumer contract",
+        "tradeperson contract",
+        "live",
+      ],
+    },
     taskAssign: {
       consumerId: String,
       tradepersonId: String,

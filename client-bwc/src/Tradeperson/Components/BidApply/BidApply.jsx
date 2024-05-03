@@ -37,7 +37,7 @@ const BidApply = ({ job }) => {
     <div>
       <ul style={{ listStyle: "decimal" }} className="d-flex flex-column gap-4">
         <li className="d-flex justify-content-between align-items-center">
-          <div className="w-100">What is your fixed price</div>
+          <div className="w-100">What is your fixed price*</div>
           <div className="w-100 text-center bg-light  py-2 rounded mx-2">
             <input
               style={{ outline: "none" }}
@@ -90,6 +90,28 @@ const BidApply = ({ job }) => {
           </div>
           <div className="w-100 text-center bg-secondary text-white py-2 rounded mx-2">
             Fixed Date
+          </div>
+        </li>
+        <li className="d-flex justify-content-between align-items-center">
+          <div className="w-100"> Choose Milestone or Fixed price*</div>
+          <div className="w-100 text-center bg-light  py-2 rounded mx-2">
+            <select
+              style={{ outline: "none" }}
+              type="text"
+              name="bidType"
+              required
+              className="w-100 bg-transparent border-0 text-center px-2"
+              placeholder="12 March 2024
+              "
+              onChange={handleChange}
+            >
+              <option value="">Select bid type</option>
+              <option value="fixed">Fixed</option>
+              <option value="milestone">Milestone</option>
+            </select>
+          </div>
+          <div className="w-100 text-center bg-secondary text-white py-2 rounded mx-2">
+            Bid Type
           </div>
         </li>
         <li className="d-flex justify-content-between align-items-center">

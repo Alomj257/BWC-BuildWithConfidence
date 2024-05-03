@@ -13,6 +13,7 @@ const bidSchema = new mongoose.Schema(
     document: String,
     duration: String,
     expireQuotation: String,
+    bidType: String,
   },
   { timestamps: true }
 );

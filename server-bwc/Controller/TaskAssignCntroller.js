@@ -6,11 +6,10 @@ const User = require("../Model/User");
 
 const createTask = async (req, res) => {
   try {
-    console.log(req.body);
     await new TaskAssign(req.body).save();
     res.status(201).json("Task assigned");
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     res.status(500).json({ message: "something went wrong" });
   }
 };
@@ -91,6 +90,7 @@ const requestHire = async (req, res) => {
       requesterId: req.body.requesterId,
       requestedId: req.body.requestedId,
     });
+    job.status = "hire";
     await job.save();
     return res.status(200).json("Your request has been sent");
   } catch (error) {
@@ -120,6 +120,7 @@ const acceptedRequest = async (req, res) => {
       consumerId: req.body.consumerId,
       tradepersonId: req.body.tradepersonId,
     });
+    job.status = "accept";
     await job.save();
     return res.status(200).json("Your request has been sent");
   } catch (error) {
@@ -143,13 +144,13 @@ const getAllacceptedRequestJobs = async (req, res) => {
 const ConsumerContractSign = async (req, res) => {
   try {
     const job = await JobPost.findById(req.params.id);
-    console.log(job);
     if (!job) {
       return res.status(404).json({ message: "job id invalid" });
     }
     job.taskAssign.consumerId = req.body.consumerId;
     job.taskAssign.contractId = req.body.contractId;
     job.taskAssign.tradepersonId = req.body.tradepersonId;
+    job.status = "consumer contract";
     await job.save();
     return res.status(200).json("you contract create successfully");
   } catch (error) {
@@ -161,7 +162,6 @@ const tradepersonContractSign = async (req, res) => {
   try {
     const job = await JobPost.findById(req.params.jobId);
     const contract = await DigitalContractModel.findById(req.params.contractId);
-    console.log(job);
     if (!job || !contract) {
       return res.status(404).json({ message: " id invalid" });
     }
@@ -171,9 +171,11 @@ const tradepersonContractSign = async (req, res) => {
       tradepersonId: req.body.tradepersonId,
     });
     job.taskAssign.isContract = true;
+    job.status = "tradeperson contract";
 
-    await contract.save();
+    console.log(job);
     await job.save();
+    await contract.save();
 
     return res
       .status(200)

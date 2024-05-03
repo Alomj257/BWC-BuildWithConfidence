@@ -63,15 +63,11 @@ const Job = ({ row, key, type }) => {
     ) {
       navigate("/tradeperson/overview", { state: row });
     }
-    if (
-      (!row?.taskAssign?.consumerId ||
-        !row?.taskAssign?.contractId ||
-        row?.taskAssign?.tradepersonId !== auth?.user?._id) &&
-      row?.accept?.find((req) => req?.tradepersonId === auth?.user?._id)
-    ) {
+    if (row?.requested?.find((req) => req?.requestedId === auth?.user?._id)) {
       navigate("/tradeperson/requests", { state: row });
     }
   };
+  console.log(row);
   return (
     <>
       <tr key={key} className="text-capitalize">
@@ -102,11 +98,10 @@ const Job = ({ row, key, type }) => {
               row?.taskAssign?.contractId &&
               !row?.taskAssign?.isContract
             ? "Sign for Contract"
-            : (!row?.taskAssign?.consumerId ||
-                !row?.taskAssign?.contractId ||
-                row?.taskAssign?.tradepersonId !== auth?.user?._id) &&
-              row?.accept?.find((req) => req?.tradepersonId === auth?.user?._id)
-            ? "Request"
+            : row?.requested?.find(
+                (req) => req?.requestedId === auth?.user?._id
+              )
+            ? "Go to request"
             : "Applied"}
         </td>
       </tr>
