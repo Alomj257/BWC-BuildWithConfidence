@@ -224,8 +224,8 @@ const sendPayment = async (req, res) => {
         };
       }),
       mode: "payment",
-      success_url: "http://localhost:3000/sucess",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: "http://localhost:3000/consumer/overview",
+      cancel_url: "http://localhost:3000/consumer/overview",
     });
     const getcontract = await DigitalContractModel.findById(contract?._id);
     getcontract.paid.push({
@@ -236,7 +236,10 @@ const sendPayment = async (req, res) => {
       consumerId,
       milestone,
     });
-    getcontract.save();
+    if (session?.id) {
+      await getcontract.save();
+    }
+
     res.json({ id: session.id });
   } catch (error) {
     console.log(error);

@@ -58,6 +58,7 @@ const DigitalSchema = new mongoose.Schema(
     contractorSigniture: [{ img: String, path: String }],
     tradepersonSignature: [{ name: String, signiture: String, path: String }],
     jobId: String,
+    paid: Array,
   },
   { timestamps: true }
 );

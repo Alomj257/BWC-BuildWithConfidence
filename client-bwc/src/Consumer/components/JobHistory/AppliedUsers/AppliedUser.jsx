@@ -74,8 +74,8 @@ const AppliedUser = ({ id, key, job, type }) => {
       toast.error(error?.data?.message || "something went wrong");
     }
   };
-  const handleContract = (job, userId) => {
-    navigate("/consumer/digital-contract", { state: { job, userId } });
+  const handleContract = (job, userId, bid) => {
+    navigate("/consumer/digital-contract", { state: { job, userId, bid } });
   };
   useEffect(() => {
     const getAllBid = async () => {
@@ -164,7 +164,7 @@ const AppliedUser = ({ id, key, job, type }) => {
               {type === "pre" && (
                 <button
                   disabled={job?.taskAssign?.isContract}
-                  onClick={() => handleContract(job, user?._id)}
+                  onClick={() => handleContract(job, user?._id, bid)}
                   className="btn btn-outline-success text-dark w-100 "
                 >
                   {!job?.taskAssign?.isContract
@@ -183,11 +183,19 @@ const AppliedUser = ({ id, key, job, type }) => {
             </div>
           </div>
           <div className="d-flex justify-content-between flex-column">
-            <div className="mx-auto">
-              <h6 className=" fw-bold my-2">Contract Price</h6>
-              <h5 className=" fw-bold fs-4">
-                {bid?.bids[bid?.bids?.length - 1]?.tradepersonBid}
-              </h5>
+            <div className="d-flex justify-content-between">
+              <div className="mx-auto">
+                <h6 className=" fw-bold my-2">Contract Price</h6>
+                <h5 className=" fw-bold fs-4">
+                  ${bid?.bids[bid?.bids?.length - 1]?.tradepersonBid}
+                </h5>
+              </div>
+              <div className="mx-auto">
+                <h6 className=" fw-bold my-2">Contract Type</h6>
+                <h5 className=" fw-bold fs-4 text-capitalize">
+                  {bid?.bidType}
+                </h5>
+              </div>
             </div>
             <small className="mx-auto">
               expires on {bid?.expireQuotation}{" "}

@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { paymentRelease } from "../../../service/TaskAssignService";
 import useFetch from "../../../Hooks/useFetch";
 import { loadStripe } from "@stripe/stripe-js";
+import Modal from "../../../Utils/Modal/Modal";
+import ContractDetails from "./ContractDetails/ContractDetails";
 
 const TradeJobDetails = () => {
   const [isActive, setActive] = useState("overview");
@@ -16,16 +18,22 @@ const TradeJobDetails = () => {
   const { data } = useFetch(
     `/consumer/digital-contractor/${state?.taskAssign?.contractId}`
   );
-  const userdata = useFetch(`/auth/users/${state?.taskAssign?.tradepersonId}`);
+  const userdata = useFetch(
+    `/auth/users/${
+      auth?.user?.role === "CONSUMER"
+        ? state?.taskAssign?.tradepersonId
+        : state?.taskAssign?.consumerId
+    }`
+  );
   const [contract, setContract] = useState({});
 
   const [user, setUser] = useState({});
   const {
     digitalService,
-    Milestone,
-    eachMilestone,
+    // Milestone,
+    // eachMilestone,
     PPSService,
-    advancePayment,
+    // advancePayment,
   } = contract;
   useEffect(() => {
     if (data) {
@@ -40,8 +48,6 @@ const TradeJobDetails = () => {
           parseInt(cost.disposalCost.total | 0) +
           parseInt(digitalService | 0) +
           parseInt(PPSService | 0) +
-          parseInt(advancePayment | 0) +
-          parseInt(Milestone | 0) * parseInt(eachMilestone | 0) +
           parseInt(cost.cleaningCost.total | 0);
       });
       setTotal(totalSum);
@@ -53,6 +59,9 @@ const TradeJobDetails = () => {
   }, [userdata?.data]);
   const handlePayment = async (money, milestone) => {
     setPaymentLoading(true);
+    if (milestone === 1) {
+      money += total;
+    }
     const tradeId =
       state?.taskAssign?.consumerId === auth?.user?._id &&
       state?.taskAssign?.contractId &&
@@ -115,7 +124,16 @@ const TradeJobDetails = () => {
               {user?.firstname} {user?.lastname}
             </span>
           </div>
-          <div className="my-auto fw-bold pe-3">Download Contract </div>
+          <div className="my-auto fw-bold pe-3">
+            <Modal
+              btnText="Download Contract"
+              btnClasss="bg-transparent btn text-white"
+              bodyClass=" mx-auto col-10 bg-white"
+              closeIcon="text-dark fs-1"
+            >
+              <ContractDetails contract={contract} />
+            </Modal>{" "}
+          </div>
         </div>
       </div>
       <div className="d-flex gap-4 my-4 border-bottom ">
@@ -138,7 +156,11 @@ const TradeJobDetails = () => {
         <div className="trade-overview">
           <div className="my-2">
             <div className="fw-bold"> Contract Sum </div>
-            <div>${total}</div>
+            <div>
+              $
+              {total + contract?.milestone &&
+                getMilestoneSum(contract?.milestone)}
+            </div>
           </div>
           <div className="d-flex gap-4 my-3">
             <div className="d-flex flex-column text-center ">
@@ -147,64 +169,105 @@ const TradeJobDetails = () => {
             </div>
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Milstone Remaining</span>
-              <span>${total - getSum(contract?.paid)}</span>
+              <span>
+                $
+                {total + contract?.milestone &&
+                  getMilestoneSum(contract?.milestone) - getSum(contract?.paid)}
+              </span>
             </div>
             <div className="d-flex flex-column text-center ">
               <span className="fw-bold">Escrow Amount</span>
               <span>
                 $
-                {contract?.milestone && contract?.paid?.length
-                  ? contract?.milestone[contract?.paid[contract?.paid?.length]]
-                  : 0}
+                {/* {contract?.isMilestone
+                  ? contract?.milestone && contract?.paid?.length
+                    ? contract?.milestone[
+                        contract?.paid[contract?.paid?.length||0]
+                      ]
+                    : 0
+                  : total} */}
+                {contract?.isMilestone
+                  ? contract?.milestone &&
+                    contract?.milestone[contract?.paid?.length || 0][
+                      `milestone${contract?.paid?.length || 0}*`
+                    ]
+                  : total}
               </span>
             </div>
           </div>
 
           <h4 className="my-3 fw-bold">Payment Milestones</h4>
           <div>
-            {Array.isArray(contract?.milestone)
-              ? contract?.milestone.map((value, i) => (
-                  <div key={i} className="d-flex gap-4 my-3 align-items-center">
-                    <div>
-                      <div className="d-flex">
-                        <span className="rounded-circle m-auto  text-white p-3 px-4 bg-dark-blue">
-                          {i + 1}
-                        </span>{" "}
+            {contract?.isMilestone ? (
+              Array.isArray(contract?.milestone) ? (
+                contract?.milestone.map((value, i) => {
+                  console.log(value);
+                  return (
+                    <div
+                      key={i}
+                      className="d-flex gap-4 my-3 align-items-center"
+                    >
+                      <div>
+                        <div className="d-flex">
+                          <span className="rounded-circle m-auto  text-white p-3 px-4 bg-dark-blue">
+                            {i + 1}
+                          </span>{" "}
+                        </div>
                       </div>
+                      <span>Milestone {i + 1}</span>
+                      <span>
+                        {value[`milestone${i}Date`]
+                          ? new Date(value[`milestone${i}Date`]).toDateString()
+                          : new Date().toDateString()}
+                      </span>
+                      {contract?.paid?.find(
+                        (paid) => paid?.milestone === i + 1
+                      ) ? (
+                        <div className="ms-auto">
+                          <button className="btn btn-dark-blue text-white">
+                            Paid
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="d-flex gap-3 ms-auto">
+                          <button
+                            onClick={() =>
+                              handlePayment(value[`milestone${i}*`], i + 1)
+                            }
+                            disabled={
+                              paymentLoading || auth?.user?.role !== "CONSUMER"
+                            }
+                            className="btn btn-dark-blue text-white"
+                          >
+                            Release Payment
+                          </button>
+                          <button className="btn btn-outline-dark-blue ">
+                            Dispute
+                          </button>
+                        </div>
+                      )}
                     </div>
-                    <span>Milestone {i + 1}</span>
-                    <span>
-                      {value?.milestone + i
-                        ? new Date(value?.milestone + i).toDateString()
-                        : new Date().toDateString()}
-                    </span>
-                    {contract?.paid?.find(
-                      (paid) => paid?.milestone === i + 1
-                    ) ? (
-                      <div className="ms-auto">
-                        <button className="btn btn-dark-blue text-white">
-                          Paid
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="d-flex gap-3 ms-auto">
-                        <button
-                          onClick={() => handlePayment(eachMilestone, i + 1)}
-                          disabled={
-                            paymentLoading || auth?.user?.role !== "CONSUMER"
-                          }
-                          className="btn btn-dark-blue text-white"
-                        >
-                          Release Payment
-                        </button>
-                        <button className="btn btn-outline-dark-blue ">
-                          Dispute
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))
-              : ""}
+                  );
+                })
+              ) : (
+                ""
+              )
+            ) : contract?.paid ? (
+              <div className="ms-auto">
+                <button className="btn btn-dark-blue text-white">Paid</button>
+              </div>
+            ) : (
+              <div className="d-flex gap-3 ms-auto">
+                <button
+                  onClick={() => handlePayment(total)}
+                  disabled={paymentLoading || auth?.user?.role !== "CONSUMER"}
+                  className="btn btn-dark-blue text-white"
+                >
+                  Release Payment
+                </button>
+                <button className="btn btn-outline-dark-blue ">Dispute</button>
+              </div>
+            )}
 
             <div className=" col-md-5 ms-auto">
               <p>
@@ -227,7 +290,7 @@ const TradeJobDetails = () => {
             <div className="d-flex justify-content-between align-items-center my-3">
               <div className="fw-bold">Contract Type</div>
               <div className="px-3 bg-dark-blue text-white rounded py-2">
-                Fixed
+                {contract?.isMilestone ? "Milestone" : "Fixed"}
               </div>
             </div>
             <div className="d-flex justify-content-between align-items-center my-3">
@@ -260,6 +323,15 @@ const getSum = (arr) => {
   Array.isArray(arr) &&
     arr.forEach((e) => {
       total += parseInt(e?.price || 0);
+    });
+  return total;
+};
+
+const getMilestoneSum = (arr) => {
+  let total = 0;
+  Array.isArray(arr) &&
+    arr.forEach((e, i) => {
+      total += parseInt(e[`milestone${i}*`] || 0);
     });
   return total;
 };

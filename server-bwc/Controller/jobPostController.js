@@ -100,10 +100,11 @@ exports.applyJob = async (req, res) => {
     bid.bids[bid.bids.length - 1].tradepersonBid = req.body.bid;
     bid.duration = req.body.duration;
     bid.expireQuotation = req.body.expireQuotation;
+    bid.bidType = req.body.bidType;
     if (req.files) {
       bid.document = "/job/supportind-document/" + req?.files[0]?.originalname;
     }
-    // console.log(bid);
+    console.log(bid);
     bid.save();
 
     res.status(201).json("Applied Successfylly");
