@@ -5,6 +5,19 @@ const taskSchema = new mongoose.Schema({
   consumerId: { type: String, required: true },
   tradepersonId: { type: String, required: true },
   constractId: String,
+  status: {
+    type: String,
+    enum: [
+      "post",
+      "apply",
+      "hire",
+      "accept",
+      "consumer contract",
+      "tradeperson contract",
+      "live",
+    ],
+  },
+  paid: Array,
   progress: {
     type: Number,
     default: 0,

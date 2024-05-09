@@ -29,12 +29,12 @@ const AuthPage = () => {
     e.preventDefault();
     try {
       console.log(user);
-      const res = await register(user);
-      if (res.message) {
-        toast.error(res.message);
+      const { data } = await register(user);
+      if (data?.message) {
+        toast.error(data?.message);
         return;
       }
-      toast.success(res);
+      toast.success(data);
       setUser({
         ...user,
         email: "",
@@ -44,7 +44,7 @@ const AuthPage = () => {
       });
     } catch (error) {
       console.log(error);
-      toast.error("something went wrong");
+      toast.error(error?.response?.data?.message);
     }
   };
   const handleLogin = async (e) => {

@@ -22,11 +22,17 @@ const JobCard = ({ jobs, type }) => {
           <tbody>
             {jobs.map((row, index) => (
               <>
-                {type === "bid" && <Job row={row} key={index} type={type} />}
+                {type === "bid" &&
+                  !row?.accept?.find(
+                    (req) => req?.tradepersonId === auth?.user?._id
+                  ) && <Job row={row} key={index} type={type} />}
                 {type === "contract" &&
                   row?.accept?.find(
                     (req) => req?.tradepersonId === auth?.user?._id
-                  ) && <Job row={row} key={index} type={type} />}
+                  ) &&
+                  !row?.taskAssign?.isContract && (
+                    <Job row={row} key={index} type={type} />
+                  )}
                 {type === "live" &&
                   row?.accept?.find(
                     (req) =>
@@ -57,7 +63,11 @@ const Job = ({ row, key, type }) => {
     ) {
       navigate("/tradeperson/overview", { state: row });
     }
+    if (row?.requested?.find((req) => req?.requestedId === auth?.user?._id)) {
+      navigate("/tradeperson/requests", { state: row });
+    }
   };
+  console.log(row);
   return (
     <>
       <tr key={key} className="text-capitalize">
@@ -74,10 +84,11 @@ const Job = ({ row, key, type }) => {
           {new Date(row?.createdAt).toLocaleDateString()}
         </td>
         <td
+          style={{ cursor: "pointer" }}
           className={"this" === "complete" ? "text-success" : "light-gray"}
           onClick={handleRedirect}
         >
-          {row?.taskAssign?.consumerId &&
+          {row?.taskAssign?.tradepersonId &&
           row?.taskAssign?.tradepersonId === auth?.user?._id &&
           row?.taskAssign?.contractId &&
           row?.taskAssign?.isContract
@@ -87,11 +98,10 @@ const Job = ({ row, key, type }) => {
               row?.taskAssign?.contractId &&
               !row?.taskAssign?.isContract
             ? "Sign for Contract"
-            : (!row?.taskAssign?.consumerId ||
-                !row?.taskAssign?.contractId ||
-                row?.taskAssign?.tradepersonId !== auth?.user?._id) &&
-              row?.accept?.find((req) => req?.tradepersonId === auth?.user?._id)
-            ? "Request Accepted"
+            : row?.requested?.find(
+                (req) => req?.requestedId === auth?.user?._id
+              )
+            ? "Go to request"
             : "Applied"}
         </td>
       </tr>

@@ -10,9 +10,10 @@ const bidSchema = new mongoose.Schema(
     },
     consumerId: String,
     bids: [{ consumerBid: String, tradepersonBid: String }],
-    attach: String,
+    document: String,
     duration: String,
     expireQuotation: String,
+    bidType: String,
   },
   { timestamps: true }
 );

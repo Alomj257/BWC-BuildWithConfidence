@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import { consumerContractSignService } from "../../../service/TaskAssignService";
 import { useAuth } from "../../../context/AuthContext";
+import Milestone from "./Milestone";
 
 const JobCreate = () => {
   const [digital, setDigital] = useState("digital");
@@ -33,6 +34,8 @@ const JobCreate = () => {
   const [isBothAgree, setBothAgree] = useState(false);
   const [partyContact, setPartyContact] = useState(false);
   const [isMilestone, setMilestone] = useState(false);
+  const [milestone, setMilestones] = useState([]);
+  const [sumMile, setSumMile] = useState(0);
   const handleProcurement = (value) => {
     if (procurement.includes(value)) {
       setProcurement(procurement.filter((item) => item !== value));
@@ -69,6 +72,7 @@ const JobCreate = () => {
       formData.append("client", JSON.stringify([client]));
       formData.append("contractor", JSON.stringify([contractor]));
       formData.append("contractSum", JSON.stringify(contractSum));
+      formData.append("milestone", JSON.stringify(milestone));
 
       for (let key in inputData) {
         formData.append(key, inputData[key]);
@@ -990,7 +994,6 @@ const JobCreate = () => {
               </div>
               {isMilestone && (
                 <>
-                  {" "}
                   <div className="row w-100 row-cols-md-2">
                     <div>Number of Milestone</div>
                     <div className="p-2  text-center">
@@ -1006,21 +1009,13 @@ const JobCreate = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="row w-100 row-cols-md-2">
-                    <div>Each Milestone Payment</div>
-                    <div className="p-2  text-center">
-                      <div className="p-2 w-100 fw-bold job-create-field rounded">
-                        <input
-                          type="text"
-                          name="eachMilestone"
-                          onChange={handleChange}
-                          className="w-100 bg-transparent border-0"
-                          style={{ outline: "none" }}
-                          placeholder="Each milstone payment"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  <Milestone
+                    milstones={inputData?.Milestone}
+                    milestone={milestone}
+                    sumMile={sumMile}
+                    setSumMile={setSumMile}
+                    setMilestones={setMilestones}
+                  />
                 </>
               )}
               <div className="row w-100 row-cols-md-2">
@@ -1031,8 +1026,7 @@ const JobCreate = () => {
                     {parseInt(inputData?.advancePayment || 0) +
                       parseInt(inputData?.PPSService || 0) +
                       parseInt(inputData?.digitalService || 0) +
-                      parseInt(inputData?.Milestone || 0) *
-                        parseInt(inputData?.eachMilestone || 0)}
+                      parseInt(sumMile || 0)}
                   </div>
                 </div>
               </div>
@@ -1173,20 +1167,6 @@ const JobCreate = () => {
                 <div> Signature</div>
                 <div className="p-2  text-center">
                   <div className="p-2 w-100 fw-bold job-create-field rounded job-file-upload-container">
-                    {/* <label htmlFor="" className="job-file-upload-label">
-                      {inputData.contractorSigniture
-                        ? inputData.contractorSigniture.name
-                        : "Upload Signiture"}
-                    </label>
-
-                    <input
-                      name="contractorSigniture"
-                      onChange={handleChange}
-                      type="file"
-                      className="w-100 bg-transparent border-0 job-file-upload-input"
-                      style={{ outline: "none" }}
-                      placeholder=" £200 per week"
-                    /> */}
                     <select
                       name="font"
                       onChange={(e) => setFont(e.target.value)}

@@ -31,7 +31,7 @@ const Requests = () => {
             </thead>
             <tbody>
               {jobs?.map((row, key) => (
-                <Req key={key} job={row} />
+                <Req index={key} job={row} />
               ))}
             </tbody>
           </table>

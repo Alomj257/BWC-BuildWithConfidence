@@ -5,6 +5,7 @@ const createDigital = async (req, res) => {
     let {
       surveyPhoto,
       clientSignature,
+      milestone,
 
       client,
       contractor,
@@ -37,6 +38,7 @@ const createDigital = async (req, res) => {
       ? JSON.parse(contractor)[0]
       : "";
     req.body.constractSum = JSON.parse(contractSum);
+    req.body.milestone = JSON.parse(milestone);
     const createdData = await new DigitalContractModel(req.body).save();
     return res.status(201).json(createdData);
   } catch (error) {

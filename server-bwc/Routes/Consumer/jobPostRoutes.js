@@ -2,6 +2,7 @@ const express = require("express");
 const jobPostRoutes = require("express").Router();
 const jobPostController = require("../../Controller/jobPostController");
 const { uploadJobPic } = require("../../Middlewares/uploadMultifieldFiles");
+const uploadFile = require("../../Middlewares/uploadFile");
 
 // Create a new job post
 jobPostRoutes.post(
@@ -29,7 +30,11 @@ jobPostRoutes.put("/jobposts/:id", jobPostController.updateJobPost);
 
 // Delete job post by ID
 jobPostRoutes.delete("/jobposts/:id", jobPostController.deleteJobPost);
-jobPostRoutes.post("/apply/:jobId", jobPostController.applyJob);
+jobPostRoutes.post(
+  "/apply/:jobId",
+  uploadFile("./Public/ApplyDoc"),
+  jobPostController.applyJob
+);
 jobPostRoutes.get(
   "/bids/:jobId/:consumerId/:tradepersonId",
   jobPostController.getAllBidsbyjobIdAndConsumerId
